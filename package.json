@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "start": "parcel serve index.html",
+    "build": "parcel build index.html"
+  },
+  "dependencies": {
+    "secretjs": "0.14.0"
+  },
+  "devDependencies": {
+    "@keplr-wallet/types": "0.8.11-rc.0",
+    "parcel": "2.0.0-nightly.746"
+  }
+}
