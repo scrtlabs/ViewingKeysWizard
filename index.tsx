@@ -48,39 +48,74 @@ type Token = {
   logo: string;
 };
 
+type DBToken = {
+  name: string;
+  address: string;
+  decimals: number;
+  src_address: string;
+  dst_address: string;
+  display_props: {
+    image: string;
+    label: string;
+    symbol: string;
+  };
+};
+
 function App() {
   const [loading, setLoading] = useState<boolean>(false);
-  const [ethTokens, setEthTokens] = useState<Token[]>([]);
+  const [tokens, setTokens] = useState<Token[]>([]);
   const [checkedTokens, setCheckedTokens] = useState<{
     [address: string]: Token;
   }>({});
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
+
       const tokens = (
-        await (
-          await fetch("https://api-bridge-mainnet.azurewebsites.net/tokens")
-        ).json()
-      ).tokens.map((t) => ({
-        address: t.dst_address,
-        name: t.name,
-        symbol: t.display_props.symbol,
-        logo: t.display_props.image,
-      }));
-      setEthTokens(tokens);
+        await Promise.all([
+          (
+            await fetch("https://api-bridge-mainnet.azurewebsites.net/tokens")
+          ).json(),
+          (
+            await fetch("https://bridge-bsc-mainnet.azurewebsites.net/tokens")
+          ).json(),
+        ])
+      )
+        .map((res) => res.tokens)
+        .flat()
+        .map((t: DBToken) => ({
+          address: t.dst_address,
+          name: t.name,
+          symbol: t.display_props.symbol,
+          logo: t.display_props.image,
+        }));
+
+      setTokens(tokens);
+      setLoading(false);
     };
 
     fetchData();
-  }, [JSON.stringify(ethTokens)]);
+  }, [JSON.stringify(tokens)]);
 
   const handleCheckToken = (event) => {
     setCheckedTokens(
       Object.assign({}, checkedTokens, {
-        [event.target.name]: ethTokens.find(
+        [event.target.name]: tokens.find(
           (t) => t.address === event.target.name
         ),
       })
     );
+  };
+
+  const handleCheckAll = (event) => {
+    const newCheckedTokens = {};
+
+    for (const t of tokens) {
+      newCheckedTokens[t.address] = t;
+    }
+
+    setCheckedTokens(newCheckedTokens);
   };
 
   return (
@@ -94,10 +129,24 @@ function App() {
         <Button
           variant="contained"
           color="primary"
-          disabled={ethTokens.length === 0 || !secretjs || loading}
+          disabled={tokens.length === 0 || !secretjs || loading}
           onClick={async () => {
             setLoading(true);
-            const ops = Object.keys(checkedTokens).length;
+            const numOfMsgs = Object.keys(checkedTokens).length;
+            let gasPerMsg = 105_000;
+            if (numOfMsgs >= 2) {
+              gasPerMsg = 85_000;
+            }
+            if (numOfMsgs >= 5) {
+              gasPerMsg = 68_000;
+            }
+            if (numOfMsgs >= 10) {
+              gasPerMsg = 62_000;
+            }
+            if (numOfMsgs >= 15) {
+              gasPerMsg = 58_000;
+            }
+
             try {
               await secretjs.multiExecute(
                 Object.values(checkedTokens).map((t) => ({
@@ -105,7 +154,7 @@ function App() {
                   handleMsg: { set_viewing_key: { key: "banana" } },
                 })),
                 "",
-                getFeeForExecute(75_000 * ops)
+                getFeeForExecute(numOfMsgs * gasPerMsg)
               );
             } finally {
               setLoading(false);
@@ -118,7 +167,13 @@ function App() {
           <CircularProgress size="2em" style={{ marginLeft: "0.3em" }} />
         )}
       </div>
-      {ethTokens.map((t) => (
+      <div>
+        <FormControlLabel
+          control={<Checkbox color="secondary" onChange={handleCheckAll} />}
+          label={`Select all`}
+        />
+      </div>
+      {tokens.map((t) => (
         <div key={t.address}>
           <FormControlLabel
             control={
