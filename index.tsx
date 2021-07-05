@@ -80,7 +80,29 @@ function App() {
         if (t.address in tokens) {
           console.error(`Duplicate tokens ${t} and ${tokens[t.address]}`);
         }
-        tokens[t.address] = t;
+        if (t.type == "LP") {
+          const [asset1, asset2] = t.name.split("-");
+
+          if (!tokens[asset1] || !tokens[asset2]) {
+            console.log(
+              `Skipping LP token ${t.address} because ${asset1} or ${asset2} is unknown.`
+            );
+            continue;
+          }
+
+          tokens[t.address] = {
+            address: t.address,
+            name: `LP ${tokens[asset1].symbol}-${tokens[asset2].symbol}`,
+            symbol: "",
+            logo: JSON.stringify([tokens[asset1].logo, tokens[asset2].logo]),
+            type: "LP",
+          } as Token;
+          continue;
+        }
+
+        tokens[t.address] = Object.assign({}, t, {
+          logo: `${window.location.href}/${t.logo}`,
+        });
       }
 
       setTokens(tokens);
@@ -174,10 +196,31 @@ function App() {
         />
       </div>
       {Object.keys(tokens).map((addr) => {
-        const { address, name, symbol, logo } = tokens[addr];
+        const { address, name, symbol, logo, type } = tokens[addr];
 
-        const logoSrc = `${window.location.href}/${logo}`;
-        console.log(logoSrc);
+        let label = (
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <span style={{ marginRight: "0.3em" }}>
+              <Avatar alt={name} src={logo} className={classes.avatar} />
+            </span>
+            {`${name} (${symbol})`}
+          </div>
+        );
+        if (type == "LP") {
+          const [logo1, logo2] = JSON.parse(logo) as string[];
+
+          label = (
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <span style={{ marginRight: "0.2em" }}>
+                <Avatar alt={name} src={logo1} className={classes.avatar} />
+              </span>
+              <span style={{ marginRight: "0.3em" }}>
+                <Avatar alt={name} src={logo2} className={classes.avatar} />
+              </span>
+              {name}
+            </div>
+          );
+        }
 
         return (
           <div key={address}>
@@ -190,18 +233,7 @@ function App() {
                   onChange={handleCheckToken}
                 />
               }
-              label={
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <span style={{ marginRight: "0.3em" }}>
-                    <Avatar
-                      alt={name}
-                      src={logoSrc}
-                      className={classes.avatar}
-                    />
-                  </span>
-                  {`${name} (${symbol})`}
-                </div>
-              }
+              label={label}
             />
           </div>
         );
@@ -219,20 +251,3 @@ export function getFeeForExecute(gas: number): StdFee {
     gas: String(gas),
   };
 }
-// (async () => {
-//   let myAddress: string;
-
-//   const ethTokens = await (
-//     await fetch("https://api-bridge-mainnet.azurewebsites.net/tokens")
-//   ).json();
-
-//   const ethAddresses = ethTokens.tokens.map((t) => t.dst_address);
-//   console.log(ethAddresses);
-
-//   const bscTokens = await (
-//     await fetch("https://bridge-bsc-mainnet.azurewebsites.net/tokens")
-//   ).json();
-
-//   const bscAddresses = bscTokens.tokens.map((t) => t.dst_address);
-//   console.log(bscAddresses);
-// })();
