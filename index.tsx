@@ -83,6 +83,18 @@ function App() {
         if (t.type == "LP") {
           const [asset1, asset2] = t.name.split("-");
 
+          if (asset1 === "uscrt" || asset2 === "uscrt") {
+            const sscrt = asset1 === "uscrt" ? asset2 : asset1;
+            tokens[t.address] = {
+              address: t.address,
+              name: `LP SCRT-sSCRT`,
+              symbol: "",
+              logo: JSON.stringify([tokens[sscrt].logo, tokens[sscrt].logo]),
+              type: "LP",
+            } as Token;
+            continue;
+          }
+
           if (!tokens[asset1] || !tokens[asset2]) {
             console.log(
               `Skipping LP token ${t.address} because ${asset1} or ${asset2} is unknown.`
@@ -211,7 +223,7 @@ function App() {
 
           label = (
             <div style={{ display: "flex", alignItems: "center" }}>
-              <span style={{ marginRight: "0.2em" }}>
+              <span style={{ marginRight: "0.1em" }}>
                 <Avatar alt={name} src={logo1} className={classes.avatar} />
               </span>
               <span style={{ marginRight: "0.3em" }}>
