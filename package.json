@@ -12,8 +12,27 @@
   },
   "devDependencies": {
     "@keplr-wallet/types": "0.8.11-rc.0",
+    "@parcel/config-default": "2.0.0-nightly.748",
     "@types/react": "17.0.13",
     "@types/react-dom": "17.0.8",
-    "parcel": "2.0.0-nightly.746"
+    "parcel": "2.0.0-nightly.746",
+    "parcel-config-pwa-manifest": "0.0.9"
+  },
+  "name": "viewing-key-wizard",
+  "description": "An awesome PWA to do awesome things",
+  "pwaManifest": {
+    "name": "Viewing Key Wizard",
+    "shortName": "VK Wizard",
+    "startURL": "./offline",
+    "theme": "#add8e6",
+    "generateIconOptions": {
+      "baseIcon": "./favicon.svg",
+      "sizes": [
+        192,
+        384,
+        512
+      ],
+      "genFavicons": true
+    }
   }
 }

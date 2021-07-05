@@ -6,13 +6,31 @@ declare global {
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import {
-  Avatar,
   Button,
   Checkbox,
   CircularProgress,
   FormControlLabel,
+  Avatar,
 } from "@material-ui/core";
+import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { StdFee } from "secretjs/types/types";
+import { Token, tokenList as localTokens } from "./tokens";
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      display: "flex",
+      "& > *": {
+        margin: theme.spacing(1),
+      },
+    },
+    avatar: {
+      width: theme.spacing(2.8),
+      height: theme.spacing(2.8),
+      boxShadow: "rgba(0, 0, 0, 0.1) 0px 6px 10px",
+    },
+  })
+);
 
 const chainId = "secret-2";
 let myAddress: string;
@@ -32,6 +50,8 @@ window.onload = async () => {
     keplrOfflineSigner,
     window.getEnigmaUtils(chainId)
   );
+
+  window.keplr.suggestToken;
 };
 
 ReactDOM.render(
@@ -41,55 +61,27 @@ ReactDOM.render(
   document.getElementById("root")
 );
 
-type Token = {
-  address: string;
-  name: string;
-  symbol: string;
-  logo: string;
-};
-
-type DBToken = {
-  name: string;
-  address: string;
-  decimals: number;
-  src_address: string;
-  dst_address: string;
-  display_props: {
-    image: string;
-    label: string;
-    symbol: string;
-  };
-};
-
 function App() {
+  const classes = useStyles();
+
   const [loading, setLoading] = useState<boolean>(false);
-  const [tokens, setTokens] = useState<Token[]>([]);
-  const [checkedTokens, setCheckedTokens] = useState<{
+  const [tokens, setTokens] = useState<{
     [address: string]: Token;
   }>({});
+  const [selectedTokens, setSelectedTokens] = useState<Set<string>>(new Set());
+  const [isAllSelected, setIsAllSelected] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
 
-      const tokens = (
-        await Promise.all([
-          (
-            await fetch("https://api-bridge-mainnet.azurewebsites.net/tokens")
-          ).json(),
-          (
-            await fetch("https://bridge-bsc-mainnet.azurewebsites.net/tokens")
-          ).json(),
-        ])
-      )
-        .map((res) => res.tokens)
-        .flat()
-        .map((t: DBToken) => ({
-          address: t.dst_address,
-          name: t.name,
-          symbol: t.display_props.symbol,
-          logo: t.display_props.image,
-        }));
+      const tokens = {};
+      for (const t of localTokens) {
+        if (t.address in tokens) {
+          console.error(`Duplicate tokens ${t} and ${tokens[t.address]}`);
+        }
+        tokens[t.address] = t;
+      }
 
       setTokens(tokens);
       setLoading(false);
@@ -99,23 +91,25 @@ function App() {
   }, [JSON.stringify(tokens)]);
 
   const handleCheckToken = (event) => {
-    setCheckedTokens(
-      Object.assign({}, checkedTokens, {
-        [event.target.name]: tokens.find(
-          (t) => t.address === event.target.name
-        ),
-      })
-    );
+    const address = event.target.name;
+    setIsAllSelected(false);
+
+    if (selectedTokens.has(address)) {
+      setSelectedTokens(
+        new Set(Array.from(selectedTokens).filter((a) => a !== address))
+      );
+    } else {
+      setSelectedTokens(new Set(Array.from(selectedTokens).concat([address])));
+    }
   };
 
   const handleCheckAll = (event) => {
-    const newCheckedTokens = {};
-
-    for (const t of tokens) {
-      newCheckedTokens[t.address] = t;
+    if (isAllSelected) {
+      setSelectedTokens(new Set());
+    } else {
+      setSelectedTokens(new Set(Object.keys(tokens)));
     }
-
-    setCheckedTokens(newCheckedTokens);
+    setIsAllSelected(!isAllSelected);
   };
 
   return (
@@ -129,10 +123,10 @@ function App() {
         <Button
           variant="contained"
           color="primary"
-          disabled={tokens.length === 0 || !secretjs || loading}
+          disabled={Object.keys(tokens).length === 0 || !secretjs || loading}
           onClick={async () => {
             setLoading(true);
-            const numOfMsgs = Object.keys(checkedTokens).length;
+            const numOfMsgs = Object.keys(selectedTokens).length;
             let gasPerMsg = 105_000;
             if (numOfMsgs >= 2) {
               gasPerMsg = 85_000;
@@ -149,8 +143,8 @@ function App() {
 
             try {
               await secretjs.multiExecute(
-                Object.values(checkedTokens).map((t) => ({
-                  contractAddress: t.address,
+                Array.from(selectedTokens).map((contractAddress) => ({
+                  contractAddress,
                   handleMsg: { set_viewing_key: { key: "banana" } },
                 })),
                 "",
@@ -169,24 +163,46 @@ function App() {
       </div>
       <div>
         <FormControlLabel
-          control={<Checkbox color="secondary" onChange={handleCheckAll} />}
+          control={
+            <Checkbox
+              color="secondary"
+              onChange={handleCheckAll}
+              checked={isAllSelected}
+            />
+          }
           label={`Select all`}
         />
       </div>
-      {tokens.map((t) => (
-        <div key={t.address}>
-          <FormControlLabel
-            control={
-              <Checkbox
-                color="primary"
-                name={t.address}
-                onChange={handleCheckToken}
-              />
-            }
-            label={`${t.name} (${t.symbol})`}
-          />
-        </div>
-      ))}
+      {Object.keys(tokens).map((addr) => {
+        const { address, name, symbol, logo } = tokens[addr];
+
+        return (
+          <div key={address}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  color="primary"
+                  name={address}
+                  checked={selectedTokens.has(address)}
+                  onChange={handleCheckToken}
+                />
+              }
+              label={
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <span style={{ marginRight: "0.3em" }}>
+                    <Avatar
+                      alt={name}
+                      src={`${window.location.href}/logos/${logo}`}
+                      className={classes.avatar}
+                    />
+                  </span>
+                  {`${name} (${symbol})`}
+                </div>
+              }
+            />
+          </div>
+        );
+      })}
     </>
   );
 }
