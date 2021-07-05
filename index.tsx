@@ -1,8 +1,3 @@
-import { SigningCosmWasmClient } from "secretjs";
-import { Window as KeplrWindow } from "@keplr-wallet/types";
-declare global {
-  interface Window extends KeplrWindow {}
-}
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import {
@@ -11,10 +6,17 @@ import {
   CircularProgress,
   FormControlLabel,
   Avatar,
+  makeStyles,
+  createStyles,
+  Theme,
 } from "@material-ui/core";
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { StdFee } from "secretjs/types/types";
 import { Token, tokenList as localTokens } from "./tokens";
+import { SigningCosmWasmClient } from "secretjs";
+import { StdFee } from "secretjs/types/types";
+import { Window as KeplrWindow } from "@keplr-wallet/types";
+declare global {
+  interface Window extends KeplrWindow {}
+}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -33,26 +35,6 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const chainId = "secret-2";
-let myAddress: string;
-let secretjs: SigningCosmWasmClient;
-window.onload = async () => {
-  await window.keplr.enable(chainId);
-
-  const keplrOfflineSigner = window.getOfflineSigner(chainId);
-  const accounts = await keplrOfflineSigner.getAccounts();
-
-  myAddress = accounts[0].address;
-
-  secretjs = new SigningCosmWasmClient(
-    "https://bridge-api-manager.azure-api.net/",
-    myAddress,
-    //@ts-ignore
-    keplrOfflineSigner,
-    window.getEnigmaUtils(chainId)
-  );
-
-  window.keplr.suggestToken;
-};
 
 ReactDOM.render(
   <React.StrictMode>
@@ -70,6 +52,32 @@ function App() {
   }>({});
   const [selectedTokens, setSelectedTokens] = useState<Set<string>>(new Set());
   const [isAllSelected, setIsAllSelected] = useState<boolean>(false);
+  // const [myAddress, setMyAddress] = useState<string>(null);
+  const [secretjs, setSecretjs] = useState<SigningCosmWasmClient>(null);
+
+  useEffect(() => {
+    const setupKeplr = async () => {
+      await window.keplr.enable(chainId);
+
+      const keplrOfflineSigner = window.getOfflineSigner(chainId);
+      const accounts = await keplrOfflineSigner.getAccounts();
+
+      const myAddress = accounts[0].address;
+
+      const secretjs = new SigningCosmWasmClient(
+        "https://bridge-api-manager.azure-api.net/",
+        myAddress,
+        //@ts-ignore
+        keplrOfflineSigner,
+        window.getEnigmaUtils(chainId)
+      );
+
+      // setMyAddress(myAddress);
+      setSecretjs(secretjs);
+    };
+
+    setupKeplr();
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -122,7 +130,7 @@ function App() {
     };
 
     fetchData();
-  }, [JSON.stringify(tokens)]);
+  }, []);
 
   const handleCheckToken = (event) => {
     const address = event.target.name;
@@ -160,7 +168,7 @@ function App() {
           disabled={Object.keys(tokens).length === 0 || !secretjs || loading}
           onClick={async () => {
             setLoading(true);
-            const numOfMsgs = Object.keys(selectedTokens).length;
+            const numOfMsgs = selectedTokens.size;
             let gasPerMsg = 105_000;
             if (numOfMsgs >= 2) {
               gasPerMsg = 85_000;
@@ -175,6 +183,7 @@ function App() {
               gasPerMsg = 58_000;
             }
 
+            console.log(gasPerMsg, numOfMsgs);
             try {
               await secretjs.multiExecute(
                 Array.from(selectedTokens).map((contractAddress) => ({
