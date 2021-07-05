@@ -176,6 +176,9 @@ function App() {
       {Object.keys(tokens).map((addr) => {
         const { address, name, symbol, logo } = tokens[addr];
 
+        const logoSrc = `${window.location.href}/${logo}`;
+        console.log(logoSrc);
+
         return (
           <div key={address}>
             <FormControlLabel
@@ -192,7 +195,7 @@ function App() {
                   <span style={{ marginRight: "0.3em" }}>
                     <Avatar
                       alt={name}
-                      src={`${window.location.href}/logos/${logo}`}
+                      src={logoSrc}
                       className={classes.avatar}
                     />
                   </span>
