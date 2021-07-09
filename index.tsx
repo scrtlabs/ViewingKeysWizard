@@ -170,7 +170,12 @@ function App() {
         <Button
           variant="contained"
           color="primary"
-          disabled={Object.keys(tokens).length === 0 || !secretjs || loading}
+          disabled={
+            Object.keys(tokens).length === 0 ||
+            !secretjs ||
+            loading ||
+            viewingKeyRef.current.value === ""
+          }
           onClick={async () => {
             setLoading(true);
             const numOfMsgs = selectedTokens.size;
