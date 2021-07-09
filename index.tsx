@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import {
   Button,
@@ -9,9 +9,10 @@ import {
   makeStyles,
   createStyles,
   Theme,
+  TextField,
 } from "@material-ui/core";
 import { Token, tokenList as localTokens } from "./tokens";
-import { SigningCosmWasmClient } from "secretjs";
+import { BroadcastMode, SigningCosmWasmClient } from "secretjs";
 import { StdFee } from "secretjs/types/types";
 import { Window as KeplrWindow } from "@keplr-wallet/types";
 declare global {
@@ -54,6 +55,7 @@ function App() {
   const [isAllSelected, setIsAllSelected] = useState<boolean>(false);
   // const [myAddress, setMyAddress] = useState<string>(null);
   const [secretjs, setSecretjs] = useState<SigningCosmWasmClient>(null);
+  const viewingKeyRef = useRef<{ value: string }>({ value: "" });
 
   useEffect(() => {
     const setupKeplr = async () => {
@@ -69,7 +71,9 @@ function App() {
         myAddress,
         //@ts-ignore
         keplrOfflineSigner,
-        window.getEnigmaUtils(chainId)
+        window.getEnigmaUtils(chainId),
+        null,
+        BroadcastMode.Sync
       );
 
       // setMyAddress(myAddress);
@@ -121,7 +125,7 @@ function App() {
         }
 
         tokens[t.address] = Object.assign({}, t, {
-          logo: `${window.location.href}/${t.logo}`,
+          logo: `${window.location.origin}/${t.logo}`,
         });
       }
 
@@ -162,6 +166,7 @@ function App() {
           alignItems: "center",
         }}
       >
+        <TextField label="Viewing Key" inputRef={viewingKeyRef} />
         <Button
           variant="contained"
           color="primary"
@@ -183,16 +188,38 @@ function App() {
               gasPerMsg = 58_000;
             }
 
-            console.log(gasPerMsg, numOfMsgs);
             try {
-              await secretjs.multiExecute(
+              const { transactionHash } = await secretjs.multiExecute(
                 Array.from(selectedTokens).map((contractAddress) => ({
                   contractAddress,
-                  handleMsg: { set_viewing_key: { key: "banana" } },
+                  contractCodeHash: tokens[contractAddress].codeHash,
+                  handleMsg: {
+                    set_viewing_key: { key: viewingKeyRef.current.value },
+                  },
                 })),
                 "",
                 getFeeForExecute(numOfMsgs * gasPerMsg)
               );
+
+              await new Promise((accept, reject) => {
+                const interval = setInterval(async () => {
+                  try {
+                    const tx = await secretjs.restClient.txById(
+                      transactionHash,
+                      false
+                    );
+                    accept(tx);
+                    clearInterval(interval);
+                  } catch (error) {
+                    console.error(error);
+                  }
+                }, 5000);
+              });
+
+              viewingKeyRef.current.value = "";
+            } catch (e) {
+              console.error(`Error: ${e.message}`);
+              alert(`Error: ${e.message}`);
             } finally {
               setLoading(false);
             }

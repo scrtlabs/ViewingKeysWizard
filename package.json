@@ -1,4 +1,6 @@
 {
+  "name": "viewing-keys-wizard",
+  "description": "An awesome app to do awesome things",
   "scripts": {
     "start": "parcel serve index.html",
     "build": "parcel build index.html"
@@ -8,7 +10,7 @@
     "@material-ui/icons": "4.11.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "secretjs": "0.14.2"
+    "secretjs": "0.15.0"
   },
   "devDependencies": {
     "@keplr-wallet/types": "0.8.11-rc.0",
@@ -16,24 +18,6 @@
     "@types/react": "17.0.13",
     "@types/react-dom": "17.0.8",
     "parcel": "2.0.0-nightly.746",
-    "parcel-config-pwa-manifest": "0.0.9",
     "parcel-reporter-static-files-copy": "1.3.0"
-  },
-  "name": "viewing-keys-wizard",
-  "description": "An awesome app to do awesome things",
-  "pwaManifest": {
-    "name": "Viewing Keys Wizard",
-    "shortName": "VK Wizard",
-    "startURL": "./offline",
-    "theme": "#add8e6",
-    "generateIconOptions": {
-      "baseIcon": "./favicon.svg",
-      "sizes": [
-        192,
-        384,
-        512
-      ],
-      "genFavicons": true
-    }
   }
 }
