@@ -10,6 +10,7 @@ import {
   createStyles,
   Theme,
   TextField,
+  Badge,
 } from "@material-ui/core";
 import { Token, tokenList as localTokens } from "./tokens";
 import { BroadcastMode, SigningCosmWasmClient } from "secretjs";
@@ -31,6 +32,15 @@ const useStyles = makeStyles((theme: Theme) =>
       width: theme.spacing(2.8),
       height: theme.spacing(2.8),
       boxShadow: "rgba(0, 0, 0, 0.1) 0px 6px 10px",
+    },
+    smallAvatar: {
+      width: theme.spacing(1.5),
+      height: theme.spacing(1.5),
+      boxShadow: "rgba(0, 0, 0, 0.1) 0px 6px 10px",
+    },
+    customBadge: {
+      backgroundColor: "transparent",
+      color: "white",
     },
   })
 );
@@ -361,6 +371,56 @@ function TokenCheckBox({
       {symbol.length > 0 ? `${name} (${symbol})` : name}
     </div>
   );
+  if (type === "ETH") {
+    label = (
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <span style={{ marginRight: "0.3em" }}>
+          <Badge
+            className={classes.customBadge}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "right",
+            }}
+            badgeContent={
+              <Avatar
+                alt={name}
+                src={window.location.origin + "/eth.png"}
+                className={classes.smallAvatar}
+              />
+            }
+          >
+            <Avatar alt={name} src={logo} className={classes.avatar} />
+          </Badge>
+        </span>
+        {symbol.length > 0 ? `${name} (${symbol})` : name}
+      </div>
+    );
+  } else if (type === "BSC") {
+    label = (
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <span style={{ marginRight: "0.3em" }}>
+          <Badge
+            className={classes.customBadge}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "right",
+            }}
+            badgeContent={
+              <Avatar
+                alt={name}
+                src={window.location.origin + "/binance-coin-bnb-logo.svg"}
+                className={classes.smallAvatar}
+              />
+            }
+          >
+            <Avatar alt={name} src={logo} className={classes.avatar} />
+          </Badge>
+        </span>
+        {symbol.length > 0 ? `${name} (${symbol})` : name}
+      </div>
+    );
+  }
+
   if (type == "LP") {
     const [logo1, logo2] = JSON.parse(logo) as string[];
 

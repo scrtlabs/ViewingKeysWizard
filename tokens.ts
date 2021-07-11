@@ -341,7 +341,7 @@ export const tokenList: Token[] = [
       "d0db7128b8697419ad915c9fa2c2b2da462634ab95cbb3ca187564a1275561cf",
     name: "Binance Coin",
     symbol: "BNB(BSC)",
-    logo: "binance-coin-bnb-logo.svg",
+    logo: "bnb.png",
     type: "BSC",
   },
   {
@@ -350,7 +350,7 @@ export const tokenList: Token[] = [
       "d0db7128b8697419ad915c9fa2c2b2da462634ab95cbb3ca187564a1275561cf",
     name: "Binance BUSD",
     symbol: "BUSD(BSC)",
-    logo: "binance-usd-busd-logo.svg",
+    logo: "busd.png",
     type: "BSC",
   },
   {
@@ -368,7 +368,7 @@ export const tokenList: Token[] = [
       "d0db7128b8697419ad915c9fa2c2b2da462634ab95cbb3ca187564a1275561cf",
     name: "Binance XRP",
     symbol: "XRP(BSC)",
-    logo: "xrp-xrp-logo.svg",
+    logo: "xrp.png",
     type: "BSC",
   },
   {
@@ -377,7 +377,7 @@ export const tokenList: Token[] = [
       "d0db7128b8697419ad915c9fa2c2b2da462634ab95cbb3ca187564a1275561cf",
     name: "Binance USDT",
     symbol: "USDT(BSC)",
-    logo: "tether-usdt-logo.svg",
+    logo: "0xdac17f958d2ee523a2206206994597c13d831ec7.png",
     type: "BSC",
   },
   {
@@ -386,7 +386,7 @@ export const tokenList: Token[] = [
       "d0db7128b8697419ad915c9fa2c2b2da462634ab95cbb3ca187564a1275561cf",
     name: "Binance Cardano",
     symbol: "ADA(BSC)",
-    logo: "cardano-ada-logo.svg",
+    logo: "ada.png",
     type: "BSC",
   },
   {
@@ -395,7 +395,7 @@ export const tokenList: Token[] = [
       "d0db7128b8697419ad915c9fa2c2b2da462634ab95cbb3ca187564a1275561cf",
     name: "Binance Dogecoin",
     symbol: "DOGE(BSC)",
-    logo: "dogecoin-doge-logo.svg",
+    logo: "doge.png",
     type: "BSC",
   },
   {
@@ -404,7 +404,7 @@ export const tokenList: Token[] = [
       "d0db7128b8697419ad915c9fa2c2b2da462634ab95cbb3ca187564a1275561cf",
     name: "Binance Polkadot",
     symbol: "DOT(BSC)",
-    logo: "polkadot-new-dot-logo.svg",
+    logo: "dot.png",
     type: "BSC",
   },
   {
@@ -413,7 +413,7 @@ export const tokenList: Token[] = [
       "d0db7128b8697419ad915c9fa2c2b2da462634ab95cbb3ca187564a1275561cf",
     name: "Binance USDC",
     symbol: "USDC(BSC)",
-    logo: "usd-coin-usdc-logo.svg",
+    logo: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png",
     type: "BSC",
   },
   {
@@ -422,7 +422,7 @@ export const tokenList: Token[] = [
       "d0db7128b8697419ad915c9fa2c2b2da462634ab95cbb3ca187564a1275561cf",
     name: "Binance Bitcoin Cash",
     symbol: "BCH(BSC)",
-    logo: "bitcoin-cash-bch-logo.svg",
+    logo: "bch.png",
     type: "BSC",
   },
   {
@@ -431,7 +431,7 @@ export const tokenList: Token[] = [
       "d0db7128b8697419ad915c9fa2c2b2da462634ab95cbb3ca187564a1275561cf",
     name: "Binance Litecoin",
     symbol: "LTC(BSC)",
-    logo: "litecoin-ltc-logo.svg",
+    logo: "ltc.png",
     type: "BSC",
   },
   {
@@ -449,7 +449,7 @@ export const tokenList: Token[] = [
       "d0db7128b8697419ad915c9fa2c2b2da462634ab95cbb3ca187564a1275561cf",
     name: "Binance Tron",
     symbol: "TRX(BSC)",
-    logo: "tron-trx-logo.svg",
+    logo: "trx.png",
     type: "BSC",
   },
   {
@@ -458,7 +458,7 @@ export const tokenList: Token[] = [
       "d0db7128b8697419ad915c9fa2c2b2da462634ab95cbb3ca187564a1275561cf",
     name: "PancakeSwap",
     symbol: "CAKE",
-    logo: "pancakeswap-cake-logo.svg",
+    logo: "cake.png",
     type: "BSC",
   },
   {
@@ -467,7 +467,7 @@ export const tokenList: Token[] = [
       "d0db7128b8697419ad915c9fa2c2b2da462634ab95cbb3ca187564a1275561cf",
     name: "Bakery Swap",
     symbol: "BAKE",
-    logo: "bakerytoken-bake-logo.svg",
+    logo: "bake.png",
     type: "BSC",
   },
   {
@@ -476,7 +476,7 @@ export const tokenList: Token[] = [
       "d0db7128b8697419ad915c9fa2c2b2da462634ab95cbb3ca187564a1275561cf",
     name: "Venus",
     symbol: "XVS",
-    logo: "venus-xvs-logo.svg",
+    logo: "xvs.png",
     type: "BSC",
   },
   {
@@ -485,7 +485,7 @@ export const tokenList: Token[] = [
       "d0db7128b8697419ad915c9fa2c2b2da462634ab95cbb3ca187564a1275561cf",
     name: "Linear",
     symbol: "LINA",
-    logo: "logo-crypto-linear-buildr.svg",
+    logo: "lina.png",
     type: "BSC",
   },
   {
@@ -494,7 +494,7 @@ export const tokenList: Token[] = [
       "d0db7128b8697419ad915c9fa2c2b2da462634ab95cbb3ca187564a1275561cf",
     name: "Refinable",
     symbol: "FINE",
-    logo: "refinable-fine-logo.png",
+    logo: "fine.png",
     type: "BSC",
   },
   {
@@ -503,7 +503,7 @@ export const tokenList: Token[] = [
       "d0db7128b8697419ad915c9fa2c2b2da462634ab95cbb3ca187564a1275561cf",
     name: "Bunny",
     symbol: "BUNNY",
-    logo: "token-bunny.svg",
+    logo: "bunny.png",
     type: "BSC",
   },
   {
@@ -1442,6 +1442,159 @@ export const tokenList: Token[] = [
   // symbol is unused
   // logo will be taken from the assets
   {
+    address: "secret1097s3zmexc4mk9s2rdv3gs6r76x9dn9rmv86c7",
+    name: "secret1709qy2smh0r7jjac0qxfgjsqn7zpvgthsdz025>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
+    codeHash:
+      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
+    type: "REWARDS",
+    symbol: "",
+    logo: "",
+  },
+  {
+    address: "secret1a3qvtsxd3fu5spkrscp5wwz3gtjmf50fgruezy",
+    name: "secret1xxvqanj85m7dppplku5782cn9hl8askqd329sv>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
+    codeHash:
+      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
+    type: "REWARDS",
+    symbol: "",
+    logo: "",
+  },
+  {
+    address: "secret1zysw570u5edsfdp44q80tm5zhdllawgh603ezy",
+    name: "secret1cgd6gcc4uyrxmzsmk4tpeta8auzcgwk4n5ngrx>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
+    codeHash:
+      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
+    type: "REWARDS",
+    symbol: "",
+    logo: "",
+  },
+  {
+    address: "secret1mznq6qwlj3ryzfpetfgydffef7w40tmlkhufcl",
+    name: "secret1nvqrwwr9942gn89nk44nf2nku6gr7u8tsg6z45>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
+    codeHash:
+      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
+    type: "REWARDS",
+    symbol: "",
+    logo: "",
+  },
+  {
+    address: "secret1y9z3ck449a46r4ku7klkhdxnlq07zh4shc7cuy",
+    name: "secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
+    codeHash:
+      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
+    type: "REWARDS",
+    symbol: "",
+    logo: "",
+  },
+  {
+    address: "secret146dg4c7jt5y37nw94swp6sahleshefxhrerpqm",
+    name: "secret17gja535zp09t9mlzzxndqqg4gzvhg0vsklhd54>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
+    codeHash:
+      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
+    type: "REWARDS",
+    symbol: "",
+    logo: "",
+  },
+  {
+    address: "secret1mlv3av6nlqt3fmzmtw0pnehsff2dxrzxq98225",
+    name: "secret1rldr66767a4gz3adkq2vgndwgnxlfqqae4fgen>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
+    codeHash:
+      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
+    type: "REWARDS",
+    symbol: "",
+    logo: "",
+  },
+  {
+    address: "secret16wup0xc9m5ndgvna3p523xntk7favp353xa79v",
+    name: "secret1kg24nc3v4wm4vzufup8fvmvffxtm8425uwfvqd>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
+    codeHash:
+      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
+    type: "REWARDS",
+    symbol: "",
+    logo: "",
+  },
+  {
+    address: "secret1rxu6rksvyaxksnhqszv06d3n92y0prgr2ghj5m",
+    name: "secret102gfpp4hgvytxlxsz8hnjy7uqndmhau3jkzps8>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
+    codeHash:
+      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
+    type: "REWARDS",
+    symbol: "",
+    logo: "",
+  },
+  {
+    address: "secret13gdhmsf5j9jjva6d924hhdjrngf8092tv5frp8",
+    name: "secret1m8msletvevuj2vsl8rcvqq9esflxmmnd2lf7yd>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
+    codeHash:
+      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
+    type: "REWARDS",
+    symbol: "",
+    logo: "",
+  },
+  {
+    address: "secret1zpz7x64lm625k0rxgk6z0drffz5hwwsnnwaxkf",
+    name: "secret1kduh3vlszmg3snq36k6s8l4v8s26z47m3q9haa>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
+    codeHash:
+      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
+    type: "REWARDS",
+    symbol: "",
+    logo: "",
+  },
+  {
+    address: "secret1d5qkesgrhhpcvkaephrs5ws7nvankrkgf32un5",
+    name: "secret1he6rzcet6jcwryu544a5zkkadxee4sk0umu703>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
+    codeHash:
+      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
+    type: "REWARDS",
+    symbol: "",
+    logo: "",
+  },
+  {
+    address: "secret1fc3w26lv0t2q8j2u0rrc7cf5mycde9sqg8jjf6",
+    name: "secret17w0wjempgtt8ngn59y7cwlae02kve5jzar4xmw>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
+    codeHash:
+      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
+    type: "REWARDS",
+    symbol: "",
+    logo: "",
+  },
+  {
+    address: "secret1358gj5s2ys859tuue6v43w98jzavfnh8d8gz8y",
+    name: "secret1gewshds6yhyry842vnxl9q6krezaatep6rxyt2>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
+    codeHash:
+      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
+    type: "REWARDS",
+    symbol: "",
+    logo: "",
+  },
+  {
+    address: "secret1le6m83ry8uftsrft8s7lz6k36yvqlkp43qagpr",
+    name: "secret1le3d0fgkrzd433fdnetdqslfxmugvg0tuaqspe>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
+    codeHash:
+      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
+    type: "REWARDS",
+    symbol: "",
+    logo: "",
+  },
+  {
+    address: "secret1nd59d30xz7yyv2gdq7x8hkmx7wghde8nkt7zqa",
+    name: "secret1mc656zt6g37u2ufqp2tw8kaj5jxpujylfzw8yw>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
+    codeHash:
+      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
+    type: "REWARDS",
+    symbol: "",
+    logo: "",
+  },
+  {
+    address: "secret1c0qu9mj4y7ch7aj4sect5jx2pyycuzgeg65jxv",
+    name: "secret1c9ky0x6fj5gc0qw6tedxsng50mjl3szn7xhjeu>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
+    codeHash:
+      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
+    type: "REWARDS",
+    symbol: "",
+    logo: "",
+  },
+  {
     address: "secret1q6y7wz6pev80aadyjsejk5xr2yj4mkrj40zrvn",
     name: "secret1wuzzjsdhthpvuyeeyhfq2ftsn3mvwf9rxy6ykw>secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek",
     codeHash:
@@ -1725,159 +1878,6 @@ export const tokenList: Token[] = [
     name: "secret13j9sg2lpmwl92taac4lr3xqhslnm2yjm4nsmzl>secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek",
     codeHash:
       "a485d39cf7b81fc3e57ad8c81f08803195ea51475a8df27974763ff25d09ce82",
-    type: "REWARDS",
-    symbol: "",
-    logo: "",
-  },
-  {
-    address: "secret1097s3zmexc4mk9s2rdv3gs6r76x9dn9rmv86c7",
-    name: "secret1709qy2smh0r7jjac0qxfgjsqn7zpvgthsdz025>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
-    codeHash:
-      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
-    type: "REWARDS",
-    symbol: "",
-    logo: "",
-  },
-  {
-    address: "secret1a3qvtsxd3fu5spkrscp5wwz3gtjmf50fgruezy",
-    name: "secret1xxvqanj85m7dppplku5782cn9hl8askqd329sv>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
-    codeHash:
-      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
-    type: "REWARDS",
-    symbol: "",
-    logo: "",
-  },
-  {
-    address: "secret1zysw570u5edsfdp44q80tm5zhdllawgh603ezy",
-    name: "secret1cgd6gcc4uyrxmzsmk4tpeta8auzcgwk4n5ngrx>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
-    codeHash:
-      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
-    type: "REWARDS",
-    symbol: "",
-    logo: "",
-  },
-  {
-    address: "secret1mznq6qwlj3ryzfpetfgydffef7w40tmlkhufcl",
-    name: "secret1nvqrwwr9942gn89nk44nf2nku6gr7u8tsg6z45>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
-    codeHash:
-      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
-    type: "REWARDS",
-    symbol: "",
-    logo: "",
-  },
-  {
-    address: "secret1y9z3ck449a46r4ku7klkhdxnlq07zh4shc7cuy",
-    name: "secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
-    codeHash:
-      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
-    type: "REWARDS",
-    symbol: "",
-    logo: "",
-  },
-  {
-    address: "secret146dg4c7jt5y37nw94swp6sahleshefxhrerpqm",
-    name: "secret17gja535zp09t9mlzzxndqqg4gzvhg0vsklhd54>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
-    codeHash:
-      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
-    type: "REWARDS",
-    symbol: "",
-    logo: "",
-  },
-  {
-    address: "secret1mlv3av6nlqt3fmzmtw0pnehsff2dxrzxq98225",
-    name: "secret1rldr66767a4gz3adkq2vgndwgnxlfqqae4fgen>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
-    codeHash:
-      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
-    type: "REWARDS",
-    symbol: "",
-    logo: "",
-  },
-  {
-    address: "secret16wup0xc9m5ndgvna3p523xntk7favp353xa79v",
-    name: "secret1kg24nc3v4wm4vzufup8fvmvffxtm8425uwfvqd>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
-    codeHash:
-      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
-    type: "REWARDS",
-    symbol: "",
-    logo: "",
-  },
-  {
-    address: "secret1rxu6rksvyaxksnhqszv06d3n92y0prgr2ghj5m",
-    name: "secret102gfpp4hgvytxlxsz8hnjy7uqndmhau3jkzps8>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
-    codeHash:
-      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
-    type: "REWARDS",
-    symbol: "",
-    logo: "",
-  },
-  {
-    address: "secret13gdhmsf5j9jjva6d924hhdjrngf8092tv5frp8",
-    name: "secret1m8msletvevuj2vsl8rcvqq9esflxmmnd2lf7yd>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
-    codeHash:
-      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
-    type: "REWARDS",
-    symbol: "",
-    logo: "",
-  },
-  {
-    address: "secret1zpz7x64lm625k0rxgk6z0drffz5hwwsnnwaxkf",
-    name: "secret1kduh3vlszmg3snq36k6s8l4v8s26z47m3q9haa>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
-    codeHash:
-      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
-    type: "REWARDS",
-    symbol: "",
-    logo: "",
-  },
-  {
-    address: "secret1d5qkesgrhhpcvkaephrs5ws7nvankrkgf32un5",
-    name: "secret1he6rzcet6jcwryu544a5zkkadxee4sk0umu703>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
-    codeHash:
-      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
-    type: "REWARDS",
-    symbol: "",
-    logo: "",
-  },
-  {
-    address: "secret1fc3w26lv0t2q8j2u0rrc7cf5mycde9sqg8jjf6",
-    name: "secret17w0wjempgtt8ngn59y7cwlae02kve5jzar4xmw>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
-    codeHash:
-      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
-    type: "REWARDS",
-    symbol: "",
-    logo: "",
-  },
-  {
-    address: "secret1358gj5s2ys859tuue6v43w98jzavfnh8d8gz8y",
-    name: "secret1gewshds6yhyry842vnxl9q6krezaatep6rxyt2>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
-    codeHash:
-      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
-    type: "REWARDS",
-    symbol: "",
-    logo: "",
-  },
-  {
-    address: "secret1le6m83ry8uftsrft8s7lz6k36yvqlkp43qagpr",
-    name: "secret1le3d0fgkrzd433fdnetdqslfxmugvg0tuaqspe>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
-    codeHash:
-      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
-    type: "REWARDS",
-    symbol: "",
-    logo: "",
-  },
-  {
-    address: "secret1nd59d30xz7yyv2gdq7x8hkmx7wghde8nkt7zqa",
-    name: "secret1mc656zt6g37u2ufqp2tw8kaj5jxpujylfzw8yw>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
-    codeHash:
-      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
-    type: "REWARDS",
-    symbol: "",
-    logo: "",
-  },
-  {
-    address: "secret1c0qu9mj4y7ch7aj4sect5jx2pyycuzgeg65jxv",
-    name: "secret1c9ky0x6fj5gc0qw6tedxsng50mjl3szn7xhjeu>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
-    codeHash:
-      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
     type: "REWARDS",
     symbol: "",
     logo: "",
