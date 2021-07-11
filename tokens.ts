@@ -1444,7 +1444,8 @@ export const tokenList: Token[] = [
   {
     address: "secret1q6y7wz6pev80aadyjsejk5xr2yj4mkrj40zrvn",
     name: "secret1wuzzjsdhthpvuyeeyhfq2ftsn3mvwf9rxy6ykw>secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek",
-    codeHash: "",
+    codeHash:
+      "a912ef76c5cff0e85b3bd99a49a46dd1278a8db3ca47d1d8b1dfd12b3f088bf7",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1452,7 +1453,8 @@ export const tokenList: Token[] = [
   {
     address: "secret1047wugr9wsxuapxgtyr407uy68cw4d6k6tkf8d",
     name: "secret15grq8y54tvc24j8hf8chunsdcr84fd3d30fvqv>secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek",
-    codeHash: "",
+    codeHash:
+      "a912ef76c5cff0e85b3bd99a49a46dd1278a8db3ca47d1d8b1dfd12b3f088bf7",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1460,7 +1462,8 @@ export const tokenList: Token[] = [
   {
     address: "secret1kma59tlgk66hwpxvjlcc42gys0sz9jc96v4jak",
     name: "secret18wpjn83dayu4meu6wnn29khfkwdxs7kyrz9c8f>secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek",
-    codeHash: "",
+    codeHash:
+      "882eb85f1c2fe1865a0f5ee37f7575784922562d4f2c95f8c7c25278afb065dd",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1468,7 +1471,8 @@ export const tokenList: Token[] = [
   {
     address: "secret19y50xzywrz98g6ljxp43fd4q47sl40gkcpm03n",
     name: "secret1xcrf2vvxcz8dhtgzgsd0zmzlf9g320ea2rhdjw>secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek",
-    codeHash: "",
+    codeHash:
+      "a912ef76c5cff0e85b3bd99a49a46dd1278a8db3ca47d1d8b1dfd12b3f088bf7",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1476,7 +1480,8 @@ export const tokenList: Token[] = [
   {
     address: "secret17negel9x6nsanvjwjy0at5ny66zjyppesytk5n",
     name: "secret12sjaw9wutn39cc5wqxfmkypm4n7tcerwfpvmps>secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek",
-    codeHash: "",
+    codeHash:
+      "a912ef76c5cff0e85b3bd99a49a46dd1278a8db3ca47d1d8b1dfd12b3f088bf7",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1484,7 +1489,8 @@ export const tokenList: Token[] = [
   {
     address: "secret16q4sz5s4dpzdywrdcnfe8pvucuegrm6m9ksdtd",
     name: "secret1vnjck36ld45apf8u4fedxd5zy7f5l92y3w5qwq>secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek",
-    codeHash: "",
+    codeHash:
+      "a912ef76c5cff0e85b3bd99a49a46dd1278a8db3ca47d1d8b1dfd12b3f088bf7",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1492,7 +1498,8 @@ export const tokenList: Token[] = [
   {
     address: "secret1ayl9jv7atks34l0vx9n7y6rl60t32ptycac909",
     name: "secret1g7jfnxmxkjgqdts9wlmn238mrzxz5r92zwqv4a>secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek",
-    codeHash: "",
+    codeHash:
+      "a485d39cf7b81fc3e57ad8c81f08803195ea51475a8df27974763ff25d09ce82",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1500,7 +1507,8 @@ export const tokenList: Token[] = [
   {
     address: "secret1qgaxregzkc6z9wmf4rgp5frj9els95zx3cs93u",
     name: "secret1ds8850j99cf5h3hygy25f0zzs6r6s7vsgfs8te>secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek",
-    codeHash: "",
+    codeHash:
+      "a912ef76c5cff0e85b3bd99a49a46dd1278a8db3ca47d1d8b1dfd12b3f088bf7",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1508,7 +1516,8 @@ export const tokenList: Token[] = [
   {
     address: "secret12s2260yswdhry8lljp2m83cvudu0zc67h3t8st",
     name: "secret1yxwnyk8htvvq25x2z87yj0r5tqpev452fk6h5h>secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek",
-    codeHash: "",
+    codeHash:
+      "a912ef76c5cff0e85b3bd99a49a46dd1278a8db3ca47d1d8b1dfd12b3f088bf7",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1516,7 +1525,8 @@ export const tokenList: Token[] = [
   {
     address: "secret1qgfqajzarljueaglzar8tdpgjkmdnr9cqgj9xl",
     name: "secret1szqzgpl9w42kekla57609y6dq2r39nf0ncx400>secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek",
-    codeHash: "",
+    codeHash:
+      "a912ef76c5cff0e85b3bd99a49a46dd1278a8db3ca47d1d8b1dfd12b3f088bf7",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1524,7 +1534,8 @@ export const tokenList: Token[] = [
   {
     address: "secret1fcvxek0quxhsfvh7xc80e7332hhwn2zamvtqcw",
     name: "secret15c5ftq4rq7xq3tml4nphv2fvz3u7kg73a583qp>secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek",
-    codeHash: "",
+    codeHash:
+      "a912ef76c5cff0e85b3bd99a49a46dd1278a8db3ca47d1d8b1dfd12b3f088bf7",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1532,7 +1543,8 @@ export const tokenList: Token[] = [
   {
     address: "secret1xdvsf5mah8yhd0ndk2khktkpaqqtat6jwyfecz",
     name: "secret1ryh523y4e3233hphrkdslegszqz8syjfpthcpp>secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek",
-    codeHash: "",
+    codeHash:
+      "a912ef76c5cff0e85b3bd99a49a46dd1278a8db3ca47d1d8b1dfd12b3f088bf7",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1540,7 +1552,8 @@ export const tokenList: Token[] = [
   {
     address: "secret1hf6tvptq8c5r86dvs037fhmm6m9mclfl5jnhdu",
     name: "secret1rs389ss2jch4xjmxv5guru86s8y839nmjsrm5d>secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek",
-    codeHash: "",
+    codeHash:
+      "a912ef76c5cff0e85b3bd99a49a46dd1278a8db3ca47d1d8b1dfd12b3f088bf7",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1548,7 +1561,8 @@ export const tokenList: Token[] = [
   {
     address: "secret1gfxwjj5evt9p0wnarheh59shz9kqf7rjf3hjnd",
     name: "secret1p4zvqgxggrrk435nj94p6la2g4xd0rwssgzpsr>secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek",
-    codeHash: "",
+    codeHash:
+      "a912ef76c5cff0e85b3bd99a49a46dd1278a8db3ca47d1d8b1dfd12b3f088bf7",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1556,7 +1570,8 @@ export const tokenList: Token[] = [
   {
     address: "secret1q762ytweqslmvsryggnunmry6ahhlwek745rau",
     name: "secret1ezg8weaamcr99848qhkqcf2ap5xz7nwe3cy22x>secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek",
-    codeHash: "",
+    codeHash:
+      "a912ef76c5cff0e85b3bd99a49a46dd1278a8db3ca47d1d8b1dfd12b3f088bf7",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1564,7 +1579,8 @@ export const tokenList: Token[] = [
   {
     address: "secret13aukj7v7fg8xzpm343s94vp5x244qk8fxjws0j",
     name: "secret1tqltnm8f53xnprmnlurczf6sr86a4mgztafxzp>secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek",
-    codeHash: "",
+    codeHash:
+      "a912ef76c5cff0e85b3bd99a49a46dd1278a8db3ca47d1d8b1dfd12b3f088bf7",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1572,7 +1588,8 @@ export const tokenList: Token[] = [
   {
     address: "secret1lsvqk5h647y4qfqyn2lxacdetry22txg9mnfzd",
     name: "secret19uje5xy80rm6rfu03df2xea532mcalw9hv8vf9>secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek",
-    codeHash: "",
+    codeHash:
+      "a912ef76c5cff0e85b3bd99a49a46dd1278a8db3ca47d1d8b1dfd12b3f088bf7",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1580,7 +1597,8 @@ export const tokenList: Token[] = [
   {
     address: "secret1p4a6pr76r4p2sn324ek2ayagr7qvrchwc0radv",
     name: "secret1vcm525c3gd9g5ggfqg7d20xcjnmcc8shh902un>secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek",
-    codeHash: "",
+    codeHash:
+      "a912ef76c5cff0e85b3bd99a49a46dd1278a8db3ca47d1d8b1dfd12b3f088bf7",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1588,7 +1606,8 @@ export const tokenList: Token[] = [
   {
     address: "secret1sugd87x8ul2jxsqpm7gazhgz6tf9zfwmfwk095",
     name: "secret1h6z05y90gwm4sqxzhz4pkyp36cna9xtp7q0urv>secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek",
-    codeHash: "",
+    codeHash:
+      "882eb85f1c2fe1865a0f5ee37f7575784922562d4f2c95f8c7c25278afb065dd",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1596,7 +1615,8 @@ export const tokenList: Token[] = [
   {
     address: "secret1q8ddhqvsgrwsrdrnspja70cgeyjhw7kymyxzn5",
     name: "secret1ukn328k6y3th5nw9z00p8lvk5s7m05cr9p06cu>secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek",
-    codeHash: "",
+    codeHash:
+      "a912ef76c5cff0e85b3bd99a49a46dd1278a8db3ca47d1d8b1dfd12b3f088bf7",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1604,7 +1624,8 @@ export const tokenList: Token[] = [
   {
     address: "secret1r8nge6cwweezye4n750gpeqkgaqkazax598gpg",
     name: "secret1d673zrls7z5sd7nzqavqs4uzahnzqxq9zk7e62>secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek",
-    codeHash: "",
+    codeHash:
+      "a912ef76c5cff0e85b3bd99a49a46dd1278a8db3ca47d1d8b1dfd12b3f088bf7",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1612,7 +1633,8 @@ export const tokenList: Token[] = [
   {
     address: "secret12u4cjgput2uvdv4y9h5h7rs9grxdx582wlvxgj",
     name: "secret1el5uj9ns9sty682dem033pt50xsv5mklmsvy24>secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek",
-    codeHash: "",
+    codeHash:
+      "a912ef76c5cff0e85b3bd99a49a46dd1278a8db3ca47d1d8b1dfd12b3f088bf7",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1620,7 +1642,8 @@ export const tokenList: Token[] = [
   {
     address: "secret15g78xxtmcuc3y77cj89e2dwu9tg3up54vns9uf",
     name: "secret19g8edr6pa2s7ywuc3wys9sgk76kj2th7xtksey>secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek",
-    codeHash: "",
+    codeHash:
+      "a912ef76c5cff0e85b3bd99a49a46dd1278a8db3ca47d1d8b1dfd12b3f088bf7",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1628,7 +1651,8 @@ export const tokenList: Token[] = [
   {
     address: "secret1uc0k4rwwzccz9a4an773lyuun4l8k4qpvz3k99",
     name: "secret1nq7resltu9870ar7vdu2suhzplx84800jfj2ja>secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek",
-    codeHash: "",
+    codeHash:
+      "a912ef76c5cff0e85b3bd99a49a46dd1278a8db3ca47d1d8b1dfd12b3f088bf7",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1636,7 +1660,8 @@ export const tokenList: Token[] = [
   {
     address: "secret1snr63w7m44ay9pl9sdkppmyqjxqauh7t5gvms7",
     name: "secret120vtzu6xjprp6pq0r8wprf3jlp86xr8uu0nlc5>secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek",
-    codeHash: "",
+    codeHash:
+      "a912ef76c5cff0e85b3bd99a49a46dd1278a8db3ca47d1d8b1dfd12b3f088bf7",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1644,7 +1669,8 @@ export const tokenList: Token[] = [
   {
     address: "secret1f9pn0vh8dltxhhpd5qe76ddw3qgl8prufq65yv",
     name: "secret1wp8aj7tja30cek5wf5jwcv0xalw8vmdasfv2lh>secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek",
-    codeHash: "",
+    codeHash:
+      "a912ef76c5cff0e85b3bd99a49a46dd1278a8db3ca47d1d8b1dfd12b3f088bf7",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1652,7 +1678,8 @@ export const tokenList: Token[] = [
   {
     address: "secret18ht734kgefpxk49nju3ld8qzzk8g4wcx7tm9ys",
     name: "secret178t2cp33hrtlthphmt9lpd25qet349mg4kcega>secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek",
-    codeHash: "",
+    codeHash:
+      "a912ef76c5cff0e85b3bd99a49a46dd1278a8db3ca47d1d8b1dfd12b3f088bf7",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1660,7 +1687,8 @@ export const tokenList: Token[] = [
   {
     address: "secret1ra9l5p04sc4pu8vc5djr3c9ds7npmwmzvsee32",
     name: "secret1jk0tw00vs23n8jwqdzrxtln6ww2a3k6em7s0p2>secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek",
-    codeHash: "",
+    codeHash:
+      "a912ef76c5cff0e85b3bd99a49a46dd1278a8db3ca47d1d8b1dfd12b3f088bf7",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1668,7 +1696,8 @@ export const tokenList: Token[] = [
   {
     address: "secret1e3kzrxjg5eyc8t9c4l0m5s4kj0ym4ku7dwj9ru",
     name: "secret1h0tn05w9cjtsz9stccq2xl5rha2fxl0n2d765t>secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek",
-    codeHash: "",
+    codeHash:
+      "a912ef76c5cff0e85b3bd99a49a46dd1278a8db3ca47d1d8b1dfd12b3f088bf7",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1676,7 +1705,8 @@ export const tokenList: Token[] = [
   {
     address: "secret16n5p4d0gsuj4yu5rcg25paflwcgvtdr0tlwtsa",
     name: "secret1pse3xfvv5pq5jw04wcaxhnhn7jqamfhcpm7j3t>secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek",
-    codeHash: "",
+    codeHash:
+      "a912ef76c5cff0e85b3bd99a49a46dd1278a8db3ca47d1d8b1dfd12b3f088bf7",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1684,7 +1714,8 @@ export const tokenList: Token[] = [
   {
     address: "secret1xkhzk4qa45gpytku2znd2y32j83cl4werlw6gg",
     name: "secret1s4fllut0e6vw0k3fxsg4fs6fm2ad6hn09zwgwv>secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek",
-    codeHash: "",
+    codeHash:
+      "a912ef76c5cff0e85b3bd99a49a46dd1278a8db3ca47d1d8b1dfd12b3f088bf7",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1692,7 +1723,8 @@ export const tokenList: Token[] = [
   {
     address: "secret1texzs8e40dc40m4phvswxt0e3l5ymmaptzukjz",
     name: "secret13j9sg2lpmwl92taac4lr3xqhslnm2yjm4nsmzl>secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek",
-    codeHash: "",
+    codeHash:
+      "a485d39cf7b81fc3e57ad8c81f08803195ea51475a8df27974763ff25d09ce82",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1700,7 +1732,8 @@ export const tokenList: Token[] = [
   {
     address: "secret1097s3zmexc4mk9s2rdv3gs6r76x9dn9rmv86c7",
     name: "secret1709qy2smh0r7jjac0qxfgjsqn7zpvgthsdz025>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
-    codeHash: "",
+    codeHash:
+      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1708,7 +1741,8 @@ export const tokenList: Token[] = [
   {
     address: "secret1a3qvtsxd3fu5spkrscp5wwz3gtjmf50fgruezy",
     name: "secret1xxvqanj85m7dppplku5782cn9hl8askqd329sv>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
-    codeHash: "",
+    codeHash:
+      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1716,7 +1750,8 @@ export const tokenList: Token[] = [
   {
     address: "secret1zysw570u5edsfdp44q80tm5zhdllawgh603ezy",
     name: "secret1cgd6gcc4uyrxmzsmk4tpeta8auzcgwk4n5ngrx>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
-    codeHash: "",
+    codeHash:
+      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1724,7 +1759,8 @@ export const tokenList: Token[] = [
   {
     address: "secret1mznq6qwlj3ryzfpetfgydffef7w40tmlkhufcl",
     name: "secret1nvqrwwr9942gn89nk44nf2nku6gr7u8tsg6z45>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
-    codeHash: "",
+    codeHash:
+      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1732,7 +1768,8 @@ export const tokenList: Token[] = [
   {
     address: "secret1y9z3ck449a46r4ku7klkhdxnlq07zh4shc7cuy",
     name: "secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
-    codeHash: "",
+    codeHash:
+      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1740,7 +1777,8 @@ export const tokenList: Token[] = [
   {
     address: "secret146dg4c7jt5y37nw94swp6sahleshefxhrerpqm",
     name: "secret17gja535zp09t9mlzzxndqqg4gzvhg0vsklhd54>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
-    codeHash: "",
+    codeHash:
+      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1748,7 +1786,8 @@ export const tokenList: Token[] = [
   {
     address: "secret1mlv3av6nlqt3fmzmtw0pnehsff2dxrzxq98225",
     name: "secret1rldr66767a4gz3adkq2vgndwgnxlfqqae4fgen>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
-    codeHash: "",
+    codeHash:
+      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1756,7 +1795,8 @@ export const tokenList: Token[] = [
   {
     address: "secret16wup0xc9m5ndgvna3p523xntk7favp353xa79v",
     name: "secret1kg24nc3v4wm4vzufup8fvmvffxtm8425uwfvqd>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
-    codeHash: "",
+    codeHash:
+      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1764,7 +1804,8 @@ export const tokenList: Token[] = [
   {
     address: "secret1rxu6rksvyaxksnhqszv06d3n92y0prgr2ghj5m",
     name: "secret102gfpp4hgvytxlxsz8hnjy7uqndmhau3jkzps8>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
-    codeHash: "",
+    codeHash:
+      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1772,7 +1813,8 @@ export const tokenList: Token[] = [
   {
     address: "secret13gdhmsf5j9jjva6d924hhdjrngf8092tv5frp8",
     name: "secret1m8msletvevuj2vsl8rcvqq9esflxmmnd2lf7yd>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
-    codeHash: "",
+    codeHash:
+      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1780,7 +1822,8 @@ export const tokenList: Token[] = [
   {
     address: "secret1zpz7x64lm625k0rxgk6z0drffz5hwwsnnwaxkf",
     name: "secret1kduh3vlszmg3snq36k6s8l4v8s26z47m3q9haa>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
-    codeHash: "",
+    codeHash:
+      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1788,7 +1831,8 @@ export const tokenList: Token[] = [
   {
     address: "secret1d5qkesgrhhpcvkaephrs5ws7nvankrkgf32un5",
     name: "secret1he6rzcet6jcwryu544a5zkkadxee4sk0umu703>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
-    codeHash: "",
+    codeHash:
+      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1796,7 +1840,8 @@ export const tokenList: Token[] = [
   {
     address: "secret1fc3w26lv0t2q8j2u0rrc7cf5mycde9sqg8jjf6",
     name: "secret17w0wjempgtt8ngn59y7cwlae02kve5jzar4xmw>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
-    codeHash: "",
+    codeHash:
+      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1804,7 +1849,8 @@ export const tokenList: Token[] = [
   {
     address: "secret1358gj5s2ys859tuue6v43w98jzavfnh8d8gz8y",
     name: "secret1gewshds6yhyry842vnxl9q6krezaatep6rxyt2>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
-    codeHash: "",
+    codeHash:
+      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1812,7 +1858,8 @@ export const tokenList: Token[] = [
   {
     address: "secret1le6m83ry8uftsrft8s7lz6k36yvqlkp43qagpr",
     name: "secret1le3d0fgkrzd433fdnetdqslfxmugvg0tuaqspe>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
-    codeHash: "",
+    codeHash:
+      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1820,7 +1867,8 @@ export const tokenList: Token[] = [
   {
     address: "secret1nd59d30xz7yyv2gdq7x8hkmx7wghde8nkt7zqa",
     name: "secret1mc656zt6g37u2ufqp2tw8kaj5jxpujylfzw8yw>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
-    codeHash: "",
+    codeHash:
+      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
     type: "REWARDS",
     symbol: "",
     logo: "",
@@ -1828,7 +1876,8 @@ export const tokenList: Token[] = [
   {
     address: "secret1c0qu9mj4y7ch7aj4sect5jx2pyycuzgeg65jxv",
     name: "secret1c9ky0x6fj5gc0qw6tedxsng50mjl3szn7xhjeu>secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
-    codeHash: "",
+    codeHash:
+      "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
     type: "REWARDS",
     symbol: "",
     logo: "",
