@@ -282,6 +282,7 @@ function App() {
             .filter((t) => tokens[t].type === "SECRET")
             .map((addr) => (
               <TokenCheckBox
+                key={addr}
                 token={tokens[addr]}
                 selectedTokens={selectedTokens}
                 handleCheckToken={handleCheckToken}
@@ -293,6 +294,7 @@ function App() {
             .filter((t) => tokens[t].type === "ETH")
             .map((addr) => (
               <TokenCheckBox
+                key={addr}
                 token={tokens[addr]}
                 selectedTokens={selectedTokens}
                 handleCheckToken={handleCheckToken}
@@ -304,6 +306,7 @@ function App() {
             .filter((t) => tokens[t].type === "BSC")
             .map((addr) => (
               <TokenCheckBox
+                key={addr}
                 token={tokens[addr]}
                 selectedTokens={selectedTokens}
                 handleCheckToken={handleCheckToken}
@@ -315,6 +318,7 @@ function App() {
             .filter((t) => tokens[t].type === "LP")
             .map((addr) => (
               <TokenCheckBox
+                key={addr}
                 token={tokens[addr]}
                 selectedTokens={selectedTokens}
                 handleCheckToken={handleCheckToken}
@@ -326,6 +330,7 @@ function App() {
             .filter((t) => tokens[t].type === "REWARDS")
             .map((addr) => (
               <TokenCheckBox
+                key={addr}
                 token={tokens[addr]}
                 selectedTokens={selectedTokens}
                 handleCheckToken={handleCheckToken}
@@ -463,7 +468,7 @@ function TokenCheckBox({
   }
 
   return (
-    <div key={address}>
+    <div>
       <FormControlLabel
         control={
           <Checkbox
