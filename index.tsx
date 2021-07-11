@@ -117,10 +117,32 @@ function App() {
           tokens[t.address] = {
             address: t.address,
             name: `LP ${tokens[asset1].symbol}-${tokens[asset2].symbol}`,
-            symbol: "",
+            symbol: `${tokens[asset1].symbol}-${tokens[asset2].symbol}`,
             logo: JSON.stringify([tokens[asset1].logo, tokens[asset2].logo]),
             type: "LP",
           } as Token;
+          continue;
+        } else if (t.type == "REWARDS") {
+          const [lock_token, rewards_token] = t.name.split(">");
+
+          if (!tokens[lock_token] || !tokens[rewards_token]) {
+            console.log(
+              `Skipping Rewards token ${t.address} because ${lock_token} or ${rewards_token} is unknown.`
+            );
+            continue;
+          }
+
+          tokens[t.address] = {
+            address: t.address,
+            name: `Rewards ${tokens[lock_token].symbol} ➜ ${tokens[rewards_token].symbol}`,
+            symbol: "",
+            logo: JSON.stringify([
+              tokens[lock_token].logo,
+              tokens[rewards_token].logo,
+            ]),
+            type: "REWARDS",
+          } as Token;
+
           continue;
         }
 
@@ -176,7 +198,7 @@ function App() {
           variant="contained"
           color="primary"
           disabled={
-            Object.keys(tokens).length === 0 ||
+            selectedTokens.size === 0 ||
             !secretjs ||
             loading ||
             viewingKeyRef.current.value === ""
@@ -299,6 +321,17 @@ function App() {
               />
             ))}
         </div>
+        <div>
+          {Object.keys(tokens)
+            .filter((t) => tokens[t].type === "REWARDS")
+            .map((addr) => (
+              <TokenCheckBox
+                token={tokens[addr]}
+                selectedTokens={selectedTokens}
+                handleCheckToken={handleCheckToken}
+              />
+            ))}
+        </div>
       </div>
     </>
   );
@@ -335,7 +368,7 @@ function TokenCheckBox({
       <span style={{ marginRight: "0.3em" }}>
         <Avatar alt={name} src={logo} className={classes.avatar} />
       </span>
-      {`${name} (${symbol})`}
+      {symbol.length > 0 ? `${name} (${symbol})` : name}
     </div>
   );
   if (type == "LP") {
@@ -348,6 +381,31 @@ function TokenCheckBox({
         </span>
         <span style={{ marginRight: "0.3em" }}>
           <Avatar alt={name} src={logo2} className={classes.avatar} />
+        </span>
+        {name}
+      </div>
+    );
+  } else if (type == "REWARDS") {
+    let [lock_logo1, rewards_logo] = JSON.parse(logo) as string[];
+    let lock_logo2 = "";
+    try {
+      // If lock_token is an LP, then its logo is acctually two logos
+      [lock_logo1, lock_logo2] = JSON.parse(lock_logo1) as string[];
+    } catch (_) {}
+
+    label = (
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <span style={{ marginRight: "0.1em" }}>
+          <Avatar alt={name} src={lock_logo1} className={classes.avatar} />
+        </span>
+        {lock_logo2.length > 0 ? (
+          <span style={{ marginRight: "0.1em" }}>
+            <Avatar alt={name} src={lock_logo2} className={classes.avatar} />
+          </span>
+        ) : null}
+        {"➜"}
+        <span style={{ marginRight: "0.3em" }}>
+          <Avatar alt={name} src={rewards_logo} className={classes.avatar} />
         </span>
         {name}
       </div>
