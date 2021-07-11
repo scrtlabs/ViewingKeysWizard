@@ -263,7 +263,7 @@ function App() {
           {loading ? <CircularProgress size="100%" /> : "Go"}
         </Button>
       </div>
-      <div style={{ display: "flex", justifyContent: "center" }}>
+      <div style={{ display: "flex" }}>
         <FormControlLabel
           control={
             <Checkbox
