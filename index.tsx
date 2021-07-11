@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, ChangeEvent } from "react";
 import ReactDOM from "react-dom";
 import {
   Button,
@@ -164,9 +164,14 @@ function App() {
         style={{
           display: "flex",
           alignItems: "center",
+          justifyContent: "center",
         }}
       >
-        <TextField label="Viewing Key" inputRef={viewingKeyRef} />
+        <TextField
+          label="Set Viewing Key"
+          inputRef={viewingKeyRef}
+          style={{ width: "25%" }}
+        />
         <Button
           variant="contained"
           color="primary"
@@ -236,7 +241,7 @@ function App() {
           <CircularProgress size="2em" style={{ marginLeft: "0.3em" }} />
         )}
       </div>
-      <div>
+      <div style={{ display: "flex", justifyContent: "center" }}>
         <FormControlLabel
           control={
             <Checkbox
@@ -248,49 +253,53 @@ function App() {
           label={`Select all`}
         />
       </div>
-      {Object.keys(tokens).map((addr) => {
-        const { address, name, symbol, logo, type } = tokens[addr];
-
-        let label = (
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <span style={{ marginRight: "0.3em" }}>
-              <Avatar alt={name} src={logo} className={classes.avatar} />
-            </span>
-            {`${name} (${symbol})`}
-          </div>
-        );
-        if (type == "LP") {
-          const [logo1, logo2] = JSON.parse(logo) as string[];
-
-          label = (
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <span style={{ marginRight: "0.1em" }}>
-                <Avatar alt={name} src={logo1} className={classes.avatar} />
-              </span>
-              <span style={{ marginRight: "0.3em" }}>
-                <Avatar alt={name} src={logo2} className={classes.avatar} />
-              </span>
-              {name}
-            </div>
-          );
-        }
-
-        return (
-          <div key={address}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  color="primary"
-                  name={address}
-                  checked={selectedTokens.has(address)}
-                  onChange={handleCheckToken}
-                />
-              }
-              label={label}
-            />
-          </div>
-        );
-      })}
+      <hr />
+      <div style={{ display: "flex " }}>
+        <div>
+          {Object.keys(tokens)
+            .filter((t) => tokens[t].type === "SECRET")
+            .map((addr) => (
+              <TokenCheckBox
+                token={tokens[addr]}
+                selectedTokens={selectedTokens}
+                handleCheckToken={handleCheckToken}
+              />
+            ))}
+        </div>
+        <div>
+          {Object.keys(tokens)
+            .filter((t) => tokens[t].type === "ETH")
+            .map((addr) => (
+              <TokenCheckBox
+                token={tokens[addr]}
+                selectedTokens={selectedTokens}
+                handleCheckToken={handleCheckToken}
+              />
+            ))}
+        </div>
+        <div>
+          {Object.keys(tokens)
+            .filter((t) => tokens[t].type === "BSC")
+            .map((addr) => (
+              <TokenCheckBox
+                token={tokens[addr]}
+                selectedTokens={selectedTokens}
+                handleCheckToken={handleCheckToken}
+              />
+            ))}
+        </div>
+        <div>
+          {Object.keys(tokens)
+            .filter((t) => tokens[t].type === "LP")
+            .map((addr) => (
+              <TokenCheckBox
+                token={tokens[addr]}
+                selectedTokens={selectedTokens}
+                handleCheckToken={handleCheckToken}
+              />
+            ))}
+        </div>
+      </div>
     </>
   );
 }
@@ -303,4 +312,61 @@ export function getFeeForExecute(gas: number): StdFee {
     ],
     gas: String(gas),
   };
+}
+
+function TokenCheckBox({
+  token,
+  selectedTokens,
+  handleCheckToken,
+}: {
+  token: Token;
+  selectedTokens: Set<string>;
+  handleCheckToken: (
+    event: ChangeEvent<HTMLInputElement>,
+    checked: boolean
+  ) => void;
+}) {
+  const classes = useStyles();
+
+  const { address, name, symbol, logo, type } = token;
+
+  let label = (
+    <div style={{ display: "flex", alignItems: "center" }}>
+      <span style={{ marginRight: "0.3em" }}>
+        <Avatar alt={name} src={logo} className={classes.avatar} />
+      </span>
+      {`${name} (${symbol})`}
+    </div>
+  );
+  if (type == "LP") {
+    const [logo1, logo2] = JSON.parse(logo) as string[];
+
+    label = (
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <span style={{ marginRight: "0.1em" }}>
+          <Avatar alt={name} src={logo1} className={classes.avatar} />
+        </span>
+        <span style={{ marginRight: "0.3em" }}>
+          <Avatar alt={name} src={logo2} className={classes.avatar} />
+        </span>
+        {name}
+      </div>
+    );
+  }
+
+  return (
+    <div key={address}>
+      <FormControlLabel
+        control={
+          <Checkbox
+            color="primary"
+            name={address}
+            checked={selectedTokens.has(address)}
+            onChange={handleCheckToken}
+          />
+        }
+        label={label}
+      />
+    </div>
+  );
 }
