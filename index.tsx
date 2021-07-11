@@ -95,7 +95,7 @@ function App() {
     const fetchData = async () => {
       setLoading(true);
 
-      const tokens = {};
+      const tokens: { [address: string]: Token } = {};
       for (const t of localTokens) {
         if (t.address in tokens) {
           console.error(`Duplicate tokens ${t} and ${tokens[t.address]}`);
@@ -126,28 +126,29 @@ function App() {
             address: t.address,
             name: `LP ${tokens[asset1].symbol}-${tokens[asset2].symbol}`,
             symbol: `${tokens[asset1].symbol}-${tokens[asset2].symbol}`,
-            logo: JSON.stringify([tokens[asset1].logo, tokens[asset2].logo]),
+            logo: `${asset1}-${asset2}`,
             type: "LP",
           } as Token;
           continue;
         } else if (t.type == "REWARDS") {
-          const [lock_token, rewards_token] = t.name.split(">");
+          const [lockToken, rewardsToken] = t.name.split(">");
 
-          if (!tokens[lock_token] || !tokens[rewards_token]) {
+          if (!tokens[lockToken] || !tokens[rewardsToken]) {
             console.log(
-              `Skipping Rewards token ${t.address} because ${lock_token} or ${rewards_token} is unknown.`
+              `Skipping Rewards token ${t.address} because ${lockToken} or ${rewardsToken} is unknown.`
             );
             continue;
           }
 
+          let lockTokenLogo = tokens[lockToken].address;
+          if (tokens[lockToken].type === "LP") {
+            lockTokenLogo = tokens[lockToken].logo;
+          }
           tokens[t.address] = {
             address: t.address,
-            name: `Rewards ${tokens[lock_token].symbol} ➜ ${tokens[rewards_token].symbol}`,
+            name: `Rewards ${tokens[lockToken].symbol} ➜ ${tokens[rewardsToken].symbol}`,
             symbol: "",
-            logo: JSON.stringify([
-              tokens[lock_token].logo,
-              tokens[rewards_token].logo,
-            ]),
+            logo: `${lockTokenLogo}-${tokens[rewardsToken].logo}`,
             type: "REWARDS",
           } as Token;
 
@@ -284,6 +285,7 @@ function App() {
               <TokenCheckBox
                 key={addr}
                 token={tokens[addr]}
+                tokens={tokens}
                 selectedTokens={selectedTokens}
                 handleCheckToken={handleCheckToken}
               />
@@ -296,6 +298,7 @@ function App() {
               <TokenCheckBox
                 key={addr}
                 token={tokens[addr]}
+                tokens={tokens}
                 selectedTokens={selectedTokens}
                 handleCheckToken={handleCheckToken}
               />
@@ -308,6 +311,7 @@ function App() {
               <TokenCheckBox
                 key={addr}
                 token={tokens[addr]}
+                tokens={tokens}
                 selectedTokens={selectedTokens}
                 handleCheckToken={handleCheckToken}
               />
@@ -320,6 +324,7 @@ function App() {
               <TokenCheckBox
                 key={addr}
                 token={tokens[addr]}
+                tokens={tokens}
                 selectedTokens={selectedTokens}
                 handleCheckToken={handleCheckToken}
               />
@@ -332,6 +337,7 @@ function App() {
               <TokenCheckBox
                 key={addr}
                 token={tokens[addr]}
+                tokens={tokens}
                 selectedTokens={selectedTokens}
                 handleCheckToken={handleCheckToken}
               />
@@ -354,16 +360,22 @@ export function getFeeForExecute(gas: number): StdFee {
 
 function TokenCheckBox({
   token,
+  tokens,
   selectedTokens,
   handleCheckToken,
 }: {
   token: Token;
+  tokens: { [address: string]: Token };
   selectedTokens: Set<string>;
   handleCheckToken: (
     event: ChangeEvent<HTMLInputElement>,
     checked: boolean
   ) => void;
 }) {
+  if (!token) {
+    return null;
+  }
+
   const classes = useStyles();
 
   const { address, name, symbol, logo, type } = token;
@@ -371,96 +383,59 @@ function TokenCheckBox({
   let label = (
     <div style={{ display: "flex", alignItems: "center" }}>
       <span style={{ marginRight: "0.3em" }}>
-        <Avatar alt={name} src={logo} className={classes.avatar} />
+        <TokenLogo token={token} />
       </span>
       {symbol.length > 0 ? `${name} (${symbol})` : name}
     </div>
   );
-  if (type === "ETH") {
-    label = (
-      <div style={{ display: "flex", alignItems: "center" }}>
-        <span style={{ marginRight: "0.3em" }}>
-          <Badge
-            className={classes.customBadge}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "right",
-            }}
-            badgeContent={
-              <Avatar
-                alt={name}
-                src={window.location.origin + "/eth.png"}
-                className={classes.smallAvatar}
-              />
-            }
-          >
-            <Avatar alt={name} src={logo} className={classes.avatar} />
-          </Badge>
-        </span>
-        {symbol.length > 0 ? `${name} (${symbol})` : name}
-      </div>
-    );
-  } else if (type === "BSC") {
-    label = (
-      <div style={{ display: "flex", alignItems: "center" }}>
-        <span style={{ marginRight: "0.3em" }}>
-          <Badge
-            className={classes.customBadge}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "right",
-            }}
-            badgeContent={
-              <Avatar
-                alt={name}
-                src={window.location.origin + "/binance-coin-bnb-logo.svg"}
-                className={classes.smallAvatar}
-              />
-            }
-          >
-            <Avatar alt={name} src={logo} className={classes.avatar} />
-          </Badge>
-        </span>
-        {symbol.length > 0 ? `${name} (${symbol})` : name}
-      </div>
-    );
-  }
 
   if (type == "LP") {
-    const [logo1, logo2] = JSON.parse(logo) as string[];
+    const [token1, token2] = logo.split("-") as string[];
 
     label = (
       <div style={{ display: "flex", alignItems: "center" }}>
-        <span style={{ marginRight: "0.1em" }}>
-          <Avatar alt={name} src={logo1} className={classes.avatar} />
+        <span style={{ marginRight: "0.2em" }}>
+          <TokenLogo token={tokens[token1]} />
         </span>
         <span style={{ marginRight: "0.3em" }}>
-          <Avatar alt={name} src={logo2} className={classes.avatar} />
+          <TokenLogo token={tokens[token2]} />
         </span>
         {name}
       </div>
     );
   } else if (type == "REWARDS") {
-    let [lock_logo1, rewards_logo] = JSON.parse(logo) as string[];
-    let lock_logo2 = "";
-    try {
-      // If lock_token is an LP, then its logo is acctually two logos
-      [lock_logo1, lock_logo2] = JSON.parse(lock_logo1) as string[];
-    } catch (_) {}
+    const [a, b, c] = logo.split("-") as string[];
+
+    const lockLogo1 = a;
+    let lockLogo2: string;
+    let rewardsLogo: string;
+
+    if (c) {
+      lockLogo2 = b;
+      rewardsLogo = c;
+    } else {
+      rewardsLogo = b;
+    }
 
     label = (
       <div style={{ display: "flex", alignItems: "center" }}>
-        <span style={{ marginRight: "0.1em" }}>
-          <Avatar alt={name} src={lock_logo1} className={classes.avatar} />
-        </span>
-        {lock_logo2.length > 0 ? (
-          <span style={{ marginRight: "0.1em" }}>
-            <Avatar alt={name} src={lock_logo2} className={classes.avatar} />
+        {lockLogo2 ? (
+          <>
+            <span style={{ marginRight: "0.2em" }}>
+              <TokenLogo token={tokens[lockLogo1]} />
+            </span>
+            <span>
+              <TokenLogo token={tokens[lockLogo2]} />
+            </span>
+          </>
+        ) : (
+          <span>
+            <TokenLogo token={tokens[lockLogo1]} />
           </span>
-        ) : null}
+        )}
         {"➜"}
         <span style={{ marginRight: "0.3em" }}>
-          <Avatar alt={name} src={rewards_logo} className={classes.avatar} />
+          <Avatar alt={name} src={rewardsLogo} className={classes.avatar} />
         </span>
         {name}
       </div>
@@ -482,4 +457,59 @@ function TokenCheckBox({
       />
     </div>
   );
+}
+
+function TokenLogo({ token }: { token: Token }) {
+  if (!token) {
+    return null;
+  }
+
+  const classes = useStyles();
+
+  const { name, logo, type } = token;
+
+  if (type === "SECRET") {
+    return <Avatar alt={name} src={logo} className={classes.avatar} />;
+  } else if (type === "ETH") {
+    return (
+      <Badge
+        className={classes.customBadge}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right",
+        }}
+        badgeContent={
+          <Avatar
+            alt={name}
+            src={window.location.origin + "/eth.png"}
+            className={classes.smallAvatar}
+          />
+        }
+      >
+        <Avatar alt={name} src={logo} className={classes.avatar} />
+      </Badge>
+    );
+  } else if (type === "BSC") {
+    return (
+      <Badge
+        className={classes.customBadge}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right",
+        }}
+        badgeContent={
+          <Avatar
+            alt={name}
+            src={window.location.origin + "/bnb.png"}
+            className={classes.smallAvatar}
+          />
+        }
+      >
+        <Avatar alt={name} src={logo} className={classes.avatar} />
+      </Badge>
+    );
+  } else {
+    console.error(`getTokenLogo must be of type "SECRET" | "ETH" | "BSC"`);
+    return null;
+  }
 }

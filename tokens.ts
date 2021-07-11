@@ -348,7 +348,7 @@ export const tokenList: Token[] = [
     address: "secret1793ctg56epnzjlv7t7mug2tv3s2zylhqssyjwe",
     codeHash:
       "d0db7128b8697419ad915c9fa2c2b2da462634ab95cbb3ca187564a1275561cf",
-    name: "Binance BUSD",
+    name: "Binance USD",
     symbol: "BUSD(BSC)",
     logo: "busd.png",
     type: "BSC",
