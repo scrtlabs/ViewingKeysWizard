@@ -35,8 +35,6 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const chainId = "secret-2";
-
 ReactDOM.render(
   <React.StrictMode>
     <App />
@@ -45,8 +43,6 @@ ReactDOM.render(
 );
 
 function App() {
-  const classes = useStyles();
-
   const [loading, setLoading] = useState<boolean>(false);
   const [tokens, setTokens] = useState<{
     [address: string]: Token;
@@ -59,6 +55,8 @@ function App() {
 
   useEffect(() => {
     const setupKeplr = async () => {
+      const chainId = "secret-2";
+
       await window.keplr.enable(chainId);
 
       const keplrOfflineSigner = window.getOfflineSigner(chainId);
@@ -197,12 +195,7 @@ function App() {
         <Button
           variant="contained"
           color="primary"
-          disabled={
-            selectedTokens.size === 0 ||
-            !secretjs ||
-            loading ||
-            viewingKeyRef.current.value === ""
-          }
+          disabled={selectedTokens.size === 0 || !secretjs || loading}
           onClick={async () => {
             setLoading(true);
             const numOfMsgs = selectedTokens.size;
@@ -257,11 +250,8 @@ function App() {
             }
           }}
         >
-          Go nuts
+          {loading ? <CircularProgress size="100%" /> : "Go"}
         </Button>
-        {loading && (
-          <CircularProgress size="2em" style={{ marginLeft: "0.3em" }} />
-        )}
       </div>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <FormControlLabel
