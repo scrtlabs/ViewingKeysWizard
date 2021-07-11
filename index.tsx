@@ -261,7 +261,7 @@ function App() {
             }
           }}
         >
-          {loading ? <CircularProgress size="100%" /> : "Go"}
+          {loading ? <CircularProgress size="2em" /> : "Go"}
         </Button>
       </div>
       <div style={{ display: "flex" }}>
