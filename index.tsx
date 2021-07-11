@@ -1,17 +1,15 @@
 import React, { useRef, useState, useEffect, ChangeEvent } from "react";
 import ReactDOM from "react-dom";
-import {
-  Button,
-  Checkbox,
-  CircularProgress,
-  FormControlLabel,
-  Avatar,
-  makeStyles,
-  createStyles,
-  Theme,
-  TextField,
-  Badge,
-} from "@material-ui/core";
+
+import Button from "@material-ui/core/Button";
+import Checkbox from "@material-ui/core/Checkbox";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Avatar from "@material-ui/core/Avatar";
+import TextField from "@material-ui/core/TextField";
+import Badge from "@material-ui/core/Badge";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+
 import { Token, tokenList as localTokens } from "./tokens";
 import { BroadcastMode, SigningCosmWasmClient } from "secretjs";
 import { StdFee } from "secretjs/types/types";
@@ -22,12 +20,6 @@ declare global {
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      display: "flex",
-      "& > *": {
-        margin: theme.spacing(1),
-      },
-    },
     avatar: {
       width: theme.spacing(2.8),
       height: theme.spacing(2.8),
@@ -57,49 +49,30 @@ function App() {
   const [tokens, setTokens] = useState<{
     [address: string]: Token;
   }>({});
+  const [relatedTokens, setRelatedTokens] = useState<{
+    [address: string]: { [address: string]: boolean };
+  }>({});
   const [selectedTokens, setSelectedTokens] = useState<Set<string>>(new Set());
   const [isAllSelected, setIsAllSelected] = useState<boolean>(false);
-  // const [myAddress, setMyAddress] = useState<string>(null);
+  const [isSelectRelated, setSelectRelated] = useState<boolean>(false);
+  const [myAddress, setMyAddress] = useState<string>(null);
   const [secretjs, setSecretjs] = useState<SigningCosmWasmClient>(null);
   const viewingKeyRef = useRef<{ value: string }>({ value: "" });
-
-  useEffect(() => {
-    const setupKeplr = async () => {
-      const chainId = "secret-2";
-
-      await window.keplr.enable(chainId);
-
-      const keplrOfflineSigner = window.getOfflineSigner(chainId);
-      const accounts = await keplrOfflineSigner.getAccounts();
-
-      const myAddress = accounts[0].address;
-
-      const secretjs = new SigningCosmWasmClient(
-        "https://bridge-api-manager.azure-api.net/",
-        myAddress,
-        //@ts-ignore
-        keplrOfflineSigner,
-        window.getEnigmaUtils(chainId),
-        null,
-        BroadcastMode.Sync
-      );
-
-      // setMyAddress(myAddress);
-      setSecretjs(secretjs);
-    };
-
-    setupKeplr();
-  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
 
       const tokens: { [address: string]: Token } = {};
+      const relatedTokens: {
+        [address: string]: { [address: string]: boolean };
+      } = {};
+
       for (const t of localTokens) {
         if (t.address in tokens) {
           console.error(`Duplicate tokens ${t} and ${tokens[t.address]}`);
         }
+
         if (t.type == "LP") {
           const [asset1, asset2] = t.name.split("-");
 
@@ -109,9 +82,12 @@ function App() {
               address: t.address,
               name: `LP SCRT-sSCRT`,
               symbol: "",
-              logo: JSON.stringify([tokens[sscrt].logo, tokens[sscrt].logo]),
+              logo: `${sscrt}-${sscrt}`,
               type: "LP",
             } as Token;
+            relatedTokens[sscrt] = Object.assign({}, relatedTokens[sscrt], {
+              [t.address]: true,
+            });
             continue;
           }
 
@@ -121,6 +97,13 @@ function App() {
             );
             continue;
           }
+
+          relatedTokens[asset1] = Object.assign({}, relatedTokens[asset1], {
+            [t.address]: true,
+          });
+          relatedTokens[asset2] = Object.assign({}, relatedTokens[asset2], {
+            [t.address]: true,
+          });
 
           tokens[t.address] = {
             address: t.address,
@@ -140,10 +123,35 @@ function App() {
             continue;
           }
 
+          relatedTokens[rewardsToken] = Object.assign(
+            {},
+            relatedTokens[rewardsToken],
+            {
+              [t.address]: true,
+            }
+          );
+
           let lockTokenLogo = tokens[lockToken].address;
           if (tokens[lockToken].type === "LP") {
             lockTokenLogo = tokens[lockToken].logo;
+
+            const [asset1, asset2] = tokens[lockToken].logo.split("-");
+            relatedTokens[asset1] = Object.assign({}, relatedTokens[asset1], {
+              [t.address]: true,
+            });
+            relatedTokens[asset2] = Object.assign({}, relatedTokens[asset2], {
+              [t.address]: true,
+            });
+          } else {
+            relatedTokens[lockToken] = Object.assign(
+              {},
+              relatedTokens[lockToken],
+              {
+                [t.address]: true,
+              }
+            );
           }
+
           tokens[t.address] = {
             address: t.address,
             name: `Rewards ${tokens[lockToken].symbol} ➜ ${tokens[rewardsToken].symbol}`,
@@ -161,26 +169,78 @@ function App() {
       }
 
       setTokens(tokens);
+      setRelatedTokens(relatedTokens);
       setLoading(false);
     };
 
     fetchData();
   }, []);
 
-  const handleCheckToken = (event) => {
+  const setupKeplr = async () => {
+    const sleep = (ms: number) =>
+      new Promise((resolve) => setTimeout(resolve, ms));
+
+    while (!window.keplr) {
+      await sleep(50);
+    }
+
+    const chainId = "secret-2";
+
+    await window.keplr.enable(chainId);
+
+    const keplrOfflineSigner = window.getOfflineSigner(chainId);
+    const accounts = await keplrOfflineSigner.getAccounts();
+
+    const myAddress = accounts[0].address;
+
+    const secretjs = new SigningCosmWasmClient(
+      "https://bridge-api-manager.azure-api.net/",
+      myAddress,
+      //@ts-ignore
+      keplrOfflineSigner,
+      window.getEnigmaUtils(chainId),
+      null,
+      BroadcastMode.Sync
+    );
+
+    setMyAddress(myAddress);
+    setSecretjs(secretjs);
+  };
+
+  const handleSelectToken = (event) => {
     const address = event.target.name;
-    setIsAllSelected(false);
+    const token = tokens[address];
+
+    const newSelectedTokens = new Set(Array.from(selectedTokens));
 
     if (selectedTokens.has(address)) {
-      setSelectedTokens(
-        new Set(Array.from(selectedTokens).filter((a) => a !== address))
-      );
+      newSelectedTokens.delete(address);
+
+      if (isSelectRelated && token.type !== "LP" && token.type !== "REWARDS") {
+        for (const relatedToken of Object.keys(relatedTokens[address])) {
+          newSelectedTokens.delete(relatedToken);
+        }
+      }
+
+      setSelectedTokens(newSelectedTokens);
+      setIsAllSelected(false);
     } else {
-      setSelectedTokens(new Set(Array.from(selectedTokens).concat([address])));
+      newSelectedTokens.add(address);
+
+      if (isSelectRelated && token.type !== "LP" && token.type !== "REWARDS") {
+        for (const relatedToken of Object.keys(relatedTokens[address])) {
+          newSelectedTokens.add(relatedToken);
+        }
+      }
+
+      setSelectedTokens(newSelectedTokens);
+      if (newSelectedTokens.size === Object.keys(tokens).length) {
+        setIsAllSelected(true);
+      }
     }
   };
 
-  const handleCheckAll = (event) => {
+  const handleSelectAll = (event) => {
     if (isAllSelected) {
       setSelectedTokens(new Set());
     } else {
@@ -189,8 +249,71 @@ function App() {
     setIsAllSelected(!isAllSelected);
   };
 
+  const handleSelectRelated = (event) => {
+    setSelectRelated(!isSelectRelated);
+  };
+
+  const isTooMuchGas = calculateGasLimit(selectedTokens.size) > 10_000_000;
+
   return (
     <>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          alignItems: "center",
+        }}
+      >
+        {!secretjs ? (
+          <Button variant="outlined" onClick={setupKeplr}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                borderRadius: 10,
+              }}
+            >
+              <img
+                src={`${window.location.origin}/keplr.svg`}
+                style={{
+                  width: "2em",
+                  borderRadius: 10,
+                }}
+              />
+              <span
+                style={{
+                  margin: "0 0.3em",
+                }}
+              >
+                Connect wallet
+              </span>
+            </div>
+          </Button>
+        ) : (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              borderRadius: 10,
+            }}
+          >
+            <img
+              src={`${window.location.origin}/keplr.svg`}
+              style={{
+                width: "1.8em",
+                borderRadius: 10,
+              }}
+            />
+            <span
+              style={{
+                margin: "0 0.3em",
+              }}
+            >
+              {myAddress}
+            </span>
+          </div>
+        )}
+      </div>
       <div
         style={{
           display: "flex",
@@ -201,30 +324,31 @@ function App() {
         <TextField
           label="Set Viewing Key"
           inputRef={viewingKeyRef}
-          style={{ width: "25%" }}
+          style={{ width: "25%", marginRight: "0.3em" }}
+          error={isTooMuchGas}
+          helperText={
+            isTooMuchGas
+              ? `Gas limit exeeds block gas limit: ${Intl.NumberFormat().format(
+                  calculateGasLimit(selectedTokens.size)
+                )} > 10,000,000`
+              : null
+          }
         />
         <Button
           variant="contained"
           color="primary"
-          disabled={selectedTokens.size === 0 || !secretjs || loading}
+          disabled={
+            selectedTokens.size === 0 || !secretjs || loading || isTooMuchGas
+          }
           onClick={async () => {
             setLoading(true);
-            const numOfMsgs = selectedTokens.size;
-            let gasPerMsg = 105_000;
-            if (numOfMsgs >= 2) {
-              gasPerMsg = 85_000;
-            }
-            if (numOfMsgs >= 5) {
-              gasPerMsg = 68_000;
-            }
-            if (numOfMsgs >= 10) {
-              gasPerMsg = 62_000;
-            }
-            if (numOfMsgs >= 15) {
-              gasPerMsg = 58_000;
-            }
-
             try {
+              console.log(
+                Array.from(selectedTokens).reduce((obj, token) => {
+                  obj[token] = tokens[token];
+                  return obj;
+                }, {})
+              );
               const { transactionHash } = await secretjs.multiExecute(
                 Array.from(selectedTokens).map((contractAddress) => ({
                   contractAddress,
@@ -234,7 +358,7 @@ function App() {
                   },
                 })),
                 "",
-                getFeeForExecute(numOfMsgs * gasPerMsg)
+                getFeeForExecute(calculateGasLimit(selectedTokens.size))
               );
 
               await new Promise((accept, reject) => {
@@ -269,11 +393,21 @@ function App() {
           control={
             <Checkbox
               color="secondary"
-              onChange={handleCheckAll}
+              onChange={handleSelectAll}
               checked={isAllSelected}
             />
           }
           label={`Select all`}
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              color="secondary"
+              onChange={handleSelectRelated}
+              checked={isSelectRelated}
+            />
+          }
+          label={`Select related`}
         />
       </div>
       <hr />
@@ -287,7 +421,7 @@ function App() {
                 token={tokens[addr]}
                 tokens={tokens}
                 selectedTokens={selectedTokens}
-                handleCheckToken={handleCheckToken}
+                handleCheckToken={handleSelectToken}
               />
             ))}
         </div>
@@ -300,7 +434,7 @@ function App() {
                 token={tokens[addr]}
                 tokens={tokens}
                 selectedTokens={selectedTokens}
-                handleCheckToken={handleCheckToken}
+                handleCheckToken={handleSelectToken}
               />
             ))}
         </div>
@@ -313,7 +447,7 @@ function App() {
                 token={tokens[addr]}
                 tokens={tokens}
                 selectedTokens={selectedTokens}
-                handleCheckToken={handleCheckToken}
+                handleCheckToken={handleSelectToken}
               />
             ))}
         </div>
@@ -326,7 +460,7 @@ function App() {
                 token={tokens[addr]}
                 tokens={tokens}
                 selectedTokens={selectedTokens}
-                handleCheckToken={handleCheckToken}
+                handleCheckToken={handleSelectToken}
               />
             ))}
         </div>
@@ -339,7 +473,7 @@ function App() {
                 token={tokens[addr]}
                 tokens={tokens}
                 selectedTokens={selectedTokens}
-                handleCheckToken={handleCheckToken}
+                handleCheckToken={handleSelectToken}
               />
             ))}
         </div>
@@ -424,17 +558,17 @@ function TokenCheckBox({
             <span style={{ marginRight: "0.2em" }}>
               <TokenLogo token={tokens[lockLogo1]} />
             </span>
-            <span>
+            <span style={{ marginRight: "0.2em" }}>
               <TokenLogo token={tokens[lockLogo2]} />
             </span>
           </>
         ) : (
-          <span>
+          <span style={{ marginRight: "0.2em" }}>
             <TokenLogo token={tokens[lockLogo1]} />
           </span>
         )}
         {"➜"}
-        <span style={{ marginRight: "0.3em" }}>
+        <span style={{ marginLeft: "0.2em", marginRight: "0.3em" }}>
           <Avatar alt={name} src={rewardsLogo} className={classes.avatar} />
         </span>
         {name}
@@ -480,7 +614,7 @@ function TokenLogo({ token }: { token: Token }) {
         }}
         badgeContent={
           <Avatar
-            alt={name}
+            alt="ETH"
             src={window.location.origin + "/eth.png"}
             className={classes.smallAvatar}
           />
@@ -499,7 +633,7 @@ function TokenLogo({ token }: { token: Token }) {
         }}
         badgeContent={
           <Avatar
-            alt={name}
+            alt="BSC"
             src={window.location.origin + "/bnb.png"}
             className={classes.smallAvatar}
           />
@@ -512,4 +646,22 @@ function TokenLogo({ token }: { token: Token }) {
     console.error(`getTokenLogo must be of type "SECRET" | "ETH" | "BSC"`);
     return null;
   }
+}
+
+function calculateGasLimit(numOfMsgs: number): number {
+  let gasPerMsg = 105_000;
+  if (numOfMsgs >= 2) {
+    gasPerMsg = 85_000;
+  }
+  if (numOfMsgs >= 5) {
+    gasPerMsg = 68_000;
+  }
+  if (numOfMsgs >= 10) {
+    gasPerMsg = 62_000;
+  }
+  if (numOfMsgs >= 15) {
+    gasPerMsg = 58_000;
+  }
+
+  return gasPerMsg * numOfMsgs;
 }
