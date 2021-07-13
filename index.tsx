@@ -256,12 +256,13 @@ function App() {
   const isTooMuchGas = calculateGasLimit(selectedTokens.size) > 10_000_000;
 
   return (
-    <>
+    <div style={{ padding: 100 }}>
       <div
         style={{
           display: "flex",
           justifyContent: "flex-end",
           alignItems: "center",
+          minHeight: "3em",
         }}
       >
         {!secretjs ? (
@@ -478,7 +479,7 @@ function App() {
             ))}
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
