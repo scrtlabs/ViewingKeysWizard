@@ -10,7 +10,7 @@ import TextField from "@material-ui/core/TextField";
 import Badge from "@material-ui/core/Badge";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 
-import { Token, tokenList as localTokens } from "./tokens";
+import { SecretAddress, Token, tokenList as localTokens } from "./tokens";
 import { BroadcastMode, SigningCosmWasmClient } from "secretjs";
 import { StdFee } from "secretjs/types/types";
 import { Window as KeplrWindow } from "@keplr-wallet/types";
@@ -44,128 +44,106 @@ ReactDOM.render(
   document.getElementById("root")
 );
 
-function App() {
+export default function App() {
   const [loading, setLoading] = useState<boolean>(false);
-  const [tokens, setTokens] = useState<{
-    [address: string]: Token;
-  }>({});
-  const [relatedTokens, setRelatedTokens] = useState<{
-    [address: string]: { [address: string]: boolean };
-  }>({});
-  const [selectedTokens, setSelectedTokens] = useState<Set<string>>(new Set());
+  const [tokens, setTokens] = useState<Map<SecretAddress, Token>>(new Map<SecretAddress, Token>());
+  const [relatedTokens, setRelatedTokens] = useState<Map<SecretAddress, Set<SecretAddress>>>(
+    new Map<SecretAddress, Set<SecretAddress>>()
+  );
+  const [selectedTokens, setSelectedTokens] = useState<Set<SecretAddress>>(new Set());
   const [isAllSelected, setIsAllSelected] = useState<boolean>(false);
   const [isSelectRelated, setSelectRelated] = useState<boolean>(false);
-  const [myAddress, setMyAddress] = useState<string>(null);
-  const [secretjs, setSecretjs] = useState<SigningCosmWasmClient>(null);
+  const [myAddress, setMyAddress] = useState<SecretAddress | null>(null);
+  const [secretjs, setSecretjs] = useState<SigningCosmWasmClient | null>(null);
   const viewingKeyRef = useRef<{ value: string }>({ value: "" });
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
 
-      const tokens: { [address: string]: Token } = {};
-      const relatedTokens: {
-        [address: string]: { [address: string]: boolean };
-      } = {};
+      const tokens = new Map<SecretAddress, Token>();
+      const relatedTokens = new Map<SecretAddress, Set<SecretAddress>>();
 
       for (const t of localTokens) {
         if (t.address in tokens) {
-          console.error(`Duplicate tokens ${t} and ${tokens[t.address]}`);
+          console.error(`Duplicate tokens ${t} and ${tokens.get(t.address)}`);
         }
 
         if (t.type == "LP") {
-          const [asset1, asset2] = t.name.split("-");
+          const [asset1, asset2] = t.name.split("-") as SecretAddress[];
 
           if (asset1 === "uscrt" || asset2 === "uscrt") {
             const sscrt = asset1 === "uscrt" ? asset2 : asset1;
-            tokens[t.address] = {
+            tokens.set(t.address, {
               address: t.address,
+              codeHash: t.codeHash,
               name: `LP SCRT-sSCRT`,
               symbol: "",
               logo: `${sscrt}-${sscrt}`,
               type: "LP",
-            } as Token;
-            relatedTokens[sscrt] = Object.assign({}, relatedTokens[sscrt], {
-              [t.address]: true,
             });
+            relatedTokens.set(sscrt, new Set([...new Set(relatedTokens.get(sscrt)), t.address]));
             continue;
           }
 
-          if (!tokens[asset1] || !tokens[asset2]) {
-            console.log(
-              `Skipping LP token ${t.address} because ${asset1} or ${asset2} is unknown.`
-            );
+          if (!tokens.has(asset1) || !tokens.has(asset2)) {
+            console.log(`Skipping LP token ${t.address} because ${asset1} or ${asset2} is unknown.`);
             continue;
           }
 
-          relatedTokens[asset1] = Object.assign({}, relatedTokens[asset1], {
-            [t.address]: true,
-          });
-          relatedTokens[asset2] = Object.assign({}, relatedTokens[asset2], {
-            [t.address]: true,
-          });
+          relatedTokens.set(asset1, new Set([...new Set(relatedTokens.get(asset1)), t.address]));
+          relatedTokens.set(asset2, new Set([...new Set(relatedTokens.get(asset2)), t.address]));
 
-          tokens[t.address] = {
+          tokens.set(t.address, {
             address: t.address,
-            name: `LP ${tokens[asset1].symbol}-${tokens[asset2].symbol}`,
-            symbol: `${tokens[asset1].symbol}-${tokens[asset2].symbol}`,
+            codeHash: t.codeHash,
+            name: `LP ${tokens.get(asset1)?.symbol}-${tokens.get(asset2)?.symbol}`,
+            symbol: `${tokens.get(asset1)?.symbol}-${tokens.get(asset2)?.symbol}`,
             logo: `${asset1}-${asset2}`,
             type: "LP",
-          } as Token;
+          });
+
           continue;
         } else if (t.type == "REWARDS") {
-          const [lockToken, rewardsToken] = t.name.split(">");
+          const [lockToken, rewardsToken] = t.name.split(">") as SecretAddress[];
 
-          if (!tokens[lockToken] || !tokens[rewardsToken]) {
-            console.log(
-              `Skipping Rewards token ${t.address} because ${lockToken} or ${rewardsToken} is unknown.`
-            );
+          if (!tokens.has(lockToken) || !tokens.has(rewardsToken)) {
+            console.log(`Skipping Rewards token ${t.address} because ${lockToken} or ${rewardsToken} is unknown.`);
             continue;
           }
 
-          relatedTokens[rewardsToken] = Object.assign(
-            {},
-            relatedTokens[rewardsToken],
-            {
-              [t.address]: true,
-            }
-          );
+          relatedTokens.set(rewardsToken, new Set([...new Set(relatedTokens.get(rewardsToken)), t.address]));
 
-          let lockTokenLogo = tokens[lockToken].address;
-          if (tokens[lockToken].type === "LP") {
-            lockTokenLogo = tokens[lockToken].logo;
+          let lockTokenLogo: string | SecretAddress | undefined = tokens.get(lockToken)?.address;
+          if (tokens.get(lockToken)?.type === "LP") {
+            lockTokenLogo = tokens.get(lockToken)?.logo;
 
-            const [asset1, asset2] = tokens[lockToken].logo.split("-");
-            relatedTokens[asset1] = Object.assign({}, relatedTokens[asset1], {
-              [t.address]: true,
-            });
-            relatedTokens[asset2] = Object.assign({}, relatedTokens[asset2], {
-              [t.address]: true,
-            });
+            const [asset1, asset2] = tokens.get(lockToken)?.logo.split("-") as SecretAddress[];
+
+            relatedTokens.set(asset1, new Set([...new Set(relatedTokens.get(asset1)), t.address]));
+            relatedTokens.set(asset2, new Set([...new Set(relatedTokens.get(asset2)), t.address]));
           } else {
-            relatedTokens[lockToken] = Object.assign(
-              {},
-              relatedTokens[lockToken],
-              {
-                [t.address]: true,
-              }
-            );
+            relatedTokens.set(lockToken, new Set([...new Set(relatedTokens.get(lockToken)), t.address]));
           }
 
-          tokens[t.address] = {
+          tokens.set(t.address, {
             address: t.address,
-            name: `Rewards ${tokens[lockToken].symbol} ➜ ${tokens[rewardsToken].symbol}`,
+            codeHash: t.codeHash,
+            name: `Rewards ${tokens.get(lockToken)?.symbol} ➜ ${tokens.get(rewardsToken)?.symbol}`,
             symbol: "",
-            logo: `${lockTokenLogo}-${tokens[rewardsToken].logo}`,
+            logo: `${lockTokenLogo}-${tokens.get(rewardsToken)?.logo}`,
             type: "REWARDS",
-          } as Token;
+          });
 
           continue;
         }
 
-        tokens[t.address] = Object.assign({}, t, {
-          logo: `${window.location.origin}/${t.logo}`,
-        });
+        tokens.set(
+          t.address,
+          Object.assign({}, t, {
+            logo: `${window.location.origin}/${t.logo}`,
+          })
+        );
       }
 
       setTokens(tokens);
@@ -177,10 +155,9 @@ function App() {
   }, []);
 
   const setupKeplr = async () => {
-    const sleep = (ms: number) =>
-      new Promise((resolve) => setTimeout(resolve, ms));
+    const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-    while (!window.keplr) {
+    while (!window.keplr || !window.getEnigmaUtils || !window.getOfflineSigner) {
       await sleep(50);
     }
 
@@ -191,7 +168,7 @@ function App() {
     const keplrOfflineSigner = window.getOfflineSigner(chainId);
     const accounts = await keplrOfflineSigner.getAccounts();
 
-    const myAddress = accounts[0].address;
+    const myAddress = accounts[0].address as SecretAddress;
 
     const secretjs = new SigningCosmWasmClient(
       "https://bridge-api-manager.azure-api.net/",
@@ -207,9 +184,14 @@ function App() {
     setSecretjs(secretjs);
   };
 
-  const handleSelectToken = (event) => {
-    const address = event.target.name;
-    const token = tokens[address];
+  const handleSelectToken = (event: ChangeEvent<HTMLInputElement>) => {
+    const address = event.target.name as SecretAddress;
+    const token = tokens.get(address);
+
+    if (!token) {
+      console.error(`handleSelectToken: Cannot find token ${address}`);
+      return;
+    }
 
     const newSelectedTokens = new Set(Array.from(selectedTokens));
 
@@ -217,7 +199,7 @@ function App() {
       newSelectedTokens.delete(address);
 
       if (isSelectRelated && token.type !== "LP" && token.type !== "REWARDS") {
-        for (const relatedToken of Object.keys(relatedTokens[address])) {
+        for (const relatedToken of new Set(relatedTokens.get(address))) {
           newSelectedTokens.delete(relatedToken);
         }
       }
@@ -228,7 +210,7 @@ function App() {
       newSelectedTokens.add(address);
 
       if (isSelectRelated && token.type !== "LP" && token.type !== "REWARDS") {
-        for (const relatedToken of Object.keys(relatedTokens[address])) {
+        for (const relatedToken of new Set(relatedTokens.get(address))) {
           newSelectedTokens.add(relatedToken);
         }
       }
@@ -240,23 +222,23 @@ function App() {
     }
   };
 
-  const handleSelectAll = (event) => {
+  const handleSelectAll = () => {
     if (isAllSelected) {
       setSelectedTokens(new Set());
     } else {
-      setSelectedTokens(new Set(Object.keys(tokens)));
+      setSelectedTokens(new Set(tokens.keys()));
     }
     setIsAllSelected(!isAllSelected);
   };
 
-  const handleSelectRelated = (event) => {
+  const handleSelectRelated = () => {
     setSelectRelated(!isSelectRelated);
   };
 
   const isTooMuchGas = calculateGasLimit(selectedTokens.size) > 10_000_000;
 
   return (
-    <div style={{ padding: 100 }}>
+    <div style={{ padding: "0.5em" }}>
       <div
         style={{
           display: "flex",
@@ -325,7 +307,7 @@ function App() {
         <TextField
           label="Set Viewing Key"
           inputRef={viewingKeyRef}
-          style={{ width: "25%", marginRight: "0.3em" }}
+          style={{ width: "25%", marginRight: "0.3em", minHeight: "4.5em" }}
           error={isTooMuchGas}
           helperText={
             isTooMuchGas
@@ -338,22 +320,19 @@ function App() {
         <Button
           variant="contained"
           color="primary"
-          disabled={
-            selectedTokens.size === 0 || !secretjs || loading || isTooMuchGas
-          }
+          disabled={selectedTokens.size === 0 || !secretjs || loading || isTooMuchGas}
           onClick={async () => {
+            if (!secretjs) {
+              console.error("Wat?");
+              return;
+            }
+
             setLoading(true);
             try {
-              console.log(
-                Array.from(selectedTokens).reduce((obj, token) => {
-                  obj[token] = tokens[token];
-                  return obj;
-                }, {})
-              );
               const { transactionHash } = await secretjs.multiExecute(
                 Array.from(selectedTokens).map((contractAddress) => ({
                   contractAddress,
-                  contractCodeHash: tokens[contractAddress].codeHash,
+                  contractCodeHash: tokens.get(contractAddress)?.codeHash,
                   handleMsg: {
                     set_viewing_key: { key: viewingKeyRef.current.value },
                   },
@@ -365,14 +344,18 @@ function App() {
               await new Promise((accept, reject) => {
                 const interval = setInterval(async () => {
                   try {
-                    const tx = await secretjs.restClient.txById(
-                      transactionHash,
-                      false
-                    );
+                    const tx = await secretjs.restClient.txById(transactionHash, false);
+
+                    if (!tx.raw_log.startsWith("[")) {
+                      console.error(`Tx failed: ${tx.raw_log}`);
+                    } else {
+                      console.log(`Viewing keys successfully set.`);
+                    }
+
                     accept(tx);
                     clearInterval(interval);
                   } catch (error) {
-                    console.error(error);
+                    console.log("Still waiting for tx to commit on-chain...");
                   }
                 }, 5000);
               });
@@ -391,35 +374,23 @@ function App() {
       </div>
       <div style={{ display: "flex" }}>
         <FormControlLabel
-          control={
-            <Checkbox
-              color="secondary"
-              onChange={handleSelectAll}
-              checked={isAllSelected}
-            />
-          }
+          control={<Checkbox color="secondary" onChange={handleSelectAll} checked={isAllSelected} />}
           label={`Select all`}
         />
         <FormControlLabel
-          control={
-            <Checkbox
-              color="secondary"
-              onChange={handleSelectRelated}
-              checked={isSelectRelated}
-            />
-          }
+          control={<Checkbox color="secondary" onChange={handleSelectRelated} checked={isSelectRelated} />}
           label={`Select related`}
         />
       </div>
       <hr />
       <div style={{ display: "flex " }}>
         <div>
-          {Object.keys(tokens)
-            .filter((t) => tokens[t].type === "SECRET")
+          {Array.from(tokens.keys())
+            .filter((addr) => tokens.get(addr)?.type === "SECRET")
             .map((addr) => (
               <TokenCheckBox
                 key={addr}
-                token={tokens[addr]}
+                token={tokens.get(addr) as Token}
                 tokens={tokens}
                 selectedTokens={selectedTokens}
                 handleCheckToken={handleSelectToken}
@@ -427,12 +398,12 @@ function App() {
             ))}
         </div>
         <div>
-          {Object.keys(tokens)
-            .filter((t) => tokens[t].type === "ETH")
+          {Array.from(tokens.keys())
+            .filter((addr) => tokens.get(addr)?.type === "ETH")
             .map((addr) => (
               <TokenCheckBox
                 key={addr}
-                token={tokens[addr]}
+                token={tokens.get(addr) as Token}
                 tokens={tokens}
                 selectedTokens={selectedTokens}
                 handleCheckToken={handleSelectToken}
@@ -440,12 +411,12 @@ function App() {
             ))}
         </div>
         <div>
-          {Object.keys(tokens)
-            .filter((t) => tokens[t].type === "BSC")
+          {Array.from(tokens.keys())
+            .filter((addr) => tokens.get(addr)?.type === "BSC")
             .map((addr) => (
               <TokenCheckBox
                 key={addr}
-                token={tokens[addr]}
+                token={tokens.get(addr) as Token}
                 tokens={tokens}
                 selectedTokens={selectedTokens}
                 handleCheckToken={handleSelectToken}
@@ -453,12 +424,12 @@ function App() {
             ))}
         </div>
         <div>
-          {Object.keys(tokens)
-            .filter((t) => tokens[t].type === "LP")
+          {Array.from(tokens.keys())
+            .filter((addr) => tokens.get(addr)?.type === "LP")
             .map((addr) => (
               <TokenCheckBox
                 key={addr}
-                token={tokens[addr]}
+                token={tokens.get(addr) as Token}
                 tokens={tokens}
                 selectedTokens={selectedTokens}
                 handleCheckToken={handleSelectToken}
@@ -466,12 +437,12 @@ function App() {
             ))}
         </div>
         <div>
-          {Object.keys(tokens)
-            .filter((t) => tokens[t].type === "REWARDS")
+          {Array.from(tokens.keys())
+            .filter((addr) => tokens.get(addr)?.type === "REWARDS")
             .map((addr) => (
               <TokenCheckBox
                 key={addr}
-                token={tokens[addr]}
+                token={tokens.get(addr) as Token}
                 tokens={tokens}
                 selectedTokens={selectedTokens}
                 handleCheckToken={handleSelectToken}
@@ -486,9 +457,7 @@ function App() {
 const gasPriceUscrt = 0.25;
 export function getFeeForExecute(gas: number): StdFee {
   return {
-    amount: [
-      { amount: String(Math.floor(gas * gasPriceUscrt) + 1), denom: "uscrt" },
-    ],
+    amount: [{ amount: String(Math.floor(gas * gasPriceUscrt) + 1), denom: "uscrt" }],
     gas: String(gas),
   };
 }
@@ -500,12 +469,9 @@ function TokenCheckBox({
   handleCheckToken,
 }: {
   token: Token;
-  tokens: { [address: string]: Token };
+  tokens: Map<SecretAddress, Token>;
   selectedTokens: Set<string>;
-  handleCheckToken: (
-    event: ChangeEvent<HTMLInputElement>,
-    checked: boolean
-  ) => void;
+  handleCheckToken: (event: ChangeEvent<HTMLInputElement>, checked: boolean) => void;
 }) {
   if (!token) {
     return null;
@@ -525,25 +491,25 @@ function TokenCheckBox({
   );
 
   if (type == "LP") {
-    const [token1, token2] = logo.split("-") as string[];
+    const [token1, token2] = logo.split("-") as SecretAddress[];
 
     label = (
       <div style={{ display: "flex", alignItems: "center" }}>
         <span style={{ marginRight: "0.2em" }}>
-          <TokenLogo token={tokens[token1]} />
+          <TokenLogo token={tokens.get(token1) as Token} />
         </span>
         <span style={{ marginRight: "0.3em" }}>
-          <TokenLogo token={tokens[token2]} />
+          <TokenLogo token={tokens.get(token2) as Token} />
         </span>
         {name}
       </div>
     );
   } else if (type == "REWARDS") {
-    const [a, b, c] = logo.split("-") as string[];
+    const [a, b, c] = logo.split("-") as SecretAddress[];
 
     const lockLogo1 = a;
-    let lockLogo2: string;
-    let rewardsLogo: string;
+    let lockLogo2: SecretAddress | undefined;
+    let rewardsLogo: SecretAddress;
 
     if (c) {
       lockLogo2 = b;
@@ -557,15 +523,15 @@ function TokenCheckBox({
         {lockLogo2 ? (
           <>
             <span style={{ marginRight: "0.2em" }}>
-              <TokenLogo token={tokens[lockLogo1]} />
+              <TokenLogo token={tokens.get(lockLogo1) as Token} />
             </span>
             <span style={{ marginRight: "0.2em" }}>
-              <TokenLogo token={tokens[lockLogo2]} />
+              <TokenLogo token={tokens.get(lockLogo2) as Token} />
             </span>
           </>
         ) : (
           <span style={{ marginRight: "0.2em" }}>
-            <TokenLogo token={tokens[lockLogo1]} />
+            <TokenLogo token={tokens.get(lockLogo1) as Token} />
           </span>
         )}
         {"➜"}
@@ -581,12 +547,7 @@ function TokenCheckBox({
     <div>
       <FormControlLabel
         control={
-          <Checkbox
-            color="primary"
-            name={address}
-            checked={selectedTokens.has(address)}
-            onChange={handleCheckToken}
-          />
+          <Checkbox color="primary" name={address} checked={selectedTokens.has(address)} onChange={handleCheckToken} />
         }
         label={label}
       />
@@ -613,13 +574,7 @@ function TokenLogo({ token }: { token: Token }) {
           vertical: "bottom",
           horizontal: "right",
         }}
-        badgeContent={
-          <Avatar
-            alt="ETH"
-            src={window.location.origin + "/eth.png"}
-            className={classes.smallAvatar}
-          />
-        }
+        badgeContent={<Avatar alt="ETH" src={window.location.origin + "/eth.png"} className={classes.smallAvatar} />}
       >
         <Avatar alt={name} src={logo} className={classes.avatar} />
       </Badge>
@@ -632,13 +587,7 @@ function TokenLogo({ token }: { token: Token }) {
           vertical: "bottom",
           horizontal: "right",
         }}
-        badgeContent={
-          <Avatar
-            alt="BSC"
-            src={window.location.origin + "/bnb.png"}
-            className={classes.smallAvatar}
-          />
-        }
+        badgeContent={<Avatar alt="BSC" src={window.location.origin + "/bnb.png"} className={classes.smallAvatar} />}
       >
         <Avatar alt={name} src={logo} className={classes.avatar} />
       </Badge>
@@ -661,7 +610,7 @@ function calculateGasLimit(numOfMsgs: number): number {
     gasPerMsg = 62_000;
   }
   if (numOfMsgs >= 15) {
-    gasPerMsg = 58_000;
+    gasPerMsg = 59_000;
   }
 
   return gasPerMsg * numOfMsgs;
