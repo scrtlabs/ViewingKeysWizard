@@ -305,7 +305,7 @@ export default function App() {
         }}
       >
         <TextField
-          label="Set Viewing Key"
+          label="Viewing Key"
           inputRef={viewingKeyRef}
           style={{ width: "25%", marginRight: "0.3em", minHeight: "4.5em" }}
           error={isTooMuchGas}
@@ -369,7 +369,7 @@ export default function App() {
             }
           }}
         >
-          {loading ? <CircularProgress size="2em" /> : "Go"}
+          {loading ? <CircularProgress size="2em" /> : "Set"}
         </Button>
       </div>
       <div style={{ display: "flex" }}>
