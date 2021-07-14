@@ -116,7 +116,7 @@ export default function App() {
 
           let lockTokenLogo: string | SecretAddress | undefined = tokens.get(lockToken)?.address;
           if (tokens.get(lockToken)?.type === "LP") {
-            lockTokenLogo = tokens.get(lockToken)?.logo;
+            lockTokenLogo = tokens.get(lockToken)?.logo; // this is `${asset1Addr}-${asset2Addr}`
 
             const [asset1, asset2] = tokens.get(lockToken)?.logo.split("-") as SecretAddress[];
 
@@ -131,7 +131,7 @@ export default function App() {
             codeHash: t.codeHash,
             name: `Rewards ${tokens.get(lockToken)?.symbol} ➜ ${tokens.get(rewardsToken)?.symbol}`,
             symbol: "",
-            logo: `${lockTokenLogo}-${tokens.get(rewardsToken)?.logo}`,
+            logo: `${lockTokenLogo}-${rewardsToken}`,
             type: "REWARDS",
           });
 
@@ -536,7 +536,7 @@ function TokenCheckBox({
         )}
         {"➜"}
         <span style={{ marginLeft: "0.2em", marginRight: "0.3em" }}>
-          <Avatar alt={name} src={rewardsLogo} className={classes.avatar} />
+          <TokenLogo token={tokens.get(rewardsLogo) as Token} />
         </span>
         {name}
       </div>
@@ -611,6 +611,9 @@ function calculateGasLimit(numOfMsgs: number): number {
   }
   if (numOfMsgs >= 15) {
     gasPerMsg = 59_000;
+  }
+  if (numOfMsgs >= 50) {
+    gasPerMsg = 57_000;
   }
 
   return gasPerMsg * numOfMsgs;
