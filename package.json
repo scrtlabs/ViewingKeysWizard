@@ -5,7 +5,7 @@
   "scripts": {
     "start": "vite",
     "build": "tsc && vite build",
-    "serve": "vite preview"
+    "preview": "yarn build && vite preview"
   },
   "dependencies": {
     "@material-ui/core": "4.11.4",
