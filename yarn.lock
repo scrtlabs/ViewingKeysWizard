@@ -384,13 +384,6 @@
     react-is "^16.8.0 || ^17.0.0"
     react-transition-group "^4.4.0"
 
-"@material-ui/icons@4.11.2":
-  version "4.11.2"
-  resolved "https://registry.yarnpkg.com/@material-ui/icons/-/icons-4.11.2.tgz#b3a7353266519cd743b6461ae9fdfcb1b25eb4c5"
-  integrity sha512-fQNsKX2TxBmqIGJCSi3tGTO/gZ+eJgWmMJkgDiOfyNaunNaxcklJQFaFogYcFl0qFuaEz1qaXYXboa/bUXVSOQ==
-  dependencies:
-    "@babel/runtime" "^7.4.4"
-
 "@material-ui/styles@^4.11.4":
   version "4.11.4"
   resolved "https://registry.yarnpkg.com/@material-ui/styles/-/styles-4.11.4.tgz#eb9dfccfcc2d208243d986457dff025497afa00d"
@@ -1278,10 +1271,10 @@ scheduler@^0.20.2:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
 
-secretjs@0.15.1:
-  version "0.15.1"
-  resolved "https://registry.yarnpkg.com/secretjs/-/secretjs-0.15.1.tgz#8c3c26e7f6f5a82042c518ca2a7b4866fbb20803"
-  integrity sha512-2m5oNfejshrbMZrGQbavKC5iELd6Ny+DERa3DwkJ/lWabmgTocWbwVMzBeowyX8ZCFBoSY3DWQ46VLEKwGTEmw==
+secretjs@0.16.0:
+  version "0.16.0"
+  resolved "https://registry.yarnpkg.com/secretjs/-/secretjs-0.16.0.tgz#2f1171b31f493dbf21f911b18f56e880a71d8809"
+  integrity sha512-aWR+f6fiJ066RZc3LuB2BL09auZ8ue5PG3p7bL2pBpBQAx2mcBzQayHdpMgXxr7v4t0QSWPegWlg2ES+QVcNUA==
   dependencies:
     "@iov/crypto" "2.1.0"
     "@iov/encoding" "2.1.0"
