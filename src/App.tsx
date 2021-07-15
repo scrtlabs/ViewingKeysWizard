@@ -23,7 +23,6 @@ const useStyles = makeStyles((theme: Theme) =>
     smallAvatar: {
       width: theme.spacing(1.5),
       height: theme.spacing(1.5),
-      boxShadow: "rgba(0, 0, 0, 0.1) 0px 6px 10px",
     },
     customBadge: {
       backgroundColor: "transparent",
