@@ -8,6 +8,7 @@ import { ComplexToken, SecretAddress, Token, BasicToken, tokenList as localToken
 import { BroadcastMode, SigningCosmWasmClient } from "secretjs";
 import { StdFee } from "secretjs/types/types";
 import { Window as KeplrWindow } from "@keplr-wallet/types";
+import SelectInput from "@material-ui/core/Select/SelectInput";
 declare global {
   interface Window extends KeplrWindow {}
 }
@@ -37,6 +38,8 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById("root")
 );
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export default function App() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -116,8 +119,6 @@ export default function App() {
   }, []);
 
   const setupKeplr = async () => {
-    const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
     while (!window.keplr || !window.getEnigmaUtils || !window.getOfflineSigner) {
       await sleep(50);
     }
@@ -302,24 +303,23 @@ export default function App() {
                 getFeeForExecute(calculateGasLimit(selectedTokens.size))
               );
 
-              await new Promise((accept, reject) => {
-                const interval = setInterval(async () => {
-                  try {
-                    const tx = await secretjs.restClient.txById(transactionHash, false);
+              while (true) {
+                try {
+                  const tx = await secretjs.restClient.txById(transactionHash, false);
 
-                    if (!tx.raw_log.startsWith("[")) {
-                      console.error(`Tx failed: ${tx.raw_log}`);
-                    } else {
-                      console.log(`Viewing keys successfully set.`);
-                    }
-
-                    accept(tx);
-                    clearInterval(interval);
-                  } catch (error) {
-                    console.log("Still waiting for tx to commit on-chain...");
+                  if (!tx.raw_log.startsWith("[")) {
+                    console.error(`Tx failed: ${tx.raw_log}`);
+                  } else {
+                    console.log(`Viewing keys successfully set.`);
                   }
-                }, 5000);
-              });
+
+                  break;
+                } catch (error) {
+                  console.log("Still waiting for tx to commit on-chain...");
+                }
+
+                await sleep(5000);
+              }
 
               viewingKeyRef.current.value = "";
             } catch (e) {
