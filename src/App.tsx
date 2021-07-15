@@ -8,7 +8,7 @@ import { ComplexToken, SecretAddress, Token, BasicToken, tokenList as localToken
 import { BroadcastMode, SigningCosmWasmClient } from "secretjs";
 import { StdFee } from "secretjs/types/types";
 import { Window as KeplrWindow } from "@keplr-wallet/types";
-import SelectInput from "@material-ui/core/Select/SelectInput";
+import { KeplrPanel } from "./KeplrPanel";
 declare global {
   interface Window extends KeplrWindow {}
 }
@@ -54,7 +54,7 @@ export default function App() {
   const viewingKeyRef = useRef<{ value: string }>({ value: "" });
 
   useEffect(() => {
-    const fetchData = async () => {
+    const loadTokens() = async () => {
       setLoading(true);
 
       const tokens = new Map<SecretAddress, Token>();
@@ -114,36 +114,8 @@ export default function App() {
       setLoading(false);
     };
 
-    fetchData();
+    loadTokens()();
   }, []);
-
-  const setupKeplr = async () => {
-    while (!window.keplr || !window.getEnigmaUtils || !window.getOfflineSigner) {
-      await sleep(50);
-    }
-
-    const chainId = "secret-2";
-
-    await window.keplr.enable(chainId);
-
-    const keplrOfflineSigner = window.getOfflineSigner(chainId);
-    const accounts = await keplrOfflineSigner.getAccounts();
-
-    const myAddress = accounts[0].address as SecretAddress;
-
-    const secretjs = new SigningCosmWasmClient(
-      "https://bridge-api-manager.azure-api.net/",
-      myAddress,
-      //@ts-ignore
-      keplrOfflineSigner,
-      window.getEnigmaUtils(chainId),
-      null,
-      BroadcastMode.Sync
-    );
-
-    setMyAddress(myAddress);
-    setSecretjs(secretjs);
-  };
 
   const handleSelectToken = (event: ChangeEvent<HTMLInputElement>) => {
     const address = event.target.name as SecretAddress;
@@ -208,55 +180,7 @@ export default function App() {
           minHeight: "3em",
         }}
       >
-        {!secretjs ? (
-          <Button variant="outlined" onClick={setupKeplr}>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                borderRadius: 10,
-              }}
-            >
-              <img
-                src="/keplr.svg"
-                style={{
-                  width: "2em",
-                  borderRadius: 10,
-                }}
-              />
-              <span
-                style={{
-                  margin: "0 0.3em",
-                }}
-              >
-                Connect wallet
-              </span>
-            </div>
-          </Button>
-        ) : (
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              borderRadius: 10,
-            }}
-          >
-            <img
-              src="/keplr.svg"
-              style={{
-                width: "1.8em",
-                borderRadius: 10,
-              }}
-            />
-            <span
-              style={{
-                margin: "0 0.3em",
-              }}
-            >
-              {myAddress}
-            </span>
-          </div>
-        )}
+        <KeplrPanel secretjs={secretjs} setSecretjs={setSecretjs} myAddress={myAddress} setMyAddress={setMyAddress} />
       </div>
       <div
         style={{
