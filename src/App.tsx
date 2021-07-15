@@ -5,7 +5,7 @@ import { Button, Checkbox, CircularProgress, FormControlLabel, Avatar, TextField
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 
 import { ComplexToken, SecretAddress, Token, BasicToken, tokenList as localTokens } from "./tokens";
-import { BroadcastMode, SigningCosmWasmClient } from "secretjs";
+import { SigningCosmWasmClient } from "secretjs";
 import { StdFee } from "secretjs/types/types";
 import { Window as KeplrWindow } from "@keplr-wallet/types";
 import { KeplrPanel } from "./KeplrPanel";
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme: Theme) =>
     avatar: {
       width: theme.spacing(2.8),
       height: theme.spacing(2.8),
-      boxShadow: "rgba(0, 0, 0, 0.1) 0px 6px 10px",
+      boxShadow: "rgba(0, 0, 0, 0.15) 0px 6px 10px",
     },
     smallAvatar: {
       width: theme.spacing(1.5),
@@ -54,7 +54,7 @@ export default function App() {
   const viewingKeyRef = useRef<{ value: string }>({ value: "" });
 
   useEffect(() => {
-    const loadTokens() = async () => {
+    const loadTokens = async () => {
       setLoading(true);
 
       const tokens = new Map<SecretAddress, Token>();
@@ -114,7 +114,7 @@ export default function App() {
       setLoading(false);
     };
 
-    loadTokens()();
+    loadTokens();
   }, []);
 
   const handleSelectToken = (event: ChangeEvent<HTMLInputElement>) => {
