@@ -104,7 +104,7 @@ export default function App() {
 
           continue;
         } else if (token.type === "SECRET" || token.type === "ETH" || token.type === "BSC") {
-          token.logo = `${window.location.origin}/${token.logo}`;
+          token.logo = `/${token.logo}`;
         }
 
         tokens.set(token.address, token);
@@ -219,7 +219,7 @@ export default function App() {
               }}
             >
               <img
-                src={`${window.location.origin}/keplr.svg`}
+                src="/keplr.svg"
                 style={{
                   width: "2em",
                   borderRadius: 10,
@@ -243,7 +243,7 @@ export default function App() {
             }}
           >
             <img
-              src={`${window.location.origin}/keplr.svg`}
+              src="/keplr.svg"
               style={{
                 width: "1.8em",
                 borderRadius: 10,
@@ -549,7 +549,7 @@ function TokenLogo({ token }: { token: BasicToken }) {
           vertical: "bottom",
           horizontal: "right",
         }}
-        badgeContent={<Avatar alt="ETH" src={window.location.origin + "/eth.png"} className={classes.smallAvatar} />}
+        badgeContent={<Avatar alt="ETH" src="/eth.png" className={classes.smallAvatar} />}
       >
         <Avatar alt={name} src={logo} className={classes.avatar} />
       </Badge>
@@ -562,7 +562,7 @@ function TokenLogo({ token }: { token: BasicToken }) {
           vertical: "bottom",
           horizontal: "right",
         }}
-        badgeContent={<Avatar alt="BSC" src={window.location.origin + "/bnb.png"} className={classes.smallAvatar} />}
+        badgeContent={<Avatar alt="BSC" src="/bnb.png" className={classes.smallAvatar} />}
       >
         <Avatar alt={name} src={logo} className={classes.avatar} />
       </Badge>
