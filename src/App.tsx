@@ -1,16 +1,10 @@
 import React, { useRef, useState, useEffect, ChangeEvent } from "react";
 import ReactDOM from "react-dom";
 
-import Button from "@material-ui/core/Button";
-import Checkbox from "@material-ui/core/Checkbox";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Avatar from "@material-ui/core/Avatar";
-import TextField from "@material-ui/core/TextField";
-import Badge from "@material-ui/core/Badge";
+import { Button, Checkbox, CircularProgress, FormControlLabel, Avatar, TextField, Badge } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 
-import { SecretAddress, Token, tokenList as localTokens } from "./tokens";
+import { ComplexToken, SecretAddress, Token, BasicToken, tokenList as localTokens } from "./tokens";
 import { BroadcastMode, SigningCosmWasmClient } from "secretjs";
 import { StdFee } from "secretjs/types/types";
 import { Window as KeplrWindow } from "@keplr-wallet/types";
@@ -64,86 +58,53 @@ export default function App() {
       const tokens = new Map<SecretAddress, Token>();
       const relatedTokens = new Map<SecretAddress, Set<SecretAddress>>();
 
-      for (const t of localTokens) {
-        if (t.address in tokens) {
-          console.error(`Duplicate tokens ${t} and ${tokens.get(t.address)}`);
+      for (const token of localTokens) {
+        if (token.address in tokens) {
+          console.error(`Duplicate tokens ${token} and ${tokens.get(token.address)}`);
         }
 
-        if (t.type == "LP") {
-          const [asset1, asset2] = t.name.split("-") as SecretAddress[];
-
-          if (asset1 === "uscrt" || asset2 === "uscrt") {
-            const sscrt = asset1 === "uscrt" ? asset2 : asset1;
-            tokens.set(t.address, {
-              address: t.address,
-              codeHash: t.codeHash,
-              name: `LP SCRT-sSCRT`,
-              symbol: "",
-              logo: `${sscrt}-${sscrt}`,
-              type: "LP",
-            });
-            relatedTokens.set(sscrt, new Set([...new Set(relatedTokens.get(sscrt)), t.address]));
-            continue;
-          }
+        if (token.type == "LP") {
+          const [asset1, asset2] = token.assets;
 
           if (!tokens.has(asset1) || !tokens.has(asset2)) {
-            console.log(`Skipping LP token ${t.address} because ${asset1} or ${asset2} is unknown.`);
+            console.log(`Skipping LP token ${token.address} because ${asset1} or ${asset2} is unknown.`);
             continue;
           }
 
-          relatedTokens.set(asset1, new Set([...new Set(relatedTokens.get(asset1)), t.address]));
-          relatedTokens.set(asset2, new Set([...new Set(relatedTokens.get(asset2)), t.address]));
+          relatedTokens.set(asset1, new Set([...new Set(relatedTokens.get(asset1)), token.address]));
+          relatedTokens.set(asset2, new Set([...new Set(relatedTokens.get(asset2)), token.address]));
 
-          tokens.set(t.address, {
-            address: t.address,
-            codeHash: t.codeHash,
-            name: `LP ${tokens.get(asset1)?.symbol}-${tokens.get(asset2)?.symbol}`,
-            symbol: `${tokens.get(asset1)?.symbol}-${tokens.get(asset2)?.symbol}`,
-            logo: `${asset1}-${asset2}`,
-            type: "LP",
-          });
+          tokens.set(token.address, token);
 
           continue;
-        } else if (t.type == "REWARDS") {
-          const [lockToken, rewardsToken] = t.name.split(">") as SecretAddress[];
+        } else if (token.type == "REWARDS") {
+          const [lockToken, rewardsToken] = token.assets;
 
           if (!tokens.has(lockToken) || !tokens.has(rewardsToken)) {
-            console.log(`Skipping Rewards token ${t.address} because ${lockToken} or ${rewardsToken} is unknown.`);
+            console.log(`Skipping Rewards token ${token.address} because ${lockToken} or ${rewardsToken} is unknown.`);
             continue;
           }
 
-          relatedTokens.set(rewardsToken, new Set([...new Set(relatedTokens.get(rewardsToken)), t.address]));
+          relatedTokens.set(rewardsToken, new Set([...new Set(relatedTokens.get(rewardsToken)), token.address]));
 
-          let lockTokenLogo: string | SecretAddress | undefined = tokens.get(lockToken)?.address;
           if (tokens.get(lockToken)?.type === "LP") {
-            lockTokenLogo = tokens.get(lockToken)?.logo; // this is `${asset1Addr}-${asset2Addr}`
+            const [asset1, asset2] = (tokens.get(lockToken) as ComplexToken).assets;
+            token.assets = [asset1, asset2, rewardsToken];
 
-            const [asset1, asset2] = tokens.get(lockToken)?.logo.split("-") as SecretAddress[];
-
-            relatedTokens.set(asset1, new Set([...new Set(relatedTokens.get(asset1)), t.address]));
-            relatedTokens.set(asset2, new Set([...new Set(relatedTokens.get(asset2)), t.address]));
+            relatedTokens.set(asset1, new Set([...new Set(relatedTokens.get(asset1)), token.address]));
+            relatedTokens.set(asset2, new Set([...new Set(relatedTokens.get(asset2)), token.address]));
           } else {
-            relatedTokens.set(lockToken, new Set([...new Set(relatedTokens.get(lockToken)), t.address]));
+            relatedTokens.set(lockToken, new Set([...new Set(relatedTokens.get(lockToken)), token.address]));
           }
 
-          tokens.set(t.address, {
-            address: t.address,
-            codeHash: t.codeHash,
-            name: `Rewards ${tokens.get(lockToken)?.symbol} ➜ ${tokens.get(rewardsToken)?.symbol}`,
-            symbol: "",
-            logo: `${lockTokenLogo}-${rewardsToken}`,
-            type: "REWARDS",
-          });
+          tokens.set(token.address, token);
 
           continue;
+        } else if (token.type === "SECRET" || token.type === "ETH" || token.type === "BSC") {
+          token.logo = `${window.location.origin}/${token.logo}`;
         }
 
-        tokens.set(
-          t.address,
-          Object.assign({}, t, {
-            logo: `${window.location.origin}/${t.logo}`,
-          })
-        );
+        tokens.set(token.address, token);
       }
 
       setTokens(tokens);
@@ -477,68 +438,77 @@ function TokenCheckBox({
     return null;
   }
 
-  const classes = useStyles();
+  let label = <>Placeholder</>;
 
-  const { address, name, symbol, logo, type } = token;
+  if (token.type === "SECRET" || token.type === "ETH" || token.type === "BSC") {
+    const { symbol, name } = token as BasicToken;
 
-  let label = (
-    <div style={{ display: "flex", alignItems: "center" }}>
-      <span style={{ marginRight: "0.3em" }}>
-        <TokenLogo token={token} />
-      </span>
-      {symbol.length > 0 ? `${name} (${symbol})` : name}
-    </div>
-  );
-
-  if (type == "LP") {
-    const [token1, token2] = logo.split("-") as SecretAddress[];
+    label = (
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <span style={{ marginRight: "0.3em" }}>
+          <TokenLogo token={token as BasicToken} />
+        </span>
+        {symbol.length > 0 ? `${name} (${symbol})` : name}
+      </div>
+    );
+  } else if (token.type == "LP") {
+    const [asset1, asset2] = (token as ComplexToken).assets;
 
     label = (
       <div style={{ display: "flex", alignItems: "center" }}>
         <span style={{ marginRight: "0.2em" }}>
-          <TokenLogo token={tokens.get(token1) as Token} />
+          <TokenLogo token={tokens.get(asset1) as BasicToken} />
         </span>
         <span style={{ marginRight: "0.3em" }}>
-          <TokenLogo token={tokens.get(token2) as Token} />
+          <TokenLogo token={tokens.get(asset2) as BasicToken} />
         </span>
-        {name}
+        {`LP ${(tokens.get(asset1) as BasicToken).symbol}-${(tokens.get(asset2) as BasicToken).symbol}`}
       </div>
     );
-  } else if (type == "REWARDS") {
-    const [a, b, c] = logo.split("-") as SecretAddress[];
+  } else if (token.type == "REWARDS") {
+    const [a, b, c] = (token as ComplexToken).assets;
 
-    const lockLogo1 = a;
-    let lockLogo2: SecretAddress | undefined;
-    let rewardsLogo: SecretAddress;
+    const lockAsset1 = a;
+    let lockAsset2: SecretAddress | undefined;
+    let rewardsAsset: SecretAddress;
 
     if (c) {
-      lockLogo2 = b;
-      rewardsLogo = c;
+      lockAsset2 = b;
+      rewardsAsset = c;
     } else {
-      rewardsLogo = b;
+      rewardsAsset = b;
+    }
+
+    let symbol = `${(tokens.get(lockAsset1) as BasicToken).symbol} ➜ ${
+      (tokens.get(rewardsAsset) as BasicToken).symbol
+    }`;
+    if (lockAsset2) {
+      symbol = `${(tokens.get(lockAsset1) as BasicToken).symbol}-${(tokens.get(lockAsset2) as BasicToken).symbol} ➜ ${
+        (tokens.get(rewardsAsset) as BasicToken).symbol
+      }`;
     }
 
     label = (
       <div style={{ display: "flex", alignItems: "center" }}>
-        {lockLogo2 ? (
+        {lockAsset2 ? (
           <>
             <span style={{ marginRight: "0.2em" }}>
-              <TokenLogo token={tokens.get(lockLogo1) as Token} />
+              <TokenLogo token={tokens.get(lockAsset1) as BasicToken} />
             </span>
             <span style={{ marginRight: "0.2em" }}>
-              <TokenLogo token={tokens.get(lockLogo2) as Token} />
+              <TokenLogo token={tokens.get(lockAsset2) as BasicToken} />
             </span>
           </>
         ) : (
           <span style={{ marginRight: "0.2em" }}>
-            <TokenLogo token={tokens.get(lockLogo1) as Token} />
+            <TokenLogo token={tokens.get(lockAsset1) as BasicToken} />
           </span>
         )}
         {"➜"}
         <span style={{ marginLeft: "0.2em", marginRight: "0.3em" }}>
-          <TokenLogo token={tokens.get(rewardsLogo) as Token} />
+          <TokenLogo token={tokens.get(rewardsAsset) as BasicToken} />
         </span>
-        {name}
+        {`Rewards ${symbol}`}
       </div>
     );
   }
@@ -547,15 +517,20 @@ function TokenCheckBox({
     <div>
       <FormControlLabel
         control={
-          <Checkbox color="primary" name={address} checked={selectedTokens.has(address)} onChange={handleCheckToken} />
+          <Checkbox
+            color="primary"
+            name={token.address}
+            checked={selectedTokens.has(token.address)}
+            onChange={handleCheckToken}
+          />
         }
-        label={label}
+        label={label as JSX.Element}
       />
     </div>
   );
 }
 
-function TokenLogo({ token }: { token: Token }) {
+function TokenLogo({ token }: { token: BasicToken }) {
   if (!token) {
     return null;
   }
