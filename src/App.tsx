@@ -1,7 +1,10 @@
 import React, { useRef, useState, useEffect, ChangeEvent } from "react";
 import ReactDOM from "react-dom";
+import "./index.css";
 
 import { Button, Checkbox, CircularProgress, FormControlLabel, Avatar, TextField, Badge } from "@material-ui/core";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import GitHubIcon from "@material-ui/icons/GitHub";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 
 import { ComplexToken, SecretAddress, Token, BasicToken, tokenList as localTokens } from "./tokens";
@@ -31,9 +34,38 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+const footerHeight = "1.8em";
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <div style={{ minHeight: `calc(100vh - ${footerHeight})` }}>
+      <App />
+    </div>
+    <footer
+      style={{
+        height: footerHeight,
+        width: "100%",
+        backgroundColor: "#e7e7e7",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        position: "relative",
+        left: 0,
+        bottom: 0,
+      }}
+    >
+      <span style={{ marginRight: "0.3em" }}>Made with</span>
+      <FavoriteIcon fontSize="small" color="secondary" />
+      <span style={{ margin: "0 0.3em" }}>by Team Enigma</span>
+      <a
+        href="https://github.com/enigmampc/ViewingKeysWizard"
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{ color: "black" }}
+      >
+        <GitHubIcon fontSize="small" />
+      </a>
+    </footer>
   </React.StrictMode>,
   document.getElementById("root")
 );
