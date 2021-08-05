@@ -346,7 +346,7 @@ export default function App() {
               <a href="https://app.secretswap.io" target="_blank">
                 SecretSwap
               </a>
-              , so all feedback is most welcome!
+              , so any and all feedback is most welcome!
             </Typography>
             <Typography gutterBottom>
               Feedback channels:
@@ -368,7 +368,7 @@ export default function App() {
                   <a href="https://t.me/SCRTCommunity" target="_blank">
                     Telegram
                   </a>{" "}
-                  or{" "}
+                  or on{" "}
                   <a href="https://chat.scrt.network" target="_blank">
                     Discord
                   </a>
