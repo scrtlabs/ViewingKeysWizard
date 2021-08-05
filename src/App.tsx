@@ -2,9 +2,25 @@ import React, { useRef, useState, useEffect, ChangeEvent } from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 
-import { Button, Checkbox, CircularProgress, FormControlLabel, Avatar, TextField, Badge } from "@material-ui/core";
+import {
+  Button,
+  Checkbox,
+  CircularProgress,
+  FormControlLabel,
+  Avatar,
+  TextField,
+  Badge,
+  IconButton,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Typography,
+} from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import GitHubIcon from "@material-ui/icons/GitHub";
+import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
+import CloseIcon from "@material-ui/icons/Close";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 
 import { ComplexToken, SecretAddress, Token, BasicToken, tokenList as localTokens } from "./tokens";
@@ -84,6 +100,7 @@ export default function App() {
   const [myAddress, setMyAddress] = useState<SecretAddress | null>(null);
   const [secretjs, setSecretjs] = useState<SigningCosmWasmClient | null>(null);
   const viewingKeyRef = useRef<{ value: string }>({ value: "" });
+  const [isHelpDialogOpened, setIsHelpDialogOpened] = useState(false);
 
   useEffect(() => {
     const loadTokens = async () => {
@@ -290,6 +307,81 @@ export default function App() {
         >
           {loading ? <CircularProgress size="2em" /> : "Set"}
         </Button>
+        <IconButton color="primary" onClick={() => setIsHelpDialogOpened(true)}>
+          <HelpOutlineIcon />
+        </IconButton>
+        <Dialog onClose={() => setIsHelpDialogOpened(false)} open={isHelpDialogOpened}>
+          <DialogTitle>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <Typography variant="h5">What's this?</Typography>
+              <IconButton onClick={() => setIsHelpDialogOpened(false)}>
+                <CloseIcon />
+              </IconButton>
+            </div>
+          </DialogTitle>
+          <DialogContent dividers>
+            <Typography gutterBottom>
+              Setup all your secret tokens at once!
+              <br />
+              Use it like this:
+              <ul>
+                <li>Type in a password that will be used as your viewing key</li>
+                <li>Select all your secret tokens</li>
+                <li>Click on "Set"</li>
+              </ul>
+            </Typography>
+            <Typography gutterBottom>
+              This will send a single transaction that will set the viewing key on all of your secret tokens, then Keplr
+              will prompt you to store the viewing key locally in your wallet.
+            </Typography>
+            <Typography variant="h6" gutterBottom>
+              We need your help!
+            </Typography>
+            <Typography gutterBottom>
+              This app is in open beta, and we hope to eventually integrate it into the{" "}
+              <a href="https://bridge.scrt.network" target="_blank">
+                Secret Bridge
+              </a>{" "}
+              and{" "}
+              <a href="https://app.secretswap.io" target="_blank">
+                SecretSwap
+              </a>
+              , so all feedback is most welcome!
+            </Typography>
+            <Typography gutterBottom>
+              Feedback channels:
+              <ul>
+                <li>
+                  In a{" "}
+                  <a href="https://github.com/enigmampc/ViewingKeysWizard/issues/new" target="_blank">
+                    GitHub issue
+                  </a>
+                </li>
+                <li>
+                  On{" "}
+                  <a href="https://forum.scrt.network/t/viewing-keys-wizard-feedback-wanted/4046" target="_blank">
+                    the forum
+                  </a>
+                </li>
+                <li>
+                  Tag @assafmo on{" "}
+                  <a href="https://t.me/SCRTCommunity" target="_blank">
+                    Telegram
+                  </a>{" "}
+                  or{" "}
+                  <a href="https://chat.scrt.network" target="_blank">
+                    Discord
+                  </a>
+                </li>
+              </ul>
+            </Typography>
+          </DialogContent>
+          <DialogActions>
+            <Button autoFocus onClick={() => setIsHelpDialogOpened(false)} color="primary">
+              Got it
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
       <div style={{ display: "flex" }}>
         <FormControlLabel
