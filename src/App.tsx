@@ -260,7 +260,7 @@ export default function App() {
 
               while (true) {
                 try {
-                  const tx = await secretjs.restClient.txById(transactionHash, false);
+                  const tx = await secretjs.restClient.txById(transactionHash, true);
 
                   if (!tx.raw_log.startsWith("[")) {
                     console.error(`Tx failed: ${tx.raw_log}`);
