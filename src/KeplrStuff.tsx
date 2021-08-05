@@ -48,6 +48,8 @@ export function KeplrPanel({
   }
 }
 
+export const chainId = "secret-2";
+
 async function setupKeplr(
   setSecretjs: React.Dispatch<React.SetStateAction<SigningCosmWasmClient | null>>,
   setMyAddress: React.Dispatch<React.SetStateAction<SecretAddress | null>>
@@ -57,8 +59,6 @@ async function setupKeplr(
   while (!window.keplr || !window.getEnigmaUtils || !window.getOfflineSigner) {
     await sleep(50);
   }
-
-  const chainId = "secret-2";
 
   await window.keplr.enable(chainId);
 
@@ -79,4 +79,10 @@ async function setupKeplr(
 
   setMyAddress(myAddress as SecretAddress);
   setSecretjs(secretjs);
+}
+
+export async function setKeplrViewingKeys(tokens: SecretAddress[], viewingKey: string) {
+  for (const token of tokens) {
+    await window.keplr?.suggestToken(chainId, token, viewingKey);
+  }
 }

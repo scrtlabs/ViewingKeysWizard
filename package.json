@@ -16,7 +16,7 @@
     "secretjs": "0.16.0"
   },
   "devDependencies": {
-    "@keplr-wallet/types": "0.8.11-rc.0",
+    "@keplr-wallet/types": "0.8.13",
     "@types/react": "17.0.13",
     "@types/react-copy-to-clipboard": "5.0.1",
     "@types/react-dom": "17.0.8",

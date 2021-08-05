@@ -11,7 +11,7 @@ import { ComplexToken, SecretAddress, Token, BasicToken, tokenList as localToken
 import { SigningCosmWasmClient } from "secretjs";
 import { StdFee } from "secretjs/types/types";
 import { Window as KeplrWindow } from "@keplr-wallet/types";
-import { KeplrPanel } from "./KeplrPanel";
+import { KeplrPanel, setKeplrViewingKeys } from "./KeplrStuff";
 declare global {
   interface Window extends KeplrWindow {}
 }
@@ -244,15 +244,16 @@ export default function App() {
               return;
             }
 
+            const tokensToSet = Array.from(selectedTokens);
+            const viewingKeyToSet = viewingKeyRef.current.value;
+
             setLoading(true);
             try {
               const { transactionHash } = await secretjs.multiExecute(
-                Array.from(selectedTokens).map((contractAddress) => ({
-                  contractAddress,
-                  contractCodeHash: tokens.get(contractAddress)?.codeHash,
-                  handleMsg: {
-                    set_viewing_key: { key: viewingKeyRef.current.value },
-                  },
+                tokensToSet.map((token) => ({
+                  contractAddress: token,
+                  contractCodeHash: tokens.get(token)?.codeHash,
+                  handleMsg: { set_viewing_key: { key: viewingKeyToSet } },
                 })),
                 "",
                 getFeeForExecute(calculateGasLimit(selectedTokens.size))
@@ -275,6 +276,8 @@ export default function App() {
 
                 await sleep(5000);
               }
+
+              await setKeplrViewingKeys(tokensToSet, viewingKeyToSet);
 
               viewingKeyRef.current.value = "";
             } catch (e) {

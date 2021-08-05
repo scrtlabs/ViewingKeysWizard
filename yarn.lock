@@ -355,16 +355,16 @@
   resolved "https://registry.yarnpkg.com/@iov/utils/-/utils-2.0.2.tgz#3527f376d26100e07ac823bf87bebd0f24680d1c"
   integrity sha512-4D8MEvTcFc/DVy5q25vHxRItmgJyeX85dixMH+MxdKr+yy71h3sYk+sVBEIn70uqGP7VqAJkGOPNFs08/XYELw==
 
-"@keplr-wallet/types@0.8.11-rc.0":
-  version "0.8.11-rc.0"
-  resolved "https://registry.yarnpkg.com/@keplr-wallet/types/-/types-0.8.11-rc.0.tgz#d1a2b84a3bc387e6597f548b8184914cdeb9cf39"
-  integrity sha512-t2HvKnCmn9fHqW+yOD6jijYupKpcX6J3qpgIWnIfcmpKuLFBpI31IicgIJmYS5zba3JxIKhC+590jTAjiyXoZw==
+"@keplr-wallet/types@0.8.13":
+  version "0.8.13"
+  resolved "https://registry.yarnpkg.com/@keplr-wallet/types/-/types-0.8.13.tgz#c4ea5e5f08af3c8b2708c786b2e85f9aa4c24a4e"
+  integrity sha512-UaVATHmGaC5REyprLahyNIC3pZZQV+VTxMz10X3+hD6w2YgyLKimmqVg7ndVQhZrNZrVmMqgATl/UCCFgE6hlQ==
   dependencies:
     "@cosmjs/launchpad" "^0.24.0-alpha.25"
     "@cosmjs/proto-signing" "^0.24.0-alpha.25"
     axios "^0.21.0"
     long "^4.0.0"
-    secretjs "^0.13.0"
+    secretjs "^0.16.0"
 
 "@material-ui/core@4.11.4":
   version "4.11.4"
@@ -1316,10 +1316,10 @@ secretjs@0.16.0:
     pako "1.0.11"
     secure-random "1.1.2"
 
-secretjs@^0.13.0:
-  version "0.13.0"
-  resolved "https://registry.yarnpkg.com/secretjs/-/secretjs-0.13.0.tgz#306d0f3b34229660610fb28441bbdf11c9cf38b9"
-  integrity sha512-/wZzEftbaPllirhRxkG104chFosY1EvLFr+KNFN8eRy/4DoUx10rB49JuqiH0cVZNDc06alTZGLEqfGAjKXPjQ==
+secretjs@^0.16.0:
+  version "0.16.1"
+  resolved "https://registry.yarnpkg.com/secretjs/-/secretjs-0.16.1.tgz#722985cf458ba2d1ab4fa1c777b3fae006e7918d"
+  integrity sha512-F5ypX1YfH4dWMkrDUhWH4hS2gh7dlyTQ5rXev9+dSp7KaIdbSSz9G9giASYZdm604BCENB45XBVGxcA+GmVOEA==
   dependencies:
     "@iov/crypto" "2.1.0"
     "@iov/encoding" "2.1.0"
