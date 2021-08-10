@@ -81,9 +81,14 @@ async function setupKeplr(
   setSecretjs(secretjs);
 }
 
-export async function setKeplrViewingKeys(tokens: SecretAddress[], viewingKey: string) {
-  for (const token of tokens) {
-    await window.keplr?.suggestToken(chainId, token, viewingKey);
-    console.log("Viewing key saved in Keplr");
+export async function setKeplrViewingKeys(tokensToSet: Array<{ token: SecretAddress; viewingKey: string }>) {
+  if (!window.keplr) {
+    console.error("Keplr not present");
+    return;
+  }
+
+  for (const { token, viewingKey } of tokensToSet) {
+    await window.keplr.suggestToken(chainId, token, viewingKey);
+    console.log(`Viewing key ${viewingKey} saved for token ${token} in Keplr`);
   }
 }

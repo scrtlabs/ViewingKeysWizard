@@ -238,19 +238,6 @@ export default function App() {
           justifyContent: "center",
         }}
       >
-        <TextField
-          label="Viewing Key"
-          inputRef={viewingKeyRef}
-          style={{ width: "25%", marginRight: "0.3rem", minHeight: "4.5rem" }}
-          error={isTooMuchGas}
-          helperText={
-            isTooMuchGas
-              ? `Gas limit exeeds block gas limit: ${Intl.NumberFormat().format(
-                  calculateGasLimit(selectedTokens.size)
-                )} > 10,000,000`
-              : null
-          }
-        />
         <Button
           variant="contained"
           color="primary"
@@ -261,16 +248,21 @@ export default function App() {
               return;
             }
 
-            const tokensToSet = Array.from(selectedTokens);
-            const viewingKeyToSet = viewingKeyRef.current.value;
+            const tokensToSet: Array<{ token: SecretAddress; viewingKey: string }> = Array.from(selectedTokens).map(
+              (token) => {
+                const buf = new Uint8Array(32);
+                window.crypto.getRandomValues(buf);
+                return { token, viewingKey: toHexString(buf) };
+              }
+            );
 
             setLoading(true);
             try {
               const { transactionHash } = await secretjs.multiExecute(
-                tokensToSet.map((token) => ({
+                tokensToSet.map(({ token, viewingKey }) => ({
                   contractAddress: token,
                   contractCodeHash: tokens.get(token)?.codeHash,
-                  handleMsg: { set_viewing_key: { key: viewingKeyToSet } },
+                  handleMsg: { set_viewing_key: { key: viewingKey } },
                 })),
                 "",
                 getFeeForExecute(calculateGasLimit(selectedTokens.size))
@@ -294,7 +286,7 @@ export default function App() {
                 await sleep(5000);
               }
 
-              await setKeplrViewingKeys(tokensToSet, viewingKeyToSet);
+              await setKeplrViewingKeys(tokensToSet);
 
               viewingKeyRef.current.value = "";
             } catch (e) {
@@ -305,7 +297,7 @@ export default function App() {
             }
           }}
         >
-          {loading ? <CircularProgress size="2rem" /> : "Set"}
+          {loading ? <CircularProgress size="2rem" /> : "Set Viewing Keys"}
         </Button>
         <IconButton color="primary" onClick={() => setIsHelpDialogOpened(true)}>
           <HelpOutlineIcon />
@@ -325,14 +317,13 @@ export default function App() {
               <br />
               Use it like this:
               <ul>
-                <li>Type in a password that will be used as your viewing key</li>
                 <li>Select all your secret tokens</li>
-                <li>Click on "Set"</li>
+                <li>Click on "Set Viewing Keys"</li>
               </ul>
             </Typography>
             <Typography gutterBottom>
-              This will send a single transaction that will set the viewing key on all of your secret tokens, then Keplr
-              will prompt you to store the viewing key locally in your wallet.
+              This will send a single transaction that will set strong viewing keys on all your secret tokens, then
+              Keplr will prompt you to store the viewing keys locally in your wallet.
             </Typography>
             <Typography variant="h6" gutterBottom>
               We need your help!
@@ -642,4 +633,8 @@ function calculateGasLimit(numOfMsgs: number): number {
   }
 
   return gasPerMsg * numOfMsgs;
+}
+
+function toHexString(byteArray: Uint8Array): string {
+  return Array.from(byteArray, (byte) => ("0" + (byte & 0xff).toString(16)).slice(-2)).join("");
 }
