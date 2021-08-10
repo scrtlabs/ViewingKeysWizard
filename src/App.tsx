@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const footerHeight = "1.8em";
+const footerHeight = "1.8rem";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -70,9 +70,9 @@ ReactDOM.render(
         bottom: 0,
       }}
     >
-      <span style={{ marginRight: "0.3em" }}>Made with</span>
+      <span style={{ marginRight: "0.3rem" }}>Made with</span>
       <FavoriteIcon fontSize="small" color="secondary" />
-      <span style={{ margin: "0 0.3em" }}>by Team Enigma</span>
+      <span style={{ margin: "0 0.3rem" }}>by Team Enigma</span>
       <a
         href="https://github.com/enigmampc/ViewingKeysWizard"
         target="_blank"
@@ -220,13 +220,13 @@ export default function App() {
   const isTooMuchGas = calculateGasLimit(selectedTokens.size) > 10_000_000;
 
   return (
-    <div style={{ padding: "0.5em" }}>
+    <div style={{ padding: "0.5rem" }}>
       <div
         style={{
           display: "flex",
           justifyContent: "flex-end",
           alignItems: "center",
-          minHeight: "3em",
+          minHeight: "3rem",
         }}
       >
         <KeplrPanel secretjs={secretjs} setSecretjs={setSecretjs} myAddress={myAddress} setMyAddress={setMyAddress} />
@@ -241,7 +241,7 @@ export default function App() {
         <TextField
           label="Viewing Key"
           inputRef={viewingKeyRef}
-          style={{ width: "25%", marginRight: "0.3em", minHeight: "4.5em" }}
+          style={{ width: "25%", marginRight: "0.3rem", minHeight: "4.5rem" }}
           error={isTooMuchGas}
           helperText={
             isTooMuchGas
@@ -305,7 +305,7 @@ export default function App() {
             }
           }}
         >
-          {loading ? <CircularProgress size="2em" /> : "Set"}
+          {loading ? <CircularProgress size="2rem" /> : "Set"}
         </Button>
         <IconButton color="primary" onClick={() => setIsHelpDialogOpened(true)}>
           <HelpOutlineIcon />
@@ -394,8 +394,8 @@ export default function App() {
         />
       </div>
       <hr />
-      <div style={{ display: "flex " }}>
-        <div>
+      <div style={{ display: "flex" }}>
+        <div style={{ minWidth: "15rem" }}>
           {Array.from(tokens.keys())
             .filter((addr) => tokens.get(addr)?.type === "SECRET")
             .map((addr) => (
@@ -495,7 +495,7 @@ function TokenCheckBox({
 
     label = (
       <div style={{ display: "flex", alignItems: "center" }}>
-        <span style={{ marginRight: "0.3em" }}>
+        <span style={{ marginRight: "0.3rem" }}>
           <TokenLogo token={token as BasicToken} />
         </span>
         {symbol.length > 0 ? `${name} (${symbol})` : name}
@@ -506,10 +506,10 @@ function TokenCheckBox({
 
     label = (
       <div style={{ display: "flex", alignItems: "center" }}>
-        <span style={{ marginRight: "0.2em" }}>
+        <span style={{ marginRight: "0.2rem" }}>
           <TokenLogo token={tokens.get(asset1) as BasicToken} />
         </span>
-        <span style={{ marginRight: "0.3em" }}>
+        <span style={{ marginRight: "0.3rem" }}>
           <TokenLogo token={tokens.get(asset2) as BasicToken} />
         </span>
         {`LP ${(tokens.get(asset1) as BasicToken).symbol}-${(tokens.get(asset2) as BasicToken).symbol}`}
@@ -542,23 +542,23 @@ function TokenCheckBox({
       <div style={{ display: "flex", alignItems: "center" }}>
         {lockAsset2 ? (
           <>
-            <span style={{ marginRight: "0.2em" }}>
+            <span style={{ marginRight: "0.2rem" }}>
               <TokenLogo token={tokens.get(lockAsset1) as BasicToken} />
             </span>
-            <span style={{ marginRight: "0.2em" }}>
+            <span style={{ marginRight: "0.2rem" }}>
               <TokenLogo token={tokens.get(lockAsset2) as BasicToken} />
             </span>
           </>
         ) : (
-          <span style={{ marginRight: "0.2em" }}>
+          <span style={{ marginRight: "0.2rem" }}>
             <TokenLogo token={tokens.get(lockAsset1) as BasicToken} />
           </span>
         )}
         {"➜"}
-        <span style={{ marginLeft: "0.2em", marginRight: "0.3em" }}>
+        <span style={{ marginLeft: "0.2rem", marginRight: "0.3rem" }}>
           <TokenLogo token={tokens.get(rewardsAsset) as BasicToken} />
         </span>
-        {`Rewards ${symbol}`}
+        {`Rewards ${symbol} ${(token as ComplexToken).isDeprecated ? "(Old)" : ""}`}
       </div>
     );
   }
@@ -624,7 +624,7 @@ function TokenLogo({ token }: { token: BasicToken }) {
 }
 
 function calculateGasLimit(numOfMsgs: number): number {
-  let gasPerMsg = 105_000;
+  let gasPerMsg = 110_000;
   if (numOfMsgs >= 2) {
     gasPerMsg = 85_000;
   }

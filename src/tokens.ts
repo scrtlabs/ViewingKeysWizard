@@ -16,6 +16,7 @@ export interface BasicToken extends Token {
 export interface ComplexToken extends Token {
   assets: SecretAddress[];
   type: "LP" | "REWARDS";
+  isDeprecated?: boolean;
 }
 
 // Note that this list must be ordered as BasicToken then LP then REWARDS
@@ -51,6 +52,14 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     name: "Fat Secret",
     symbol: "FATS",
     logo: "fat_secret.png",
+    type: "SECRET",
+  },
+  {
+    address: "secret19ungtd2c7srftqdwgq0dspwvrw63dhu79qxv88",
+    codeHash: "667a3dbec9096de530a5521a83e6090df0956475bd4acc8d05f382d4f8ffdd05",
+    name: "Secret Monero",
+    symbol: "sXMR",
+    logo: "sXMR.png",
     type: "SECRET",
   },
   // ETH
@@ -1115,10 +1124,17 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     type: "REWARDS",
   },
   {
+    address: "secret1wuhypk53eukm9xvlzu2z30rtyqfh74qtqgvlvr",
+    assets: ["secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt", "secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt"],
+    codeHash: "10fd545068e58cd7dab0d26467481e00566158e7d516218576b1dc8f5d3f3668",
+    type: "REWARDS",
+  },
+  {
     address: "secret1y9z3ck449a46r4ku7klkhdxnlq07zh4shc7cuy",
     assets: ["secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt", "secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt"],
     codeHash: "c0685e563cf038e6bc1e00c4187c8f502a96a5e393fd3c4b18a1367f0b083d7d",
     type: "REWARDS",
+    isDeprecated: true,
   },
   {
     address: "secret146dg4c7jt5y37nw94swp6sahleshefxhrerpqm",
