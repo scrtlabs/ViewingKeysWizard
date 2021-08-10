@@ -92,3 +92,16 @@ export async function setKeplrViewingKeys(tokensToSet: Array<{ token: SecretAddr
     console.log(`Viewing key ${viewingKey} saved for token ${token} in Keplr`);
   }
 }
+
+export async function getKeplrViewingKey(token: SecretAddress): Promise<string | null> {
+  if (!window.keplr) {
+    console.error("Keplr not present");
+    return null;
+  }
+
+  try {
+    return await window.keplr.getSecret20ViewingKey(chainId, token);
+  } catch (e) {
+    return null;
+  }
+}

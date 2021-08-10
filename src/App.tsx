@@ -8,7 +8,6 @@ import {
   CircularProgress,
   FormControlLabel,
   Avatar,
-  TextField,
   Badge,
   IconButton,
   Dialog,
@@ -27,7 +26,7 @@ import { ComplexToken, SecretAddress, Token, BasicToken, tokenList as localToken
 import { SigningCosmWasmClient } from "secretjs";
 import { StdFee } from "secretjs/types/types";
 import { Window as KeplrWindow } from "@keplr-wallet/types";
-import { KeplrPanel, setKeplrViewingKeys } from "./KeplrStuff";
+import { chainId, getKeplrViewingKey, KeplrPanel, setKeplrViewingKeys } from "./KeplrStuff";
 declare global {
   interface Window extends KeplrWindow {}
 }
@@ -90,6 +89,7 @@ const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export default function App() {
   const [loading, setLoading] = useState<boolean>(false);
+  const [loadingCsv, setLoadingCsv] = useState<boolean>(false);
   const [tokens, setTokens] = useState<Map<SecretAddress, Token>>(new Map<SecretAddress, Token>());
   const [relatedTokens, setRelatedTokens] = useState<Map<SecretAddress, Set<SecretAddress>>>(
     new Map<SecretAddress, Set<SecretAddress>>()
@@ -99,7 +99,6 @@ export default function App() {
   const [isSelectRelated, setSelectRelated] = useState<boolean>(false);
   const [myAddress, setMyAddress] = useState<SecretAddress | null>(null);
   const [secretjs, setSecretjs] = useState<SigningCosmWasmClient | null>(null);
-  const viewingKeyRef = useRef<{ value: string }>({ value: "" });
   const [isHelpDialogOpened, setIsHelpDialogOpened] = useState(false);
 
   useEffect(() => {
@@ -287,8 +286,6 @@ export default function App() {
               }
 
               await setKeplrViewingKeys(tokensToSet);
-
-              viewingKeyRef.current.value = "";
             } catch (e) {
               console.error(`Error: ${e.message}`);
               alert(`Error: ${e.message}`);
@@ -383,6 +380,43 @@ export default function App() {
           control={<Checkbox color="secondary" onChange={handleSelectRelated} checked={isSelectRelated} />}
           label={`Select related`}
         />
+        <Button
+          variant="outlined"
+          color="primary"
+          disabled={!secretjs || loadingCsv}
+          onClick={async () => {
+            if (!secretjs) {
+              console.error("Wat?");
+              return;
+            }
+
+            setLoadingCsv(true);
+
+            const tokenList = Array.from(tokens.keys());
+            const viewingKeys = await Promise.all(tokenList.map((token) => getKeplrViewingKey(token)));
+
+            let csvContent = `"Address","Name","Viewing Key"\n`;
+            for (let i = 0; i < tokenList.length; i++) {
+              if (viewingKeys[i] === null) {
+                continue;
+              }
+
+              const token = tokens.get(tokenList[i]);
+              if (!token) {
+                console.error("Uh?");
+                continue;
+              }
+
+              csvContent += `"${token.address}","${getTokenName(token, tokens)}","${viewingKeys[i]}"\n`;
+            }
+
+            download("keplr_viewing_keys.csv", csvContent);
+
+            setLoadingCsv(false);
+          }}
+        >
+          {loadingCsv ? <CircularProgress size="1rem" /> : "Export Keplr tokens to CSV"}
+        </Button>
       </div>
       <hr />
       <div style={{ display: "flex" }}>
@@ -482,14 +516,12 @@ function TokenCheckBox({
   let label = <>Placeholder</>;
 
   if (token.type === "SECRET" || token.type === "ETH" || token.type === "BSC") {
-    const { symbol, name } = token as BasicToken;
-
     label = (
       <div style={{ display: "flex", alignItems: "center" }}>
         <span style={{ marginRight: "0.3rem" }}>
           <TokenLogo token={token as BasicToken} />
         </span>
-        {symbol.length > 0 ? `${name} (${symbol})` : name}
+        {getTokenName(token, tokens)}
       </div>
     );
   } else if (token.type == "LP") {
@@ -503,7 +535,7 @@ function TokenCheckBox({
         <span style={{ marginRight: "0.3rem" }}>
           <TokenLogo token={tokens.get(asset2) as BasicToken} />
         </span>
-        {`LP ${(tokens.get(asset1) as BasicToken).symbol}-${(tokens.get(asset2) as BasicToken).symbol}`}
+        {getTokenName(token, tokens)}
       </div>
     );
   } else if (token.type == "REWARDS") {
@@ -518,15 +550,6 @@ function TokenCheckBox({
       rewardsAsset = c;
     } else {
       rewardsAsset = b;
-    }
-
-    let symbol = `${(tokens.get(lockAsset1) as BasicToken).symbol} ➜ ${
-      (tokens.get(rewardsAsset) as BasicToken).symbol
-    }`;
-    if (lockAsset2) {
-      symbol = `${(tokens.get(lockAsset1) as BasicToken).symbol}-${(tokens.get(lockAsset2) as BasicToken).symbol} ➜ ${
-        (tokens.get(rewardsAsset) as BasicToken).symbol
-      }`;
     }
 
     label = (
@@ -549,7 +572,7 @@ function TokenCheckBox({
         <span style={{ marginLeft: "0.2rem", marginRight: "0.3rem" }}>
           <TokenLogo token={tokens.get(rewardsAsset) as BasicToken} />
         </span>
-        {`Rewards ${symbol} ${(token as ComplexToken).isDeprecated ? "(Old)" : ""}`}
+        {getTokenName(token, tokens)}
       </div>
     );
   }
@@ -637,4 +660,52 @@ function calculateGasLimit(numOfMsgs: number): number {
 
 function toHexString(byteArray: Uint8Array): string {
   return Array.from(byteArray, (byte) => ("0" + (byte & 0xff).toString(16)).slice(-2)).join("");
+}
+
+function getTokenName(token: Token, tokens: Map<SecretAddress, Token>): string {
+  if (token.type === "SECRET" || token.type === "ETH" || token.type === "BSC") {
+    const { symbol, name } = token as BasicToken;
+    return `${name} (${symbol})`;
+  } else if (token.type === "LP") {
+    const [asset1, asset2] = (token as ComplexToken).assets;
+    return `LP ${(tokens.get(asset1) as BasicToken).symbol}-${(tokens.get(asset2) as BasicToken).symbol}`;
+  } else {
+    // token.type === "REWARDS"
+    const [a, b, c] = (token as ComplexToken).assets;
+
+    const lockAsset1 = a;
+    let lockAsset2: SecretAddress | undefined;
+    let rewardsAsset: SecretAddress;
+
+    if (c) {
+      lockAsset2 = b;
+      rewardsAsset = c;
+    } else {
+      rewardsAsset = b;
+    }
+
+    let symbol = `${(tokens.get(lockAsset1) as BasicToken).symbol} ➜ ${
+      (tokens.get(rewardsAsset) as BasicToken).symbol
+    }`;
+    if (lockAsset2) {
+      symbol = `${(tokens.get(lockAsset1) as BasicToken).symbol}-${(tokens.get(lockAsset2) as BasicToken).symbol} ➜ ${
+        (tokens.get(rewardsAsset) as BasicToken).symbol
+      }`;
+    }
+
+    return `Rewards ${symbol} ${(token as ComplexToken).isDeprecated ? "(Old)" : ""}`;
+  }
+}
+
+function download(filename: string, text: string) {
+  const element = document.createElement("a");
+  element.setAttribute("href", "data:application/octet-stream," + encodeURIComponent(text));
+  element.setAttribute("download", filename);
+
+  element.style.display = "none";
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
 }
