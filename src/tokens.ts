@@ -62,6 +62,14 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     logo: "sXMR.png",
     type: "SECRET",
   },
+  {
+    address: "secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt",
+    codeHash: "f8b27343ff08290827560a1ba358eece600c9ea7f403b02684ad87ae7af0f288",
+    name: "Buttcoin",
+    symbol: "BUTT",
+    logo: "butt.png",
+    type: "SECRET",
+  },
   // ETH
   {
     address: "secret1wuzzjsdhthpvuyeeyhfq2ftsn3mvwf9rxy6ykw",
