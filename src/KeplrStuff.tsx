@@ -48,7 +48,7 @@ export function KeplrPanel({
   }
 }
 
-export const chainId = "secret-2";
+export const chainId = "secret-3";
 
 async function setupKeplr(
   setSecretjs: React.Dispatch<React.SetStateAction<SigningCosmWasmClient | null>>,
