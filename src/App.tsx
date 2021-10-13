@@ -19,6 +19,7 @@ import {
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
+import ReportProblemIcon from "@material-ui/icons/ReportProblem";
 import CloseIcon from "@material-ui/icons/Close";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 
@@ -230,6 +231,13 @@ export default function App() {
       >
         <KeplrPanel secretjs={secretjs} setSecretjs={setSecretjs} myAddress={myAddress} setMyAddress={setMyAddress} />
       </div>
+      <Typography align="center" component="div" variant="h5" gutterBottom>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "0.3em" }}>
+          <ReportProblemIcon />
+          <span>This app is broken until the next Keplr version comes out</span>
+          <ReportProblemIcon />
+        </div>
+      </Typography>
       <div
         style={{
           display: "flex",
@@ -240,7 +248,7 @@ export default function App() {
         <Button
           variant="contained"
           color="primary"
-          disabled={selectedTokens.size === 0 || !secretjs || loading || isTooMuchGas}
+          disabled /* ={selectedTokens.size === 0 || !secretjs || loading || isTooMuchGas} */
           onClick={async () => {
             if (!secretjs) {
               console.error("Wat?");
@@ -286,7 +294,7 @@ export default function App() {
               }
 
               await setKeplrViewingKeys(tokensToSet);
-            } catch (e) {
+            } catch (e: any) {
               console.error(`Error: ${e.message}`);
               alert(`Error: ${e.message}`);
             } finally {
@@ -415,7 +423,7 @@ export default function App() {
             setLoadingCsv(false);
           }}
         >
-          {loadingCsv ? <CircularProgress size="1rem" /> : "Export Keplr tokens to CSV"}
+          {loadingCsv ? <CircularProgress size="1rem" /> : "Export tokens from Keplr to CSV"}
         </Button>
       </div>
       <hr />
