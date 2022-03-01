@@ -27,7 +27,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "af74387e276be8874f07bec3a87023ee49b0e7ebe08178c49d0a49c3c98ed60e",
     name: "Secret SCRT",
     symbol: "sSCRT",
-    logo: "scrt.svg",
+    logo: "/scrt.svg",
     type: "SECRET",
   },
   {
@@ -35,7 +35,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "c7fe67b243dfedc625a28ada303434d6f5a46a3086e7d2b5063a814e9f9a379d",
     name: "Secret Finance",
     symbol: "SEFI",
-    logo: "sefi.svg",
+    logo: "/sefi.svg",
     type: "SECRET",
   },
   {
@@ -43,15 +43,63 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "84508d76f34061e5e394b596fc293f1bf66d33d03def5b77a27643f2bc0bea8d",
     name: "Sienna",
     symbol: "SIENNA",
-    logo: "sienna.svg",
+    logo: "/sienna.svg",
     type: "SECRET",
   },
   {
-    address: "secret1xzlgeyuuyqje79ma6vllregprkmgwgavk8y798",
-    codeHash: "15361339b59f2753fc365283d4a144dd3a4838e237022ac0249992d8d9f3b88e",
-    name: "Fat Secret",
-    symbol: "FATS",
-    logo: "fat_secret.png",
+    address: "secret1qfql357amn448duf5gvp9gr48sxx9tsnhupu3d",
+    codeHash: "fa824c4504f21fc59250da0cdf549dd392fd862baf2689d246a07b9e941f04a9",
+    name: "Shade",
+    symbol: "SHD",
+    logo: "/shade.svg",
+    type: "SECRET",
+  },
+  {
+    address: "secret1ra7avvjh9fhr7dtr3djutugwj59ptctsrakyyw",
+    codeHash: "ad91060456344fc8d8e93c0600a3957b8158605c044b3bef7048510b3157b807",
+    name: "Terra Luna",
+    symbol: "sLuna",
+    logo: "/luna.png",
+    type: "SECRET",
+  },
+  {
+    address: "secret14mzwd0ps5q277l20ly2q3aetqe3ev4m4260gf4",
+    codeHash: "ad91060456344fc8d8e93c0600a3957b8158605c044b3bef7048510b3157b807",
+    name: "Cosmos Hub",
+    symbol: "sATOM",
+    logo: "/atom.jpg",
+    type: "SECRET",
+  },
+  {
+    address: "secret1zwwealwm0pcl9cul4nt6f38dsy6vzplw8lp3qg",
+    codeHash: "ad91060456344fc8d8e93c0600a3957b8158605c044b3bef7048510b3157b807",
+    name: "Osmosis",
+    symbol: "sOSMO",
+    logo: "/osmo.jpeg",
+    type: "SECRET",
+  },
+  {
+    address: "secret129h4vu66y3gry6wzwa24rw0vtqjyn8tujuwtn9",
+    codeHash: "ad91060456344fc8d8e93c0600a3957b8158605c044b3bef7048510b3157b807",
+    name: "Terra USD",
+    symbol: "sUST",
+    logo: "/ust.png",
+    type: "SECRET",
+  },
+  {
+    address: "secret1k8cge73c3nh32d4u0dsd5dgtmk63shtlrfscj5",
+    codeHash: "ad91060456344fc8d8e93c0600a3957b8158605c044b3bef7048510b3157b807",
+    name: "Sentinel",
+    symbol: "sDVPN",
+    logo: "/dvpn.jpeg",
+    type: "SECRET",
+  },
+  {
+    address: "secret1ntvxnf5hzhzv8g87wn76ch6yswdujqlgmjh32w",
+    codeHash: "182d7230c396fa8f548220ff88c34cb0291a00046df9ff2686e407c3b55692e9",
+    name: "Chihuahua",
+    symbol: "sHUAHUA",
+    logo: "/huahua.jpg",
     type: "SECRET",
   },
   {
@@ -59,7 +107,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "667a3dbec9096de530a5521a83e6090df0956475bd4acc8d05f382d4f8ffdd05",
     name: "Secret Monero",
     symbol: "sXMR",
-    logo: "sXMR.png",
+    logo: "/sXMR.png",
     type: "SECRET",
   },
   {
@@ -67,7 +115,15 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "f8b27343ff08290827560a1ba358eece600c9ea7f403b02684ad87ae7af0f288",
     name: "Buttcoin",
     symbol: "BUTT",
-    logo: "butt.png",
+    logo: "/butt.png",
+    type: "SECRET",
+  },
+  {
+    address: "secret1xzlgeyuuyqje79ma6vllregprkmgwgavk8y798",
+    codeHash: "15361339b59f2753fc365283d4a144dd3a4838e237022ac0249992d8d9f3b88e",
+    name: "Fat Secret",
+    symbol: "FATS",
+    logo: "/fat_secret.png",
     type: "SECRET",
   },
   // ETH
@@ -76,7 +132,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "2da545ebc441be05c9fa6338f3353f35ac02ec4b02454bc49b1a66f4b9866aed",
     name: "Ethereum",
     symbol: "ETH",
-    logo: "eth.png",
+    logo: "/eth.png",
     type: "ETH",
   },
   {
@@ -84,7 +140,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "2da545ebc441be05c9fa6338f3353f35ac02ec4b02454bc49b1a66f4b9866aed",
     name: "Tether",
     symbol: "USDT",
-    logo: "0xdac17f958d2ee523a2206206994597c13d831ec7.png",
+    logo: "/0xdac17f958d2ee523a2206206994597c13d831ec7.png",
     type: "ETH",
   },
   {
@@ -92,7 +148,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "2da545ebc441be05c9fa6338f3353f35ac02ec4b02454bc49b1a66f4b9866aed",
     name: "Dai Stablecoin",
     symbol: "DAI",
-    logo: "0x6b175474e89094c44da98b954eedeac495271d0f.png",
+    logo: "/0x6b175474e89094c44da98b954eedeac495271d0f.png",
     type: "ETH",
   },
   {
@@ -100,7 +156,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "2da545ebc441be05c9fa6338f3353f35ac02ec4b02454bc49b1a66f4b9866aed",
     name: "Compound",
     symbol: "COMP",
-    logo: "0xc00e94cb662c3520282e6f5717214004a7f26888.png",
+    logo: "/0xc00e94cb662c3520282e6f5717214004a7f26888.png",
     type: "ETH",
   },
   {
@@ -108,7 +164,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "2da545ebc441be05c9fa6338f3353f35ac02ec4b02454bc49b1a66f4b9866aed",
     name: "Uniswap",
     symbol: "UNI",
-    logo: "uni.png",
+    logo: "/uni.png",
     type: "ETH",
   },
   {
@@ -116,7 +172,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "2da545ebc441be05c9fa6338f3353f35ac02ec4b02454bc49b1a66f4b9866aed",
     name: "yearn.finance",
     symbol: "YFI",
-    logo: "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e.png",
+    logo: "/0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e.png",
     type: "ETH",
   },
   {
@@ -124,7 +180,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "2da545ebc441be05c9fa6338f3353f35ac02ec4b02454bc49b1a66f4b9866aed",
     name: "TrueUSD",
     symbol: "TUSD",
-    logo: "0x0000000000085d4780b73119b644ae5ecd22b376.png",
+    logo: "/0x0000000000085d4780b73119b644ae5ecd22b376.png",
     type: "ETH",
   },
   {
@@ -132,7 +188,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "2da545ebc441be05c9fa6338f3353f35ac02ec4b02454bc49b1a66f4b9866aed",
     name: "Ocean",
     symbol: "OCEAN",
-    logo: "0x967da4048cd07ab37855c090aaf366e4ce1b9f48.png",
+    logo: "/0x967da4048cd07ab37855c090aaf366e4ce1b9f48.png",
     type: "ETH",
   },
   {
@@ -140,7 +196,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "2da545ebc441be05c9fa6338f3353f35ac02ec4b02454bc49b1a66f4b9866aed",
     name: "ChainLink",
     symbol: "LINK",
-    logo: "0x514910771af9ca656af840dff83e8264ecf986ca.png",
+    logo: "/0x514910771af9ca656af840dff83e8264ecf986ca.png",
     type: "ETH",
   },
   {
@@ -148,7 +204,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "2da545ebc441be05c9fa6338f3353f35ac02ec4b02454bc49b1a66f4b9866aed",
     name: "Maker",
     symbol: "MKR",
-    logo: "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2.png",
+    logo: "/0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2.png",
     type: "ETH",
   },
   {
@@ -156,7 +212,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "2da545ebc441be05c9fa6338f3353f35ac02ec4b02454bc49b1a66f4b9866aed",
     name: "Synthetix Network",
     symbol: "SNX",
-    logo: "0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f.png",
+    logo: "/0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f.png",
     type: "ETH",
   },
   {
@@ -164,7 +220,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "2da545ebc441be05c9fa6338f3353f35ac02ec4b02454bc49b1a66f4b9866aed",
     name: "BandToken",
     symbol: "BAND",
-    logo: "0xba11d00c5f74255f56a5e366f4f77f5a186d7f55.png",
+    logo: "/0xba11d00c5f74255f56a5e366f4f77f5a186d7f55.png",
     type: "ETH",
   },
   {
@@ -172,7 +228,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "2da545ebc441be05c9fa6338f3353f35ac02ec4b02454bc49b1a66f4b9866aed",
     name: "KyberNetwork",
     symbol: "KNC",
-    logo: "0xdd974d5c2e2928dea5f71b9825b8b646686bd200.png",
+    logo: "/0xdd974d5c2e2928dea5f71b9825b8b646686bd200.png",
     type: "ETH",
   },
   {
@@ -180,7 +236,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "2da545ebc441be05c9fa6338f3353f35ac02ec4b02454bc49b1a66f4b9866aed",
     name: "Aave",
     symbol: "AAVE",
-    logo: "0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9.png",
+    logo: "/0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9.png",
     type: "ETH",
   },
   {
@@ -188,7 +244,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "2da545ebc441be05c9fa6338f3353f35ac02ec4b02454bc49b1a66f4b9866aed",
     name: "Wrapped BTC",
     symbol: "WBTC",
-    logo: "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599.png",
+    logo: "/0x2260fac5e5542a773aa44fbcfedf7c193bc2c599.png",
     type: "ETH",
   },
   {
@@ -196,7 +252,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "2da545ebc441be05c9fa6338f3353f35ac02ec4b02454bc49b1a66f4b9866aed",
     name: "Basis Cash",
     symbol: "BAC",
-    logo: "0x3449fc1cd036255ba1eb19d65ff4ba2b8903a69a.png",
+    logo: "/0x3449fc1cd036255ba1eb19d65ff4ba2b8903a69a.png",
     type: "ETH",
   },
   {
@@ -204,7 +260,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     address: "secret1s4fllut0e6vw0k3fxsg4fs6fm2ad6hn09zwgwv",
     codeHash: "2da545ebc441be05c9fa6338f3353f35ac02ec4b02454bc49b1a66f4b9866aed",
     symbol: "REN",
-    logo: "0x408e41876cccdc0f92210600ef50372656052a38.png",
+    logo: "/0x408e41876cccdc0f92210600ef50372656052a38.png",
     type: "ETH",
   },
   {
@@ -212,7 +268,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     address: "secret13j9sg2lpmwl92taac4lr3xqhslnm2yjm4nsmzl",
     codeHash: "2da545ebc441be05c9fa6338f3353f35ac02ec4b02454bc49b1a66f4b9866aed",
     symbol: "RENBTC",
-    logo: "0xeb4c2781e4eba804ce9a9803c67d0893436bb27d.png",
+    logo: "/0xeb4c2781e4eba804ce9a9803c67d0893436bb27d.png",
     type: "ETH",
   },
   {
@@ -220,7 +276,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     address: "secret19uje5xy80rm6rfu03df2xea532mcalw9hv8vf9",
     codeHash: "2da545ebc441be05c9fa6338f3353f35ac02ec4b02454bc49b1a66f4b9866aed",
     symbol: "SUSHI",
-    logo: "0x6b3595068778dd592e39a122f4f5a5cf09c90fe2.png",
+    logo: "/0x6b3595068778dd592e39a122f4f5a5cf09c90fe2.png",
     type: "ETH",
   },
   {
@@ -228,7 +284,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     address: "secret1vcm525c3gd9g5ggfqg7d20xcjnmcc8shh902un",
     codeHash: "2da545ebc441be05c9fa6338f3353f35ac02ec4b02454bc49b1a66f4b9866aed",
     symbol: "RSR",
-    logo: "0x8762db106b2c2a0bccb3a80d1ed41273552616e8.png",
+    logo: "/0x8762db106b2c2a0bccb3a80d1ed41273552616e8.png",
     type: "ETH",
   },
   {
@@ -236,7 +292,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     address: "secret1h6z05y90gwm4sqxzhz4pkyp36cna9xtp7q0urv",
     codeHash: "2da545ebc441be05c9fa6338f3353f35ac02ec4b02454bc49b1a66f4b9866aed",
     symbol: "USDC",
-    logo: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png",
+    logo: "/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png",
     type: "ETH",
   },
   {
@@ -244,7 +300,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     address: "secret1ukn328k6y3th5nw9z00p8lvk5s7m05cr9p06cu",
     codeHash: "2da545ebc441be05c9fa6338f3353f35ac02ec4b02454bc49b1a66f4b9866aed",
     symbol: "DPI",
-    logo: "0x1494ca1f11d487c2bbe4543e90080aeba4ba3c2b.png",
+    logo: "/0x1494ca1f11d487c2bbe4543e90080aeba4ba3c2b.png",
     type: "ETH",
   },
   {
@@ -252,7 +308,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "2da545ebc441be05c9fa6338f3353f35ac02ec4b02454bc49b1a66f4b9866aed",
     name: "Uniswap LP",
     symbol: "WSCRT-ETH",
-    logo: "scrt.svg",
+    logo: "/scrt.svg",
     type: "ETH",
   },
   {
@@ -260,7 +316,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     address: "secret1el5uj9ns9sty682dem033pt50xsv5mklmsvy24",
     codeHash: "2da545ebc441be05c9fa6338f3353f35ac02ec4b02454bc49b1a66f4b9866aed",
     symbol: "RUNE",
-    logo: "0x3155ba85d5f96b2d030a4966af206230e46849cb.png",
+    logo: "/0x3155ba85d5f96b2d030a4966af206230e46849cb.png",
     type: "ETH",
   },
   {
@@ -268,7 +324,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     address: "secret19g8edr6pa2s7ywuc3wys9sgk76kj2th7xtksey",
     codeHash: "2da545ebc441be05c9fa6338f3353f35ac02ec4b02454bc49b1a66f4b9866aed",
     symbol: "TORN",
-    logo: "0x77777feddddffc19ff86db637967013e6c6a116c.png",
+    logo: "/0x77777feddddffc19ff86db637967013e6c6a116c.png",
     type: "ETH",
   },
   {
@@ -276,7 +332,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     address: "secret1nq7resltu9870ar7vdu2suhzplx84800jfj2ja",
     codeHash: "2da545ebc441be05c9fa6338f3353f35ac02ec4b02454bc49b1a66f4b9866aed",
     symbol: "BAT",
-    logo: "0x0d8775f648430679a709e98d2b0cb6250d2887ef.png",
+    logo: "/0x0d8775f648430679a709e98d2b0cb6250d2887ef.png",
     type: "ETH",
   },
   {
@@ -284,7 +340,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     address: "secret120vtzu6xjprp6pq0r8wprf3jlp86xr8uu0nlc5",
     codeHash: "2da545ebc441be05c9fa6338f3353f35ac02ec4b02454bc49b1a66f4b9866aed",
     symbol: "ZRX",
-    logo: "0xe41d2489571d322189246dafa5ebde1f4699f498.png",
+    logo: "/0xe41d2489571d322189246dafa5ebde1f4699f498.png",
     type: "ETH",
   },
   {
@@ -292,7 +348,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     address: "secret1wp8aj7tja30cek5wf5jwcv0xalw8vmdasfv2lh",
     codeHash: "2da545ebc441be05c9fa6338f3353f35ac02ec4b02454bc49b1a66f4b9866aed",
     symbol: "ENJ",
-    logo: "0xf629cbd94d3791c9250152bd8dfbdf380e2a3b9c.png",
+    logo: "/0xf629cbd94d3791c9250152bd8dfbdf380e2a3b9c.png",
     type: "ETH",
   },
   {
@@ -300,7 +356,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     address: "secret178t2cp33hrtlthphmt9lpd25qet349mg4kcega",
     codeHash: "2da545ebc441be05c9fa6338f3353f35ac02ec4b02454bc49b1a66f4b9866aed",
     symbol: "MANA",
-    logo: "0x0f5d2fb29fb7d3cfee444a200298f468908cc942.png",
+    logo: "/0x0f5d2fb29fb7d3cfee444a200298f468908cc942.png",
     type: "ETH",
   },
   {
@@ -308,7 +364,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     address: "secret1jk0tw00vs23n8jwqdzrxtln6ww2a3k6em7s0p2",
     codeHash: "2da545ebc441be05c9fa6338f3353f35ac02ec4b02454bc49b1a66f4b9866aed",
     symbol: "YFL",
-    logo: "yflink_32.png",
+    logo: "/yflink_32.png",
     type: "ETH",
   },
   {
@@ -316,7 +372,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     address: "secret1h0tn05w9cjtsz9stccq2xl5rha2fxl0n2d765t",
     codeHash: "2da545ebc441be05c9fa6338f3353f35ac02ec4b02454bc49b1a66f4b9866aed",
     symbol: "ALPHA",
-    logo: "0xa1faa113cbe53436df28ff0aee54275c13b40975.png",
+    logo: "/0xa1faa113cbe53436df28ff0aee54275c13b40975.png",
     type: "ETH",
   },
   {
@@ -324,7 +380,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     address: "secret1pse3xfvv5pq5jw04wcaxhnhn7jqamfhcpm7j3t",
     codeHash: "2da545ebc441be05c9fa6338f3353f35ac02ec4b02454bc49b1a66f4b9866aed",
     symbol: "MATIC",
-    logo: "0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0.png",
+    logo: "/0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0.png",
     type: "ETH",
   },
   // BSC
@@ -333,7 +389,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "d0db7128b8697419ad915c9fa2c2b2da462634ab95cbb3ca187564a1275561cf",
     name: "Binance Coin",
     symbol: "BNB(BSC)",
-    logo: "bnb.png",
+    logo: "/bnb.png",
     type: "BSC",
   },
   {
@@ -341,7 +397,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "d0db7128b8697419ad915c9fa2c2b2da462634ab95cbb3ca187564a1275561cf",
     name: "Binance USD",
     symbol: "BUSD(BSC)",
-    logo: "busd.png",
+    logo: "/busd.png",
     type: "BSC",
   },
   {
@@ -349,7 +405,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "d0db7128b8697419ad915c9fa2c2b2da462634ab95cbb3ca187564a1275561cf",
     name: "Binance Ethereum",
     symbol: "ETH(BSC)",
-    logo: "eth.png",
+    logo: "/eth.png",
     type: "BSC",
   },
   {
@@ -357,7 +413,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "d0db7128b8697419ad915c9fa2c2b2da462634ab95cbb3ca187564a1275561cf",
     name: "Binance XRP",
     symbol: "XRP(BSC)",
-    logo: "xrp.png",
+    logo: "/xrp.png",
     type: "BSC",
   },
   {
@@ -365,7 +421,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "d0db7128b8697419ad915c9fa2c2b2da462634ab95cbb3ca187564a1275561cf",
     name: "Binance USDT",
     symbol: "USDT(BSC)",
-    logo: "0xdac17f958d2ee523a2206206994597c13d831ec7.png",
+    logo: "/0xdac17f958d2ee523a2206206994597c13d831ec7.png",
     type: "BSC",
   },
   {
@@ -373,7 +429,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "d0db7128b8697419ad915c9fa2c2b2da462634ab95cbb3ca187564a1275561cf",
     name: "Binance Cardano",
     symbol: "ADA(BSC)",
-    logo: "ada.png",
+    logo: "/ada.png",
     type: "BSC",
   },
   {
@@ -381,7 +437,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "d0db7128b8697419ad915c9fa2c2b2da462634ab95cbb3ca187564a1275561cf",
     name: "Binance Dogecoin",
     symbol: "DOGE(BSC)",
-    logo: "doge.png",
+    logo: "/doge.png",
     type: "BSC",
   },
   {
@@ -389,7 +445,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "d0db7128b8697419ad915c9fa2c2b2da462634ab95cbb3ca187564a1275561cf",
     name: "Binance Polkadot",
     symbol: "DOT(BSC)",
-    logo: "dot.png",
+    logo: "/dot.png",
     type: "BSC",
   },
   {
@@ -397,7 +453,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "d0db7128b8697419ad915c9fa2c2b2da462634ab95cbb3ca187564a1275561cf",
     name: "Binance USDC",
     symbol: "USDC(BSC)",
-    logo: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png",
+    logo: "/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png",
     type: "BSC",
   },
   {
@@ -405,7 +461,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "d0db7128b8697419ad915c9fa2c2b2da462634ab95cbb3ca187564a1275561cf",
     name: "Binance Bitcoin Cash",
     symbol: "BCH(BSC)",
-    logo: "bch.png",
+    logo: "/bch.png",
     type: "BSC",
   },
   {
@@ -413,7 +469,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "d0db7128b8697419ad915c9fa2c2b2da462634ab95cbb3ca187564a1275561cf",
     name: "Binance Litecoin",
     symbol: "LTC(BSC)",
-    logo: "ltc.png",
+    logo: "/ltc.png",
     type: "BSC",
   },
   {
@@ -421,7 +477,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "d0db7128b8697419ad915c9fa2c2b2da462634ab95cbb3ca187564a1275561cf",
     name: "Binance ChainLink",
     symbol: "LINK(BSC)",
-    logo: "0x514910771af9ca656af840dff83e8264ecf986ca.png",
+    logo: "/0x514910771af9ca656af840dff83e8264ecf986ca.png",
     type: "BSC",
   },
   {
@@ -429,7 +485,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "d0db7128b8697419ad915c9fa2c2b2da462634ab95cbb3ca187564a1275561cf",
     name: "Binance Tron",
     symbol: "TRX(BSC)",
-    logo: "trx.png",
+    logo: "/trx.png",
     type: "BSC",
   },
   {
@@ -437,7 +493,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "d0db7128b8697419ad915c9fa2c2b2da462634ab95cbb3ca187564a1275561cf",
     name: "PancakeSwap",
     symbol: "CAKE",
-    logo: "cake.png",
+    logo: "/cake.png",
     type: "BSC",
   },
   {
@@ -445,7 +501,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "d0db7128b8697419ad915c9fa2c2b2da462634ab95cbb3ca187564a1275561cf",
     name: "Bakery Swap",
     symbol: "BAKE",
-    logo: "bake.png",
+    logo: "/bake.png",
     type: "BSC",
   },
   {
@@ -453,7 +509,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "d0db7128b8697419ad915c9fa2c2b2da462634ab95cbb3ca187564a1275561cf",
     name: "Venus",
     symbol: "XVS",
-    logo: "xvs.png",
+    logo: "/xvs.png",
     type: "BSC",
   },
   {
@@ -461,7 +517,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "d0db7128b8697419ad915c9fa2c2b2da462634ab95cbb3ca187564a1275561cf",
     name: "Linear",
     symbol: "LINA",
-    logo: "lina.png",
+    logo: "/lina.png",
     type: "BSC",
   },
   {
@@ -469,7 +525,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "d0db7128b8697419ad915c9fa2c2b2da462634ab95cbb3ca187564a1275561cf",
     name: "Refinable",
     symbol: "FINE",
-    logo: "fine.png",
+    logo: "/fine.png",
     type: "BSC",
   },
   {
@@ -477,7 +533,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "d0db7128b8697419ad915c9fa2c2b2da462634ab95cbb3ca187564a1275561cf",
     name: "Bunny",
     symbol: "BUNNY",
-    logo: "bunny.png",
+    logo: "/bunny.png",
     type: "BSC",
   },
   {
@@ -485,7 +541,7 @@ export const tokenList: Array<BasicToken | ComplexToken> = [
     codeHash: "d0db7128b8697419ad915c9fa2c2b2da462634ab95cbb3ca187564a1275561cf",
     name: "Binance SCRT",
     symbol: "SCRT(BSC)",
-    logo: "scrt.svg",
+    logo: "/scrt.svg",
     type: "BSC",
   },
   // SecretSwap LP

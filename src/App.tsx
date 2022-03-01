@@ -1,33 +1,32 @@
-import React, { useRef, useState, useEffect, ChangeEvent } from "react";
-import ReactDOM from "react-dom";
-import "./index.css";
-
+import { Window as KeplrWindow } from "@keplr-wallet/types";
 import {
+  Avatar,
+  Badge,
   Button,
   Checkbox,
   CircularProgress,
-  FormControlLabel,
-  Avatar,
-  Badge,
-  IconButton,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
+  FormControlLabel,
+  IconButton,
   Typography,
 } from "@material-ui/core";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import CloseIcon from "@material-ui/icons/Close";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import ReportProblemIcon from "@material-ui/icons/ReportProblem";
-import CloseIcon from "@material-ui/icons/Close";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-
-import { ComplexToken, SecretAddress, Token, BasicToken, tokenList as localTokens } from "./tokens";
+import React, { ChangeEvent, useEffect, useState } from "react";
+import ReactDOM from "react-dom";
 import { SigningCosmWasmClient } from "secretjs";
 import { StdFee } from "secretjs/types/types";
-import { Window as KeplrWindow } from "@keplr-wallet/types";
-import { chainId, getKeplrViewingKey, KeplrPanel, setKeplrViewingKeys } from "./KeplrStuff";
+import "./index.css";
+import { getKeplrViewingKey, KeplrPanel, setKeplrViewingKeys } from "./KeplrStuff";
+import { BasicToken, ComplexToken, SecretAddress, Token, tokenList as localTokens } from "./tokens";
+
 declare global {
   interface Window extends KeplrWindow {}
 }
@@ -72,9 +71,9 @@ ReactDOM.render(
     >
       <span style={{ marginRight: "0.3rem" }}>Made with</span>
       <FavoriteIcon fontSize="small" color="secondary" />
-      <span style={{ margin: "0 0.3rem" }}>by Team Enigma</span>
+      <span style={{ margin: "0 0.3rem" }}>by SCRT Labs</span>
       <a
-        href="https://github.com/enigmampc/ViewingKeysWizard"
+        href="https://github.com/scrtlabs/ViewingKeysWizard"
         target="_blank"
         rel="noopener noreferrer"
         style={{ color: "black" }}
@@ -151,8 +150,6 @@ export default function App() {
           tokens.set(token.address, token);
 
           continue;
-        } else if (token.type === "SECRET" || token.type === "ETH" || token.type === "BSC") {
-          token.logo = `/${token.logo}`;
         }
 
         tokens.set(token.address, token);
@@ -334,22 +331,26 @@ export default function App() {
               We need your help!
             </Typography>
             <Typography gutterBottom>
-              This app is in open beta, and we hope to eventually integrate it into the{" "}
+              This app is in open beta, and we hope to eventually integrate it into apps like the{" "}
               <a href="https://bridge.scrt.network" target="_blank">
                 Secret Bridge
-              </a>{" "}
-              and{" "}
-              <a href="https://app.secretswap.io" target="_blank">
+              </a>
+              {", "}
+              <a href="https://app.secretswap.net" target="_blank">
                 SecretSwap
               </a>
-              , so any and all feedback is most welcome!
+              {" and "}
+              <a href="https://sienna.network" target="_blank">
+                Sienna
+              </a>{" "}
+              so any and all feedback is most welcome!
             </Typography>
             <Typography gutterBottom>
               Feedback channels:
               <ul>
                 <li>
                   In a{" "}
-                  <a href="https://github.com/enigmampc/ViewingKeysWizard/issues/new" target="_blank">
+                  <a href="https://github.com/scrtlabs/ViewingKeysWizard/issues/new" target="_blank">
                     GitHub issue
                   </a>
                 </li>
@@ -646,21 +647,21 @@ function TokenLogo({ token }: { token: BasicToken }) {
 }
 
 function calculateGasLimit(numOfMsgs: number): number {
-  let gasPerMsg = 110_000;
+  let gasPerMsg = 11_000;
   if (numOfMsgs >= 2) {
-    gasPerMsg = 85_000;
+    gasPerMsg = 8_500;
   }
   if (numOfMsgs >= 5) {
-    gasPerMsg = 68_000;
+    gasPerMsg = 6_800;
   }
   if (numOfMsgs >= 10) {
-    gasPerMsg = 62_000;
+    gasPerMsg = 6_200;
   }
   if (numOfMsgs >= 15) {
-    gasPerMsg = 59_000;
+    gasPerMsg = 5_900;
   }
   if (numOfMsgs >= 50) {
-    gasPerMsg = 57_000;
+    gasPerMsg = 5_700;
   }
 
   return gasPerMsg * numOfMsgs;

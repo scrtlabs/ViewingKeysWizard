@@ -48,7 +48,7 @@ export function KeplrPanel({
   }
 }
 
-export const chainId = "secret-3";
+export const chainId = "secret-4";
 
 async function setupKeplr(
   setSecretjs: React.Dispatch<React.SetStateAction<SigningCosmWasmClient | null>>,
@@ -88,6 +88,8 @@ export async function setKeplrViewingKeys(tokensToSet: Array<{ token: SecretAddr
   }
 
   for (const { token, viewingKey } of tokensToSet) {
+    console.log("setting vk", token, viewingKey);
+
     await window.keplr.suggestToken(chainId, token, viewingKey);
     console.log(`Viewing key ${viewingKey} saved for token ${token} in Keplr`);
   }
