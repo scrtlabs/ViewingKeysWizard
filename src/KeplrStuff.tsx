@@ -68,7 +68,7 @@ async function setupKeplr(
   const myAddress = accounts[0].address;
 
   const secretjs = new SigningCosmWasmClient(
-    "https://bridge-api-manager.azure-api.net/",
+    "https://lcd.secret.express",
     myAddress,
     //@ts-ignore
     keplrOfflineSigner,

@@ -13,18 +13,17 @@ import {
   IconButton,
   Typography,
 } from "@material-ui/core";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
 import CloseIcon from "@material-ui/icons/Close";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
-import ReportProblemIcon from "@material-ui/icons/ReportProblem";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { SigningCosmWasmClient } from "secretjs";
 import { StdFee } from "secretjs/types/types";
+import { KeplrPanel, getKeplrViewingKey } from "./KeplrStuff";
 import "./index.css";
-import { getKeplrViewingKey, KeplrPanel, setKeplrViewingKeys } from "./KeplrStuff";
 import { BasicToken, ComplexToken, SecretAddress, Token, tokenList as localTokens } from "./tokens";
 
 declare global {
@@ -228,13 +227,6 @@ export default function App() {
       >
         <KeplrPanel secretjs={secretjs} setSecretjs={setSecretjs} myAddress={myAddress} setMyAddress={setMyAddress} />
       </div>
-      <Typography align="center" component="div" variant="h5" gutterBottom>
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "0.3em" }}>
-          <ReportProblemIcon />
-          <span>This app is broken until the next Keplr version comes out</span>
-          <ReportProblemIcon />
-        </div>
-      </Typography>
       <div
         style={{
           display: "flex",
@@ -245,7 +237,7 @@ export default function App() {
         <Button
           variant="contained"
           color="primary"
-          disabled /* ={selectedTokens.size === 0 || !secretjs || loading || isTooMuchGas} */
+          disabled={selectedTokens.size === 0 || !secretjs || loading || isTooMuchGas}
           onClick={async () => {
             if (!secretjs) {
               console.error("Wat?");
@@ -254,9 +246,7 @@ export default function App() {
 
             const tokensToSet: Array<{ token: SecretAddress; viewingKey: string }> = Array.from(selectedTokens).map(
               (token) => {
-                const buf = new Uint8Array(32);
-                window.crypto.getRandomValues(buf);
-                return { token, viewingKey: toHexString(buf) };
+                return { token, viewingKey: "banana" };
               }
             );
 
@@ -290,7 +280,22 @@ export default function App() {
                 await sleep(5000);
               }
 
-              await setKeplrViewingKeys(tokensToSet);
+              console.log("My address:", myAddress);
+              for (const token of tokensToSet) {
+                let balance = await secretjs.queryContractSmart(token.token, {
+                  balance: { address: myAddress, key: "banana" },
+                });
+                let balanceStr = JSON.stringify(balance);
+                while (balanceStr.includes("Wrong viewing key for this address or viewing key not set")) {
+                  await sleep(3000);
+                  balance = await secretjs.queryContractSmart(token.token, {
+                    balance: { address: myAddress, key: "banana" },
+                  });
+                  balanceStr = JSON.stringify(balance);
+                }
+
+                console.log(`Balance of ${token.token}: ${balanceStr}`);
+              }
             } catch (e: any) {
               console.error(`Error: ${e.message}`);
               alert(`Error: ${e.message}`);
@@ -664,7 +669,7 @@ function calculateGasLimit(numOfMsgs: number): number {
     gasPerMsg = 5_700;
   }
 
-  return gasPerMsg * numOfMsgs;
+  return gasPerMsg * numOfMsgs * 5;
 }
 
 function toHexString(byteArray: Uint8Array): string {
