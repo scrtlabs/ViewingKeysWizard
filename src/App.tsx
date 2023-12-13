@@ -159,6 +159,10 @@ export default function App() {
     };
 
     loadTokens();
+
+    window.addEventListener("keplr_keystorechange", () => {
+      setSecretjs(null);
+    });
   }, []);
 
   const handleSelectToken = (event: ChangeEvent<HTMLInputElement>) => {

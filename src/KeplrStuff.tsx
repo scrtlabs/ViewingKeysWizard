@@ -40,6 +40,7 @@ export function KeplrPanel({
       </CopyToClipboard>
     );
   } else {
+    setupKeplr(setSecretjs, setMyAddress);
     return (
       <Button variant="contained" style={{ background: "white" }} onClick={() => setupKeplr(setSecretjs, setMyAddress)}>
         {content}
