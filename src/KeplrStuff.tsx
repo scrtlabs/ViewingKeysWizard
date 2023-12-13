@@ -56,13 +56,13 @@ async function setupKeplr(
 ) {
   const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-  while (!window.keplr || !window.getEnigmaUtils || !window.getOfflineSigner) {
+  while (!window.keplr || !window.getEnigmaUtils || !window.getOfflineSignerOnlyAmino) {
     await sleep(50);
   }
 
   await window.keplr.enable(chainId);
 
-  const keplrOfflineSigner = window.getOfflineSigner(chainId);
+  const keplrOfflineSigner = window.getOfflineSignerOnlyAmino(chainId);
   const [{ address: myAddress }] = await keplrOfflineSigner.getAccounts();
 
   const secretjs = new SecretNetworkClient({
