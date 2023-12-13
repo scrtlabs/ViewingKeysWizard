@@ -2,7 +2,7 @@ import { Button } from "@material-ui/core";
 import { FileCopyOutlined } from "@material-ui/icons";
 import React, { useState } from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
-import { BroadcastMode, SigningCosmWasmClient } from "secretjs";
+import { SecretNetworkClient } from "secretjs";
 import { SecretAddress } from "./tokens";
 
 export function KeplrPanel({
@@ -11,8 +11,8 @@ export function KeplrPanel({
   myAddress,
   setMyAddress,
 }: {
-  secretjs: SigningCosmWasmClient | null;
-  setSecretjs: React.Dispatch<React.SetStateAction<SigningCosmWasmClient | null>>;
+  secretjs: SecretNetworkClient | null;
+  setSecretjs: React.Dispatch<React.SetStateAction<SecretNetworkClient | null>>;
   myAddress: SecretAddress | null;
   setMyAddress: React.Dispatch<React.SetStateAction<SecretAddress | null>>;
 }) {
@@ -51,7 +51,7 @@ export function KeplrPanel({
 export const chainId = "secret-4";
 
 async function setupKeplr(
-  setSecretjs: React.Dispatch<React.SetStateAction<SigningCosmWasmClient | null>>,
+  setSecretjs: React.Dispatch<React.SetStateAction<SecretNetworkClient | null>>,
   setMyAddress: React.Dispatch<React.SetStateAction<SecretAddress | null>>
 ) {
   const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -63,19 +63,14 @@ async function setupKeplr(
   await window.keplr.enable(chainId);
 
   const keplrOfflineSigner = window.getOfflineSigner(chainId);
-  const accounts = await keplrOfflineSigner.getAccounts();
+  const [{ address: myAddress }] = await keplrOfflineSigner.getAccounts();
 
-  const myAddress = accounts[0].address;
-
-  const secretjs = new SigningCosmWasmClient(
-    "https://lcd.secret.express",
-    myAddress,
-    //@ts-ignore
-    keplrOfflineSigner,
-    window.getEnigmaUtils(chainId),
-    null,
-    BroadcastMode.Sync
-  );
+  const secretjs = new SecretNetworkClient({
+    chainId: "secret-4",
+    url: "https://lcd.secret.express",
+    wallet: keplrOfflineSigner,
+    walletAddress: myAddress,
+  });
 
   setMyAddress(myAddress as SecretAddress);
   setSecretjs(secretjs);

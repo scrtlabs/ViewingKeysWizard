@@ -20,8 +20,7 @@ import GitHubIcon from "@material-ui/icons/GitHub";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import { SigningCosmWasmClient } from "secretjs";
-import { StdFee } from "secretjs/types/types";
+import { MsgExecuteContract, SecretNetworkClient } from "secretjs";
 import { KeplrPanel, getKeplrViewingKey } from "./KeplrStuff";
 import "./index.css";
 import { BasicToken, ComplexToken, SecretAddress, Token, tokenList as localTokens } from "./tokens";
@@ -97,7 +96,7 @@ export default function App() {
   const [isAllSelected, setIsAllSelected] = useState<boolean>(false);
   const [isSelectRelated, setSelectRelated] = useState<boolean>(false);
   const [myAddress, setMyAddress] = useState<SecretAddress | null>(null);
-  const [secretjs, setSecretjs] = useState<SigningCosmWasmClient | null>(null);
+  const [secretjs, setSecretjs] = useState<SecretNetworkClient | null>(null);
   const [isHelpDialogOpened, setIsHelpDialogOpened] = useState(false);
 
   useEffect(() => {
@@ -252,44 +251,46 @@ export default function App() {
 
             setLoading(true);
             try {
-              const { transactionHash } = await secretjs.multiExecute(
-                tokensToSet.map(({ token, viewingKey }) => ({
-                  contractAddress: token,
-                  contractCodeHash: tokens.get(token)?.codeHash,
-                  handleMsg: { set_viewing_key: { key: viewingKey } },
-                })),
-                "",
-                getFeeForExecute(calculateGasLimit(selectedTokens.size))
+              const { transactionHash } = await secretjs.tx.broadcast(
+                tokensToSet.map(
+                  ({ token, viewingKey }) =>
+                    new MsgExecuteContract({
+                      contract_address: token,
+                      code_hash: tokens.get(token)?.codeHash,
+                      msg: { set_viewing_key: { key: viewingKey } },
+                      sender: myAddress!,
+                    })
+                ),
+                {
+                  gasLimit: calculateGasLimit(selectedTokens.size),
+                }
               );
 
-              while (true) {
-                try {
-                  const tx = await secretjs.restClient.txById(transactionHash, true);
+              try {
+                const tx = await secretjs.query.getTx(transactionHash);
 
-                  if (!tx.raw_log.startsWith("[")) {
-                    console.error(`Tx failed: ${tx.raw_log}`);
-                  } else {
-                    console.log(`Viewing keys successfully set.`);
-                  }
-
-                  break;
-                } catch (error) {
-                  console.log("Still waiting for tx to commit on-chain...");
+                if (tx!.code !== 0) {
+                  console.error(`Tx failed: ${tx!.rawLog}`);
+                  return;
+                } else {
+                  console.log(`Viewing keys successfully set.`);
                 }
-
-                await sleep(5000);
+              } catch (error) {
+                console.log("Still waiting for tx to commit on-chain:", error);
               }
 
               console.log("My address:", myAddress);
               for (const token of tokensToSet) {
-                let balance = await secretjs.queryContractSmart(token.token, {
-                  balance: { address: myAddress, key: "banana" },
+                let balance = await secretjs.query.compute.queryContract({
+                  contract_address: token.token,
+                  query: { balance: { address: myAddress, key: "banana" } },
                 });
                 let balanceStr = JSON.stringify(balance);
                 while (balanceStr.includes("Wrong viewing key for this address or viewing key not set")) {
                   await sleep(3000);
-                  balance = await secretjs.queryContractSmart(token.token, {
-                    balance: { address: myAddress, key: "banana" },
+                  balance = await secretjs.query.compute.queryContract({
+                    contract_address: token.token,
+                    query: { balance: { address: myAddress, key: "banana" } },
                   });
                   balanceStr = JSON.stringify(balance);
                 }
@@ -502,14 +503,6 @@ export default function App() {
       </div>
     </div>
   );
-}
-
-const gasPriceUscrt = 0.25;
-export function getFeeForExecute(gas: number): StdFee {
-  return {
-    amount: [{ amount: String(Math.floor(gas * gasPriceUscrt) + 1), denom: "uscrt" }],
-    gas: String(gas),
-  };
 }
 
 function TokenCheckBox({
